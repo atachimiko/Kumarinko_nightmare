@@ -1,0 +1,78 @@
+﻿<Window x:Class="Akalib.Sample.VirtualWrapImageList.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Containers="clr-namespace:Akalib.Wpf.Control;assembly=Akalib.Wpf"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:LocalContainer="clr-namespace:Akalib.Sample.VirtualWrapImageList"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        Title="MainWindow"
+        Width="525"
+        Height="350">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="150*" />
+            <RowDefinition Height="120*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Margin="3"
+                    Orientation="Horizontal">
+            <Button x:Name="ScrollOffsetButton"
+                    Margin="5"
+                    Click="ScrollOffsetButton_Click"
+                    Content="ScrollOffset 10" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="3">
+            <ListView x:Name="ListViewSampleContainer"
+                      IsSynchronizedWithCurrentItem="True"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListView.View>
+                    <LocalContainer:ImageListView />
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*" />
+                <ColumnDefinition Width="210" />
+            </Grid.ColumnDefinitions>
+            <TextBox FontSize="10px"
+                     HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Path=Message}"
+                     TextChanged="OnTextChanged"
+                     VerticalScrollBarVisibility="Auto" />
+
+            <GroupBox Grid.Column="1" Header="実験">
+                <StackPanel>
+                    <Button Margin="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <l:LivetCallMethodAction MethodName="ShowGeneratorPosition" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        現在のGeneratorPositionを表示
+                    </Button>
+                    <Button Margin="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <l:LivetCallMethodAction MethodName="MessageClear" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        メッセージ消去
+                    </Button>
+                    <Button Margin="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <l:LivetCallMethodAction MethodName="AddItem" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        アイテム追加
+                    </Button>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

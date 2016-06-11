@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://www.google.co.jp</licenseUrl>
+    <projectUrl>http://www.google.co.jp</projectUrl>
+    <iconUrl>http://www.google.co.jp</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Akalib WPF ライブラリ</releaseNotes>
+    <copyright>Copyright 2015 atachi</copyright>
+    <tags>Akalib WPF</tags>
+    <dependencies>
+      <dependency id="LivetCask" version="(1.1.0.0,)"></dependency>
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,42 @@
+﻿<Window x:Class="Akalib.Sample.TreeList.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tree="clr-namespace:Akalib.Wpf.Control.Tree;assembly=Akalib.Wpf"
+        Title="MainWindow"
+        Width="625"
+        Height="350">
+    <Grid VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320" />
+        </Grid.ColumnDefinitions>
+        <tree:TreeList x:Name="_treeList"
+                       Grid.Column="0"
+                       Width="300"
+                       Margin="5"
+                       DockPanel.Dock="Left"
+                       ItemContainerStyle="{StaticResource TreeListItemNodeStyle}">
+            <tree:TreeList.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <tree:RowExpander />
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Panel.Background}"
+                                BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                Focusable="True"
+                                Padding="{TemplateBinding Control.Padding}"
+                                SnapsToDevicePixels="True">
+                            <TextBlock Text="{Binding Name}" />
+                        </Border>
+                    </StackPanel>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type tree:TreeListItem}}}" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </tree:TreeList.ItemTemplate>
+        </tree:TreeList>
+    </Grid>
+</Window>

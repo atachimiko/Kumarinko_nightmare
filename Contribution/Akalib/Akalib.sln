@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET4.5", ".NET4.5", "{B56ED8DE-C193-4CAF-8FED-75C3CA5B42A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib", ".NET4.5\Akalib\Akalib.csproj", "{AC9A53E6-25C0-4465-8F91-671DE8D9573E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Wpf", ".NET4.5\Akalib.Wpf\Akalib.Wpf.csproj", "{B55F2D6B-B39F-4431-94D2-BEE0B7AB974E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Wpf.Mvvm", ".NET4.5\Akalib.Wpf.Mvvm\Akalib.Wpf.Mvvm.csproj", "{3821A2C9-9111-4623-AE66-D9355A5AAA0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Entity", ".NET4.5\Akalib.Entity\Akalib.Entity.csproj", "{756953CE-A786-4A28-ADD8-6E744633C904}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3480136-F99F-460B-B999-9BDC0692337B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Sample.TreeList", "Akalib.Sample.TreeList\Akalib.Sample.TreeList.csproj", "{0AB17E8F-8A6A-483A-A1F2-2757F2F8EA7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Sample.VirtualWrapImageList", "Akalib.Sample.VirtualWrapImageList\Akalib.Sample.VirtualWrapImageList.csproj", "{7E58F0A3-5D8F-465D-B8BE-3292E69F5222}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC9A53E6-25C0-4465-8F91-671DE8D9573E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9A53E6-25C0-4465-8F91-671DE8D9573E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC9A53E6-25C0-4465-8F91-671DE8D9573E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9A53E6-25C0-4465-8F91-671DE8D9573E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B55F2D6B-B39F-4431-94D2-BEE0B7AB974E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B55F2D6B-B39F-4431-94D2-BEE0B7AB974E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B55F2D6B-B39F-4431-94D2-BEE0B7AB974E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B55F2D6B-B39F-4431-94D2-BEE0B7AB974E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3821A2C9-9111-4623-AE66-D9355A5AAA0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3821A2C9-9111-4623-AE66-D9355A5AAA0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3821A2C9-9111-4623-AE66-D9355A5AAA0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3821A2C9-9111-4623-AE66-D9355A5AAA0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{756953CE-A786-4A28-ADD8-6E744633C904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{756953CE-A786-4A28-ADD8-6E744633C904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{756953CE-A786-4A28-ADD8-6E744633C904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{756953CE-A786-4A28-ADD8-6E744633C904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB17E8F-8A6A-483A-A1F2-2757F2F8EA7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB17E8F-8A6A-483A-A1F2-2757F2F8EA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB17E8F-8A6A-483A-A1F2-2757F2F8EA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB17E8F-8A6A-483A-A1F2-2757F2F8EA7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E58F0A3-5D8F-465D-B8BE-3292E69F5222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E58F0A3-5D8F-465D-B8BE-3292E69F5222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E58F0A3-5D8F-465D-B8BE-3292E69F5222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E58F0A3-5D8F-465D-B8BE-3292E69F5222}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AC9A53E6-25C0-4465-8F91-671DE8D9573E} = {B56ED8DE-C193-4CAF-8FED-75C3CA5B42A9}
+		{B55F2D6B-B39F-4431-94D2-BEE0B7AB974E} = {B56ED8DE-C193-4CAF-8FED-75C3CA5B42A9}
+		{3821A2C9-9111-4623-AE66-D9355A5AAA0A} = {B56ED8DE-C193-4CAF-8FED-75C3CA5B42A9}
+		{756953CE-A786-4A28-ADD8-6E744633C904} = {B56ED8DE-C193-4CAF-8FED-75C3CA5B42A9}
+	EndGlobalSection
+EndGlobal
