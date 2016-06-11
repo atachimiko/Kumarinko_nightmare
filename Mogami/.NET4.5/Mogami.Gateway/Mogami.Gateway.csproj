@@ -67,11 +67,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Contribution\Akalib\.NET4.5\Akalib.Entity\Akalib.Entity.csproj">
+      <Project>{756953ce-a786-4a28-add8-6e744633c904}</Project>
+      <Name>Akalib.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Contribution\Akalib\.NET4.5\Akalib\Akalib.csproj">
+      <Project>{ac9a53e6-25c0-4465-8f91-671de8d9573e}</Project>
+      <Name>Akalib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Common\Mogami.Common.csproj">
+      <Project>{482683f7-dfa9-4bcb-9e5e-d9c4618d7740}</Project>
+      <Name>Mogami.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Contrib\Mogami.Contrib.csproj">
+      <Project>{84f32316-f684-4304-acfc-f5d250d9e68d}</Project>
+      <Name>Mogami.Contrib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Core\Mogami.Core.csproj">
+      <Project>{1b4aa145-c9c2-44ca-b54c-37362ae8e480}</Project>
+      <Name>Mogami.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Model\Mogami.Model.csproj">
+      <Project>{21e9e537-6737-4755-980b-8b2a6e737e48}</Project>
+      <Name>Mogami.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\System.Data.SQLite.Core.1.0.101.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\..\packages\System.Data.SQLite.Core.1.0.101.0\build\net451\System.Data.SQLite.Core.targets')" />

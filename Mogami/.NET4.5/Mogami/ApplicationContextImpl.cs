@@ -2,12 +2,17 @@
 using log4net;
 using Mogami.Core.Constructions;
 using Mogami.Core.Infrastructure;
+using Mogami.Gateway;
+using Mogami.Model;
+using Mogami.Model.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -70,6 +75,8 @@ namespace Mogami
 			AppDomain.CurrentDomain.SetPrincipalPolicy(System.Security.Principal.PrincipalPolicy.WindowsPrincipal);
 
 			this.ApplicationFileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+			CreateSettingSQLite();
 		}
 
 		#endregion コンストラクタ
@@ -162,6 +169,7 @@ namespace Mogami
 		{
 			return ApplicationContextImpl.instance;
 		}
+
 		/// <summary>
 		/// アプリケーションの初期化を行います
 		/// </summary>
@@ -215,10 +223,82 @@ namespace Mogami
 		}
 
 		/// <summary>
+		/// SQLiteを使用するための設定を読み込みます
+		/// </summary>
+		void CreateSettingSQLite()
+		{
+			SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
+			builder.DataSource = Path.Combine(DatabaseDirectoryPath, "mogami.db");
+			AppDbContext.SDbConnection = builder;
+		}
+		/// <summary>
 		/// データベースに関する初期化処理
 		/// </summary>
 		private void InitializeDatabase()
 		{
+			ApMetadata apMetadata = null;
+			bool isMigrate = false;
+
+			// 構造の初期化
+			using (var @dbc = new AppDbContext())
+			{
+				bool isInitializeDatabase = false;
+				var @repo = new ApMetadataRepository(@dbc);
+				try
+				{
+					apMetadata = @repo.FindBy(p => p.Key == "APVER").FirstOrDefault();
+					if (apMetadata == null) isInitializeDatabase = true;
+				}
+				catch (Exception)
+				{
+					isInitializeDatabase = true;
+				}
+
+				if (isInitializeDatabase)
+				{
+					// データベースにテーブルなどの構造を初期化する
+					string sqltext = "";
+					System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
+
+					using (var stream = assm.GetManifestResourceStream("Mogami.Assets.Sql.initialize_sql.txt"))
+					{
+						using (StreamReader reader = new StreamReader(stream))
+						{
+							sqltext = reader.ReadToEnd();
+						}
+					}
+					@dbc.Database.ExecuteSqlCommand(sqltext);
+					@dbc.SaveChanges();
+
+					apMetadata = @repo.FindBy(p => p.Key == "APVER").FirstOrDefault();
+				}
+
+				if (apMetadata == null)
+				{
+					apMetadata = new ApMetadata { Key = "APVER", Value = "1.0.0" };
+					@repo.Add(apMetadata);
+
+					@repo.Save();
+				}
+
+				string currentVersion = apMetadata.Value;
+				string nextVersion = currentVersion;
+				do
+				{
+					currentVersion = nextVersion;
+					nextVersion = UpgradeFromResource(currentVersion, @dbc);
+					if (nextVersion != currentVersion) isMigrate = true;
+				} while (nextVersion != currentVersion);
+
+				if (isMigrate)
+				{
+					apMetadata.Value = nextVersion;
+
+					@repo.Save();
+				}
+
+				@dbc.SaveChanges();
+			}
 		}
 
 		/// <summary>
@@ -256,8 +336,57 @@ namespace Mogami
 			}
 		}
 
-		#endregion メソッド
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="resourcePath"></param>
+		/// <param name="dbc">データベース</param>
+		private void UpgradeDatabase(string resourcePath, AppDbContext dbc)
+		{
+			string sqltext = "";
+			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
+			using (var stream = assm.GetManifestResourceStream(resourcePath))
+			{
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					sqltext = reader.ReadToEnd();
+				}
+			}
+
+			dbc.Database.ExecuteSqlCommand(sqltext);
+		}
+
+		/// <summary>
+		/// 現在のバージョンからマイグレーションするファイルがリソースファイルにあるか探します。
+		/// リソースファイルがある場合はそのファイルに含まれるSQLを実行し、ファイル名からマイグレーション後のバージョンを取得します。
+		/// </summary>
+		/// <param name="version">現在のバージョン。アップグレード元のバージョン。</param>
+		/// <returns>次のバージョン番号。マイグレーションを実施しなかった場合は、versionの値がそのまま帰ります。</returns>
+		private string UpgradeFromResource(string version, AppDbContext @dbc)
+		{
+			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
+
+			string currentVersion = version;
+			var mss = assm.GetManifestResourceNames();
+
+			// 「Yukikaze.Assets.Sql.upgrade-1.0.0-1.1.0.txt」というリソースファイルを探す。
+			// この方法で読み込みができるリソースファイルは、「埋め込みリソース」です。
+			var r = new Regex("Mogami.Assets.Sql.upgrade-" + currentVersion + "-(.+)\\.txt");
+			foreach (var rf in assm.GetManifestResourceNames())
+			{
+				var matcher = r.Match(rf);
+				if (matcher.Success && matcher.Groups.Count > 1)
+				{
+					UpgradeDatabase(rf, @dbc);
+					currentVersion = matcher.Groups[1].Value; // 正規表現にマッチした箇所が、マイグレート後のバージョンになります。
+				}
+			}
+
+			return currentVersion;
+		}
+
+		#endregion メソッド
 	}
 }
 
