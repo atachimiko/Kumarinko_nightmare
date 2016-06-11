@@ -71,9 +71,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApMetadata.cs" />
+    <Compile Include="FileMappingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ApMetadataRepository.cs" />
+    <Compile Include="Repository\FileMappingInfoRepository.cs" />
+    <Compile Include="Repository\WorkspaceRepository.cs" />
     <Compile Include="ServiceModel.cs" />
+    <Compile Include="Workspace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -87,6 +91,18 @@
     <ProjectReference Include="..\..\..\Contribution\Akalib\.NET4.5\Akalib\Akalib.csproj">
       <Project>{ac9a53e6-25c0-4465-8f91-671de8d9573e}</Project>
       <Name>Akalib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Common\Mogami.Common.csproj">
+      <Project>{482683f7-dfa9-4bcb-9e5e-d9c4618d7740}</Project>
+      <Name>Mogami.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Contrib\Mogami.Contrib.csproj">
+      <Project>{84f32316-f684-4304-acfc-f5d250d9e68d}</Project>
+      <Name>Mogami.Contrib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Core\Mogami.Core.csproj">
+      <Project>{1b4aa145-c9c2-44ca-b54c-37362ae8e480}</Project>
+      <Name>Mogami.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

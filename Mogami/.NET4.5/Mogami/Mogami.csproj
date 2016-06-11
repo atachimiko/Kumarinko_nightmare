@@ -64,6 +64,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration.Install" />
@@ -135,6 +139,10 @@
     <ProjectReference Include="..\Mogami.Activity\Mogami.Activity.csproj">
       <Project>{aeaee777-3501-4df0-81a4-f1652b0652ca}</Project>
       <Name>Mogami.Activity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Applus\Mogami.Applus.csproj">
+      <Project>{ab280d7b-f16f-4b60-ae6e-130b563447ff}</Project>
+      <Name>Mogami.Applus</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mogami.Common\Mogami.Common.csproj">
       <Project>{482683f7-dfa9-4bcb-9e5e-d9c4618d7740}</Project>

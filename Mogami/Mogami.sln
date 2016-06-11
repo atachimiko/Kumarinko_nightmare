@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.InvokeServiceConsole
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.CT.xUnit", "Mogami.CT.xUnit\Mogami.CT.xUnit.csproj", "{406AE95F-657A-4DBF-BB49-3A2680E91506}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.Applus", ".NET4.5\Mogami.Applus\Mogami.Applus.csproj", "{AB280D7B-F16F-4B60-AE6E-130B563447FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,10 @@ Global
 		{406AE95F-657A-4DBF-BB49-3A2680E91506}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{406AE95F-657A-4DBF-BB49-3A2680E91506}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{406AE95F-657A-4DBF-BB49-3A2680E91506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,5 +165,6 @@ Global
 		{BAA064DB-6546-491E-A4F1-7A5678EC8E43} = {EB4362DB-1681-47A3-945F-D16A04D04B20}
 		{AC9A53E6-25C0-4465-8F91-671DE8D9573E} = {128EBBCF-F1A4-435F-B597-9B742F65F6A3}
 		{756953CE-A786-4A28-ADD8-6E744633C904} = {128EBBCF-F1A4-435F-B597-9B742F65F6A3}
+		{AB280D7B-F16F-4B60-AE6E-130B563447FF} = {EB4362DB-1681-47A3-945F-D16A04D04B20}
 	EndGlobalSection
 EndGlobal
