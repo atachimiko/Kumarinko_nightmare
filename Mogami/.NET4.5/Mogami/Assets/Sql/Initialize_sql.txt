@@ -1,0 +1,93 @@
+﻿﻿CREATE TABLE IF NOT EXISTS `ApMetadata`
+(
+	`Id` INTEGER PRIMARY KEY AUTOINCREMENT,
+	`Key` TEXT NOT NULL,
+	`Value` TEXT
+);
+
+CREATE TABLE IF NOT	EXISTS [alTag]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[Name] TEXT NOT NULL,
+	[ParentTag_Id] INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS [alArtifact]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[Title] TEXT,
+	[IdentifyHash] TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [alCategory]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[Name] TEXT,
+	[CategortTypeCode] INTEGER NOT NULL,
+	[ParentCategory_Id] INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS [alImageArtifact]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[ImageWidth] INTEGER DEFAULT -1,
+	[ImageHeight] INTEGER DEFAULT -1
+);
+
+CREATE TABLE IF NOT EXISTS [alWorkspace]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[Name] TEXT UNIQUE,
+	[PhysicalPath] TEXT NOT NULL UNIQUE,
+	[WorkspacePath] TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS [alFileMappingInfo]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[AclHash] TEXT NOT NULL,
+	[MappingFilePath] TEXT DEFAULT NULL,
+	[Workspace_Id] INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS [alAccount]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,	
+	[LoginName] TEXT NOT NULL,
+	[Password] TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS [alThumbnail]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[GenerateDate] DATETIME,
+	[ThumbnailType] INTEGER DEFAULT 0,
+	[OrderNo] INTEGER DEFAULT 0,
+	[ThumbnailHash] TEXT,
+	[Artifact_Id] INTEGER
+);
+
+--
+-- Relations
+--
+
+CREATE TABLE IF NOT EXISTS [T_Artifact2Category]
+(
+	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[OrderNo] INTEGER,
+	[Category_Id] INTEGER
+);
+
+
+CREATE TABLE IF NOT	EXISTS [TS_Artifact2Tag]
+(
+	[TagId] INTEGER,
+	[ArtifactId] INTEGER,
+	PRIMARY KEY([TagId], [ArtifactId])
+);
+
+--
+-- Initialize Data
+--
+-- INSERT INTO alCategory (Id, Name, CategortTypeCode) VALUES (1, "RootCategory", 0);
+-- INSERT INTO alCategory (Id, Name, CategortTypeCode) VALUES (2, "RecycleCategory", 0);
