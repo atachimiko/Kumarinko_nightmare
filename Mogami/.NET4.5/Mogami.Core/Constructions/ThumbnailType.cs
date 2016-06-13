@@ -25,4 +25,4 @@ namespace Mogami.Core.Constructions
 		PREVIEWIMAGE,
 	}
 }
-}
+

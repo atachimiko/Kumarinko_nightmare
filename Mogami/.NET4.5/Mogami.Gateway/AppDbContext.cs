@@ -14,6 +14,7 @@ namespace Mogami.Gateway
 	public sealed class AppDbContext : AtDbContext
 	{
 
+
 		#region フィールド
 
 		public static SQLiteConnectionStringBuilder SDbConnection;
@@ -35,6 +36,8 @@ namespace Mogami.Gateway
 		#region プロパティ
 
 		public DbSet<ApMetadata> ApMetadatas { get; set; }
+		public DbSet<FileMappingInfo> FileMappingInfos { get; set; }
+		public DbSet<Workspace> Workspaces { get; set; }
 
 		#endregion プロパティ
 
@@ -52,6 +55,7 @@ namespace Mogami.Gateway
 		}
 
 		#endregion メソッド
+
 	}
 }
 

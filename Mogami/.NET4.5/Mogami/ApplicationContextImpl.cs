@@ -1,4 +1,5 @@
 ﻿using Akalib;
+using Akalib.Entity;
 using log4net;
 using Mogami.Core.Constructions;
 using Mogami.Core.Infrastructure;
@@ -20,7 +21,6 @@ namespace Mogami
 {
 	public class ApplicationContextImpl : IApplicationContext
 	{
-
 
 		#region フィールド
 
@@ -184,6 +184,7 @@ namespace Mogami
 
 				case InitializeParamType.DATABASE:
 					InitializeDatabase();
+					InitializeDatabaseThumbnail();
 					break;
 			}
 		}
@@ -201,6 +202,35 @@ namespace Mogami
 			Initialize(InitializeParamType.DATABASE);
 		}
 
+		/// <summary>
+		/// [ユニットテスト] データベースファイルを削除します
+		/// </summary>
+		/// <remarks>
+		/// ※ユニットテストからのみ呼び出してください。
+		/// </remarks>
+		public void RemoveUnitDbFile()
+		{
+
+			LOG.Info("ユニットテストで使用するデータベースファイルを削除します");
+			var dir = new DirectoryInfo(this.DatabaseDirectoryPath);
+			if (!dir.Exists) return;
+
+			foreach (var file in dir.GetFiles())
+			{
+				// ファイルの削除に失敗しても処理は継続
+				try
+				{
+					file.IsReadOnly = false;
+					file.Delete();
+					LOG.InfoFormat("ユニットテストで使用するデータベースファイルを削除しました({0})", file.Name);
+				}
+				catch (Exception expr)
+				{
+					LOG.FatalFormat("データベースファイルの削除に失敗しました。({0})", expr.Message);
+				}
+			}
+
+		}
 		/// <summary>
 		/// アプリケーション全体での経過時間をロギングする
 		/// </summary>
@@ -227,10 +257,16 @@ namespace Mogami
 		/// </summary>
 		void CreateSettingSQLite()
 		{
-			SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
-			builder.DataSource = Path.Combine(DatabaseDirectoryPath, "mogami.db");
-			AppDbContext.SDbConnection = builder;
+			SQLiteConnectionStringBuilder builder_AppDb = new SQLiteConnectionStringBuilder();
+			builder_AppDb.DataSource = Path.Combine(DatabaseDirectoryPath, "mogami.db");
+			AppDbContext.SDbConnection = builder_AppDb;
+
+			SQLiteConnectionStringBuilder builder_ThumbDb = new SQLiteConnectionStringBuilder();
+			builder_ThumbDb.DataSource = Path.Combine(DatabaseDirectoryPath, "thumbnail.db");
+			AppDbContext.SDbConnection = builder_ThumbDb;
 		}
+
+
 		/// <summary>
 		/// データベースに関する初期化処理
 		/// </summary>
@@ -260,7 +296,7 @@ namespace Mogami
 					string sqltext = "";
 					System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
-					using (var stream = assm.GetManifestResourceStream("Mogami.Assets.Sql.initialize_sql.txt"))
+					using (var stream = assm.GetManifestResourceStream("Mogami.Assets.Sql.Initialize_sql.txt"))
 					{
 						using (StreamReader reader = new StreamReader(stream))
 						{
@@ -302,6 +338,77 @@ namespace Mogami
 		}
 
 		/// <summary>
+		/// データベースに関する初期化処理
+		/// </summary>
+		private void InitializeDatabaseThumbnail()
+		{
+			ApMetadata apMetadata = null;
+			bool isMigrate = false;
+
+			// 構造の初期化
+			using (var @dbc = new ThumbDbContext())
+			{
+				bool isInitializeDatabase = false;
+				var @repo = new ApMetadataRepository(@dbc);
+				try
+				{
+					apMetadata = @repo.FindBy(p => p.Key == "APVER").FirstOrDefault();
+					if (apMetadata == null) isInitializeDatabase = true;
+				}
+				catch (Exception)
+				{
+					isInitializeDatabase = true;
+				}
+
+				if (isInitializeDatabase)
+				{
+					// データベースにテーブルなどの構造を初期化する
+					string sqltext = "";
+					System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
+
+					using (var stream = assm.GetManifestResourceStream("Mogami.Assets.Sql.Thumbnail_Initialize_sql.txt"))
+					{
+						using (StreamReader reader = new StreamReader(stream))
+						{
+							sqltext = reader.ReadToEnd();
+						}
+					}
+					@dbc.Database.ExecuteSqlCommand(sqltext);
+					@dbc.SaveChanges();
+
+					apMetadata = @repo.FindBy(p => p.Key == "APVER").FirstOrDefault();
+				}
+
+				if (apMetadata == null)
+				{
+					apMetadata = new ApMetadata { Key = "APVER", Value = "1.0.0" };
+					@repo.Add(apMetadata);
+
+					@repo.Save();
+				}
+
+				string currentVersion = apMetadata.Value;
+				string nextVersion = currentVersion;
+				do
+				{
+					currentVersion = nextVersion;
+					nextVersion = UpgradeFromResource(currentVersion, @dbc);
+					if (nextVersion != currentVersion) isMigrate = true;
+				} while (nextVersion != currentVersion);
+
+				if (isMigrate)
+				{
+					apMetadata.Value = nextVersion;
+
+					@repo.Save();
+				}
+
+				@dbc.SaveChanges();
+			}
+		}
+
+
+		/// <summary>
 		/// 必要なディレクトリを作成する初期化処理
 		/// </summary>
 		private void InitializeDirectory()
@@ -341,7 +448,7 @@ namespace Mogami
 		/// </summary>
 		/// <param name="resourcePath"></param>
 		/// <param name="dbc">データベース</param>
-		private void UpgradeDatabase(string resourcePath, AppDbContext dbc)
+		private void UpgradeDatabase(string resourcePath, AtDbContext dbc)
 		{
 			string sqltext = "";
 			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
@@ -363,7 +470,7 @@ namespace Mogami
 		/// </summary>
 		/// <param name="version">現在のバージョン。アップグレード元のバージョン。</param>
 		/// <returns>次のバージョン番号。マイグレーションを実施しなかった場合は、versionの値がそのまま帰ります。</returns>
-		private string UpgradeFromResource(string version, AppDbContext @dbc)
+		private string UpgradeFromResource(string version, AtDbContext @dbc)
 		{
 			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
@@ -387,6 +494,7 @@ namespace Mogami
 		}
 
 		#endregion メソッド
+
 	}
 }
 

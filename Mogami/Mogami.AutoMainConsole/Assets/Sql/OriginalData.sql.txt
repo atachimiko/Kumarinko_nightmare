@@ -1,0 +1,11 @@
+﻿DELETE FROM alWorkspace;
+-- このテーブルのレコードは、プログラム内で初期化を行うので既存レコードはすべて削除
+DELETE FROM alFileMappingInfo;
+
+-- PRIMARY KEYの自動カウントインデックスのクリア
+delete from sqlite_sequence where name='alWorkspace';
+delete from sqlite_sequence where name='alFileMappingInfo';
+
+INSERT OR REPLACE INTO alWorkspace (Id, Name, PhysicalPath, WorkspacePath) VALUES (2, "DefaultWorkspace", "C:\Mogami_Physical", "C:\Mogami_Workspace");
+
+

@@ -220,6 +220,7 @@ namespace Mogami.Applus.Manager
 		{
 			const string indentText = "  ";
 			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("イベント発生数:" + _UpdatesWatchFiles.Count);
 			foreach (var prop in _UpdatesWatchFiles)
 			{
 				sb.Append("★Key=").Append(prop.Key).AppendLine();
@@ -333,7 +334,7 @@ namespace Mogami.Applus.Manager
 							using (var dbc = new AppDbContext())
 							{
 								var workspace = WorkspaceRepository.Load(dbc, _Workspace.Id);
-								var workflow = new WorkflowInvoker(new UpdateVirtualSpaceFlow());
+								var workflow = new WorkflowInvoker(new UpdateVirtualSpaceAppFlow());
 								workflow.Extensions.Add(new WorkflowExtention(dbc));
 
 								// 処理対象のファイルがACLファイルか、物理ファイルかで処理を切り分けます
