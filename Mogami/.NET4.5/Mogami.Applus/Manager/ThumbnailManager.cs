@@ -1,6 +1,10 @@
 ﻿using log4net;
+using Mogami.Core;
 using Mogami.Core.Attributes;
 using Mogami.Core.Constructions;
+using Mogami.Gateway;
+using Mogami.Model;
+using Mogami.Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Mogami.Core.Manager
+namespace Mogami.Applus.Manager
 {
 	public class ThumbnailManager
 	{
@@ -28,8 +32,9 @@ namespace Mogami.Core.Manager
 		/// <summary>
 		/// サムネイル作成
 		/// </summary>
+		/// <param name="baseImageFilePath">サムネイルハッシュ</param>
 		/// <returns></returns>
-		public void BuildThumbnail(string key, string baseImageFilePath)
+		public void BuildThumbnail(string thumbnailhash, string baseImageFilePath)
 		{
 			LOG.Debug("サムネイルの作成を開始します");
 			Byte[] imageByte = null;
@@ -46,12 +51,12 @@ namespace Mogami.Core.Manager
 					if (infos.Length > 0)
 					{
 						var @attr = infos[0];
-						var dir = ThumbnailFileDir(key, @attr);
-						System.IO.Directory.CreateDirectory(dir); // ディレクトリが無い場合は、作成します。
+						//var dir = ThumbnailFileDir(thumbnailhash, @attr);
+						//System.IO.Directory.CreateDirectory(dir); // ディレクトリが無い場合は、作成します。
 
-						var resizedImage = CreateImage(imageByte, 300, 0); // 生成するサムネイル画像の大きさは「300」(TODO?)
+						var resizedImage = CreateImage(imageByte, @attr.Width, @attr.Height); // 生成するサムネイル画像の大きさは「300」(TODO?)
 
-						var invoker = new ThumbnailEncodingInvoker(resizedImage, Path.Combine(dir, key));
+						var invoker = new ThumbnailEncodingInvoker(resizedImage, thumbnailhash);
 						var encodingBackground = new BackgroundWorker();
 						encodingBackground.DoWork += invoker.Do;
 						encodingBackground.RunWorkerAsync();
@@ -164,6 +169,8 @@ namespace Mogami.Core.Manager
 			{
 				try
 				{
+					/*
+					// ファイルに出力
 					using (FileStream wstream = new FileStream(this._OutputPath, FileMode.Create))
 					{
 						PngBitmapEncoder encoder = new PngBitmapEncoder();
@@ -171,6 +178,28 @@ namespace Mogami.Core.Manager
 						encoder.Frames.Add(frame);
 						encoder.Save(wstream);
 						wstream.Close();
+					}
+					*/
+					// バイナリに出力
+					using (MemoryStream memoryStream = new MemoryStream())
+					{
+						PngBitmapEncoder encoder = new PngBitmapEncoder();
+						var frame = BitmapFrame.Create((BitmapImage)this._ImageSource);
+						encoder.Frames.Add(frame);
+						encoder.Save(memoryStream);
+
+						using (var dbc = new ThumbDbContext())
+						{
+							var thumbnail = new Thumbnail();
+							thumbnail.ThumbnailHash = this._OutputPath;
+							thumbnail.ThumbnailType = ThumbnailType.PREVIEWIMAGE;
+							thumbnail.BitmapBytes = memoryStream.ToArray();
+
+							var repo = new ThumbnailRepository(dbc);
+							repo.Add(thumbnail);
+
+							dbc.SaveChanges();
+						}
 					}
 				}
 				catch (NotSupportedException expr)

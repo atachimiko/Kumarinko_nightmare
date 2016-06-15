@@ -263,7 +263,7 @@ namespace Mogami
 
 			SQLiteConnectionStringBuilder builder_ThumbDb = new SQLiteConnectionStringBuilder();
 			builder_ThumbDb.DataSource = Path.Combine(DatabaseDirectoryPath, "thumbnail.db");
-			AppDbContext.SDbConnection = builder_ThumbDb;
+			ThumbDbContext.SDbConnection = builder_ThumbDb;
 		}
 
 

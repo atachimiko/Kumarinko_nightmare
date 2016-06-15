@@ -103,6 +103,7 @@
   <ItemGroup>
     <Compile Include="Action\UsingDatabaseAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\GenerateThumbnailTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -120,6 +121,10 @@
     <ProjectReference Include="..\.NET4.5\Mogami.Activity\Mogami.Activity.csproj">
       <Project>{aeaee777-3501-4df0-81a4-f1652b0652ca}</Project>
       <Name>Mogami.Activity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\.NET4.5\Mogami.Applus\Mogami.Applus.csproj">
+      <Project>{ab280d7b-f16f-4b60-ae6e-130b563447ff}</Project>
+      <Name>Mogami.Applus</Name>
     </ProjectReference>
     <ProjectReference Include="..\.NET4.5\Mogami.Common\Mogami.Common.csproj">
       <Project>{482683f7-dfa9-4bcb-9e5e-d9c4618d7740}</Project>
@@ -155,12 +160,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Asstes\Sql\App\CommonInitializeData.txt" />
-    <EmbeddedResource Include="Asstes\Sql\App\DeleteAllData.txt" />
+    <EmbeddedResource Include="Assets\Sql\App\CommonInitializeData.txt" />
+    <EmbeddedResource Include="Assets\Sql\App\DeleteAllData.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Asstes\Sql\Thumbnail\" />
-    <Folder Include="Test\" />
+    <EmbeddedResource Include="Assets\Sql\Thumbnail\DeleteAllData.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Image\Kinkaku.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\Lighthouse.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net451\System.Data.SQLite.Core.targets')" />

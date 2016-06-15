@@ -37,11 +37,6 @@ namespace Mogami.CT.xUnit.Action
 		/// </summary>
 		public string ImportSqlFileName { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public string ImportDatabaseName { get; set; }
-
 		public ActionTargets Targets
 		{
 			get { return ActionTargets.Suite; }
@@ -75,7 +70,10 @@ namespace Mogami.CT.xUnit.Action
 				if (application == null)
 					application = new Application();
 
-				ApplicationContext.SetupApplicationContextImpl(ApplicationContextImpl.CreateInstance(application));
+				var buildAssemblyType = new BuildAssemblyParameter();
+				buildAssemblyType.Params["ApplicationDirectoryPath"] = @"\Mogami.CT.xUnit";
+
+				ApplicationContext.SetupApplicationContextImpl(ApplicationContextImpl.CreateInstance(application, buildAssemblyType));
 				var task = Task.Factory.StartNew(() =>
 				{
 					LOG.Info("アプリケーションの初期化を開始します。");
@@ -84,7 +82,9 @@ namespace Mogami.CT.xUnit.Action
 																									   //((ApplicationContextImpl)ApplicationContextImpl.GetInstance()).InitializeApplicationProgressEvent += UsingDatabaseActionAttribute_InitializeApplicationProgressEvent;
 					((ApplicationContextImpl)ApplicationContextImpl.GetInstance()).InitializeApplication();
 
-					DeleteAllData();
+					DeleteAllData("App");
+					DeleteAllData("Thumbnail");
+
 					((ApplicationContextImpl)ApplicationContextImpl.GetInstance()).Initialize(InitializeParamType.DATABASE);
 
 					LOG.Info("アプリケーションの初期化が終了しました。");
@@ -96,8 +96,8 @@ namespace Mogami.CT.xUnit.Action
 				if (ImportInitializeDataFlag)
 				{
 					ImportInitializeData();
-					if (!string.IsNullOrEmpty(ImportSqlFileName) && !string.IsNullOrEmpty(ImportDatabaseName))
-						ImportSqlFile(ImportDatabaseName);
+					if (!string.IsNullOrEmpty(ImportSqlFileName))
+						ImportSqlFile();
 				}
 			}
 			Console.WriteLine("BeforeTest");
@@ -107,13 +107,15 @@ namespace Mogami.CT.xUnit.Action
 		/// <summary>
 		/// 
 		/// </summary>
-		void DeleteAllData()
+		void DeleteAllData(string databasename)
 		{
 			// データベースにテーブルなどの構造を初期化する
 			string sqltext = "";
 			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
-			using (var stream = assm.GetManifestResourceStream("Halcyon.ST.xUnit.Assets.Sql.App.DeleteAllData.txt"))
+			using (var stream = assm.GetManifestResourceStream(
+				string.Format("Mogami.CT.xUnit.Assets.Sql.{0}.DeleteAllData.txt", databasename)
+			))
 			{
 				using (StreamReader reader = new StreamReader(stream))
 				{
@@ -121,10 +123,19 @@ namespace Mogami.CT.xUnit.Action
 				}
 			}
 
-			using (var @dbc = new AppDbContext())
+			if (!string.IsNullOrEmpty(sqltext))
 			{
-				@dbc.Database.ExecuteSqlCommand(sqltext);
-				@dbc.SaveChanges();
+				using (var @dbc = new AppDbContext())
+				{
+					@dbc.Database.ExecuteSqlCommand(sqltext);
+					@dbc.SaveChanges();
+				}
+
+				using (var @dbc = new ThumbDbContext())
+				{
+					@dbc.Database.ExecuteSqlCommand(sqltext);
+					@dbc.SaveChanges();
+				}
 			}
 		}
 
@@ -137,7 +148,7 @@ namespace Mogami.CT.xUnit.Action
 			string sqltext = "";
 			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
-			using (var stream = assm.GetManifestResourceStream("Mogami.ST.xUnit.Assets.Sql.App.CommonInitializeData.txt"))
+			using (var stream = assm.GetManifestResourceStream("Mogami.CT.xUnit.Assets.Sql.App.CommonInitializeData.txt"))
 			{
 				using (StreamReader reader = new StreamReader(stream))
 				{
@@ -158,12 +169,12 @@ namespace Mogami.CT.xUnit.Action
 		/// <summary>
 		/// ユニットテスト用のSQLファイルを読み込む
 		/// </summary>
-		void ImportSqlFile(string dbname)
+		void ImportSqlFile()
 		{
 			string sqltext = "";
 			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
-			using (var stream = assm.GetManifestResourceStream(string.Format("Halcyon.ST.xUnit.Assets.Sql.{0}.{1}", dbname, ImportSqlFileName)))
+			using (var stream = assm.GetManifestResourceStream(string.Format("Mogami.CT.xUnit.Assets.Sql.App.{0}", ImportSqlFileName)))
 			{
 				using (StreamReader reader = new StreamReader(stream))
 				{

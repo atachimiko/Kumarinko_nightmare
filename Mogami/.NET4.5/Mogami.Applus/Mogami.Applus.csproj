@@ -74,6 +74,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\ThumbnailManager.cs" />
     <Compile Include="VirtualFileSystemWatcherManager.cs" />
     <Compile Include="WorkflowExtention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

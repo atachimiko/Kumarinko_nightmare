@@ -12,17 +12,18 @@ namespace Mogami.Core.Constructions
 	/// </summary>
 	public enum ThumbnailType
 	{
-		NON_SETTING,
+		NON_SETTING = 0,
+
 		/// <summary>
 		/// ListIcon用サムネイル
 		/// </summary>
-		[ThumbnailInfo("ListIcon")]
-		LISTICON,
+		[ThumbnailInfo("ListIcon", Width = 150)]
+		LISTICON = 1,
 		/// <summary>
 		/// プレビュー用サムネイル
 		/// </summary>
-		[ThumbnailInfo("PreviewImage")]
-		PREVIEWIMAGE,
+		[ThumbnailInfo("PreviewImage", Width = 350)]
+		PREVIEWIMAGE = 2,
 	}
 }
 

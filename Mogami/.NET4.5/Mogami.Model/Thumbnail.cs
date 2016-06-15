@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mogami.Core.Constructions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Mogami.Model
 	public class Thumbnail : ServiceModel
 	{
 
+
 		#region フィールド
 
 		private byte[] _BitmapBytes;
-		private string _Key;
+		private string _ThumbnailHash;
+		private ThumbnailType _ThumbnailType;
 
 		#endregion フィールド
 
@@ -30,13 +33,22 @@ namespace Mogami.Model
 			}
 		}
 
-		public string Key
+		public string ThumbnailHash
 		{
-			get { return _Key; }
+			get { return _ThumbnailHash; }
 			set
 			{
-				if (_Key == value) return;
-				_Key = value;
+				if (_ThumbnailHash == value) return;
+				_ThumbnailHash = value;
+			}
+		}
+
+		public ThumbnailType ThumbnailType
+		{
+			get { return _ThumbnailType; }
+			set
+			{
+				_ThumbnailType = value;
 			}
 		}
 

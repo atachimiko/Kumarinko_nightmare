@@ -1,0 +1,6 @@
+DELETE FROM ApMetadata;
+DELETE FROM alThumbnail;
+
+-- PRIMARY KEYの自動カウントインデックスのクリア
+delete from sqlite_sequence where name='ApMetadata';
+delete from sqlite_sequence where name='alThumbnail';
