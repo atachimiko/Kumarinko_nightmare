@@ -1,4 +1,5 @@
-﻿using Mogami.Core.Infrastructure;
+﻿using Mogami.Applus.Manager;
+using Mogami.Core.Infrastructure;
 using Mogami.Gateway;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace Mogami.Applus
 {
-	public class WorkflowExtention : ISessionDbContext
+	public class WorkflowExtention : IWorkflowContext
 	{
+
+
 		#region フィールド
 
 		AppDbContext _appdb;
@@ -35,6 +38,8 @@ namespace Mogami.Applus
 		{
 			get { return this._appdb; }
 		}
+
+		public IThumbnailManager ThumbnailManager { get { return new ThumbnailManager(); } }
 
 		#endregion プロパティ
 	}

@@ -10,11 +10,20 @@ namespace Mogami.Core.Infrastructure
 	/// <summary>
 	/// ワークフロー内で使用するデータベースに関するコンテキストを返すためのインターフェース
 	/// </summary>
-	public interface ISessionDbContext
+	public interface IWorkflowContext
 	{
+		#region プロパティ
+
 		/// <summary>
 		/// データベースのコンテキストを取得します
 		/// </summary>
 		DbContext DbContext { get; }
+
+		/// <summary>
+		/// サムネイル生成マネージャ
+		/// </summary>
+		IThumbnailManager ThumbnailManager { get; }
+
+		#endregion プロパティ
 	}
 }

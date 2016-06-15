@@ -2,6 +2,7 @@
 using Mogami.Core;
 using Mogami.Core.Attributes;
 using Mogami.Core.Constructions;
+using Mogami.Core.Infrastructure;
 using Mogami.Gateway;
 using Mogami.Model;
 using Mogami.Model.Repository;
@@ -17,7 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace Mogami.Applus.Manager
 {
-	public class ThumbnailManager
+	public class ThumbnailManager : IThumbnailManager
 	{
 
 		#region フィールド

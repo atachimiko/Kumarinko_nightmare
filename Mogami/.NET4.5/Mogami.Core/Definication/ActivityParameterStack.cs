@@ -8,5 +8,7 @@ namespace Mogami.Core.Definication
 {
 	public static class ActivityParameterStack
 	{
+		public const string GENERATETHUMBNAIL_KEY = "GENERATETHUMBNAIL_KEY";
+		public const string GENERATETHUMBNAIL_IMAGEPATH = "GENERATETHUMBNAIL_IMAGEPATH";
 	}
 }
