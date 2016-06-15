@@ -24,7 +24,9 @@ namespace Mogami
 		private static void Main(string[] args)
 		{
 			System.Threading.Thread.CurrentThread.Name = "Mogami application thread";
-
+#if RELEASE
+			EnsureThat.Ensure.Off()
+#endif
 			// Windowsサービスとして起動する
 			ServiceBase[] ServicesToRun;
 			ServicesToRun = new ServiceBase[]

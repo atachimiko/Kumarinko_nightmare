@@ -7,6 +7,7 @@ using Mogami.Contrib.Akalib;
 using Mogami.Core.Definication;
 using Mogami.Core.Infrastructure;
 using log4net;
+using EnsureThat;
 
 namespace Mogami.Activity.Feature.Thumbnail
 {
@@ -38,6 +39,11 @@ namespace Mogami.Activity.Feature.Thumbnail
 
 			var key = pstack.GetValue<string>(ActivityParameterStack.GENERATETHUMBNAIL_KEY);
 			var path = pstack.GetValue<string>(ActivityParameterStack.GENERATETHUMBNAIL_IMAGEPATH);
+
+
+			// Guard
+			Ensure.That(key).IsNotNullOrEmpty();
+			Ensure.That(path).IsNotNullOrEmpty();
 
 			var thumbnailManager = workflowContext.ThumbnailManager;
 			thumbnailManager.BuildThumbnail(key, path);

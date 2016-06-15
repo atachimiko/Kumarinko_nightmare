@@ -29,6 +29,7 @@ namespace Mogami
 
 		public BuildAssemblyParameter()
 		{
+
 			BuildParams();
 		}
 
