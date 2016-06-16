@@ -51,6 +51,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
@@ -69,6 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Feature\Thumbnail\GenerateThumbnail.cs" />
+    <Compile Include="Feature\VFS\CreateACLFile.cs" />
+    <Compile Include="Feature\VFS\GenerateACLHash.cs" />
+    <Compile Include="Feature\VFS\IsACLFile.cs" />
+    <Compile Include="Feature\VFS\MovePhysicalFile.cs" />
+    <Compile Include="Feature\VFS\MovePhysicalFileFromVirtual.cs" />
+    <Compile Include="Feature\VFS\ReadACLFile.cs" />
+    <Compile Include="Feature\VFS\RemoveACLFile.cs" />
+    <Compile Include="Feature\VFS\RemovePhysicalFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,9 +116,7 @@
       <Name>Mogami.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Feature\VFS\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
