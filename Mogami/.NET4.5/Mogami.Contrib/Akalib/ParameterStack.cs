@@ -17,7 +17,7 @@ namespace Mogami.Contrib.Akalib
 		/// <summary>
 		/// データを格納するハッシュのスタック
 		/// </summary>
-		readonly private Stack<Dictionary<string, object>> _KeyValueStack = new Stack<Dictionary<string, object>>();
+		readonly private Stack<Dictionary<string, ValueObject>> _KeyValueStack = new Stack<Dictionary<string, ValueObject>>();
 
 		#endregion フィールド
 
@@ -26,7 +26,7 @@ namespace Mogami.Contrib.Akalib
 
 		public ParameterStack()
 		{
-			this._KeyValueStack.Push(new Dictionary<string, object>());
+			this._KeyValueStack.Push(new Dictionary<string, ValueObject>());
 		}
 
 		#endregion コンストラクタ
@@ -79,7 +79,7 @@ namespace Mogami.Contrib.Akalib
 		/// <returns></returns>
 		public object GetValue(string key, bool hierarchy = false)
 		{
-			object retobj = null;
+			ValueObject retobj = null;
 			if (!hierarchy)
 				this._KeyValueStack.Peek().TryGetValue(key, out retobj);
 			else
@@ -91,7 +91,10 @@ namespace Mogami.Contrib.Akalib
 				}
 			}
 
-			return retobj;
+			if (string.IsNullOrEmpty(retobj.AliasKey))
+				return retobj.Value;
+
+			return GetValue(retobj.AliasKey, hierarchy);
 		}
 
 		/// <summary>
@@ -107,7 +110,18 @@ namespace Mogami.Contrib.Akalib
 		/// </summary>
 		public void Push()
 		{
-			this._KeyValueStack.Push(new Dictionary<string, object>());
+			this._KeyValueStack.Push(new Dictionary<string, ValueObject>());
+		}
+
+		/// <summary>
+		/// エイリアスキーを追加します。
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="aliasKey"></param>
+		public void SetAlias(string key, string aliasKey)
+		{
+			this._KeyValueStack.Peek()[key].Value = null; // 同名のキーがある場合は、キーマップの値は削除。
+			this._KeyValueStack.Peek()[key].AliasKey = aliasKey;
 		}
 
 		/// <summary>
@@ -117,9 +131,25 @@ namespace Mogami.Contrib.Akalib
 		/// <param name="value">値</param>
 		public void SetValue(string key, object value)
 		{
-			this._KeyValueStack.Peek()[key] = value;
+			this._KeyValueStack.Peek()[key].Value = value;
 		}
 
 		#endregion メソッド
+
+
+		#region 内部クラス
+
+		class ValueObject
+		{
+
+			#region フィールド
+
+			internal string AliasKey;
+			internal object Value;
+
+			#endregion フィールド
+		}
+
+		#endregion 内部クラス
 	}
 }

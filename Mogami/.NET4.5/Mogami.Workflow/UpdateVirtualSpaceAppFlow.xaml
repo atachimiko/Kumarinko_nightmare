@@ -1,11 +1,21 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Mogami.Workflow.UpdateVirtualSpaceAppFlow" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Mogami.Workflow.UpdateVirtualSpaceAppFlow"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mafv="clr-namespace:Mogami.Activity.Feature.VFS;assembly=Mogami.Activity"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Mogami.Contrib.Akalib;assembly=Mogami.Contrib"
+ xmlns:mca1="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:mcc="clr-namespace:Mogami.Core.Constructions;assembly=Mogami.Core"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="ParameterStack" Type="InArgument(mca:ParameterStack)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>Mogami.Workflow.UpdateVirtualSpaceAppFlow_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System</x:String>
@@ -13,22 +23,157 @@
       <x:String>System.Data</x:String>
       <x:String>System.Linq</x:String>
       <x:String>System.Text</x:String>
+      <x:String>Mogami.Contrib.Akalib</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
-      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>EnsureThat</AssemblyReference>
+      <AssemblyReference>Livet</AssemblyReference>
+      <AssemblyReference>log4net</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>Microsoft.Expression.Interactions</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Windows.Interactivity</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>Akalib.Entity</AssemblyReference>
+      <AssemblyReference>Akalib</AssemblyReference>
+      <AssemblyReference>Mogami.Activity</AssemblyReference>
+      <AssemblyReference>Mogami.Common</AssemblyReference>
+      <AssemblyReference>Mogami.Contrib</AssemblyReference>
+      <AssemblyReference>Mogami.Core</AssemblyReference>
+      <AssemblyReference>Mogami.Gateway</AssemblyReference>
+      <AssemblyReference>Mogami.Model</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Mogami.Workflow</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <sap2010:WorkflowViewState.IdRef>Mogami.Workflow.UpdateVirtualSpaceAppFlow_1</sap2010:WorkflowViewState.IdRef>
+  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Switch x:TypeArguments="mcc:UpdateVirtualStatusEventType" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+      <Switch.Expression>
+        <InArgument x:TypeArguments="mcc:UpdateVirtualStatusEventType">
+          <mca1:CSharpValue x:TypeArguments="mcc:UpdateVirtualStatusEventType">ParameterStack.GetValue&lt;Mogami.Core.Constructions.UpdateVirtualStatusEventType&gt;("Event",false)</mca1:CSharpValue>
+        </InArgument>
+      </Switch.Expression>
+      <Sequence x:Key="UPDATE" DisplayName="DoUpdate" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:Boolean" Default="False" Name="bAcl" />
+        </Sequence.Variables>
+        <mafv:IsACLFile sap2010:WorkflowViewState.IdRef="IsACLFile_1">
+          <mafv:IsACLFile.Parameter>
+            <InArgument x:TypeArguments="mca:ParameterStack">
+              <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+            </InArgument>
+          </mafv:IsACLFile.Parameter>
+          <mafv:IsACLFile.Result>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca1:CSharpReference x:TypeArguments="x:Boolean">bAcl</mca1:CSharpReference>
+            </OutArgument>
+          </mafv:IsACLFile.Result>
+        </mafv:IsACLFile>
+        <If sap2010:WorkflowViewState.IdRef="If_1">
+          <If.Condition>
+            <InArgument x:TypeArguments="x:Boolean">
+              <mca1:CSharpValue x:TypeArguments="x:Boolean">bAcl == true</mca1:CSharpValue>
+            </InArgument>
+          </If.Condition>
+          <If.Then>
+            <Sequence DisplayName="TargetIsAclFile" sap2010:WorkflowViewState.IdRef="Sequence_1" />
+          </If.Then>
+          <If.Else>
+            <Sequence DisplayName="TargetIsPhysicalFile" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Name="aclhash" />
+              </Sequence.Variables>
+              <mafv:GenerateACLHash sap2010:WorkflowViewState.IdRef="GenerateACLHash_1">
+                <mafv:GenerateACLHash.Result>
+                  <OutArgument x:TypeArguments="x:String">
+                    <mca1:CSharpReference x:TypeArguments="x:String">aclhash</mca1:CSharpReference>
+                  </OutArgument>
+                </mafv:GenerateACLHash.Result>
+              </mafv:GenerateACLHash>
+              <mafv:MakeFileMappingInfo sap2010:WorkflowViewState.IdRef="MakeFileMappingInfo_1">
+                <mafv:MakeFileMappingInfo.Aclhash>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">aclhash</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:MakeFileMappingInfo.Aclhash>
+                <mafv:MakeFileMappingInfo.OutputName>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.TARGET</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:MakeFileMappingInfo.OutputName>
+                <mafv:MakeFileMappingInfo.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:MakeFileMappingInfo.Parameter>
+              </mafv:MakeFileMappingInfo>
+              <mafv:MovePhysicalFileFromVirtual>
+                <mafv:MovePhysicalFileFromVirtual.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:MovePhysicalFileFromVirtual.Parameter>
+                <sap2010:WorkflowViewState.IdRef>MovePhysicalFileFromVirtual_1</sap2010:WorkflowViewState.IdRef>
+              </mafv:MovePhysicalFileFromVirtual>
+            </Sequence>
+          </If.Else>
+        </If>
+      </Sequence>
+      <x:Null x:Key="RENAME" />
+      <x:Null x:Key="DELETE" />
+    </Switch>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sFD4DiwEOAgEBPwWJAQ4CAQJCC0LHAQIBA0UHhgESAgEFRzlHQAIBBkkJVBoCASRVCYUBDgIBB0wPTGcCAShRD1FcAgElWA9YXAIBCFwNXGQCASNfDYMBGAIBC2MPaSYCAR5qD3oqAgERew+CATICAQxmFWZkAgEfdxV3bQIBGnIVcosBAgEWbRVtXAIBEn4Vfm0CAQ0=</sads:DebugSymbol.Symbol>
+  </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="440,440" />
+      <sap2010:ViewStateData Id="IsACLFile_1" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="202,102">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="GenerateACLHash_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="MakeFileMappingInfo_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="MovePhysicalFileFromVirtual_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,270">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,428" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,614">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="689,799" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="711,923">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="751,1003" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

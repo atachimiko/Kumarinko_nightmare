@@ -101,6 +101,7 @@
     <Compile Include="Constructions\ThumbnailType.cs" />
     <Compile Include="Constructions\UpdateVirtualStatusEventType.cs" />
     <Compile Include="Definication\ActivityParameterStack.cs" />
+    <Compile Include="Definication\WorkflowParameterStack.cs" />
     <Compile Include="Infrastructure\IApplicationContext.cs" />
     <Compile Include="Infrastructure\IWorkflowContext.cs" />
     <Compile Include="Infrastructure\IThumbnailManager.cs" />

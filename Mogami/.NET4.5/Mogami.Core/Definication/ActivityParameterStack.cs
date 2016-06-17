@@ -16,6 +16,7 @@ namespace Mogami.Core.Definication
 		public const string TARGET = "TARGET";
 		public const string WORKSPACE = "WORKSPACE";
 		public const string WORKSPACE_FILEPATH = "WORKSPACE_FILEPATH";
+		public const string WORKSPACE_FILEINFO = "WORKSPACE_FILEINFO";
 		public const string WORKSPACE_PHYFILEPATH = "WORKSPACE_PHYFILEPATH";
 		public const string WORKSPACE_PHYFILEPATH_OLD = "WORKSPACE_PHYFILEPATH_OLD";
 	}
