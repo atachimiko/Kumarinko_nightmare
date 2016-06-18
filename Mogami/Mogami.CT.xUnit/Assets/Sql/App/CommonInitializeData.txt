@@ -1,0 +1,2 @@
+-- 
+INSERT INTO alWorkspace (Id, Name, PhysicalPath, WorkspacePath) VALUES (1, "UnitTestWorkspace", "C:\Mogami_Physical", "C:\Mogami_filewatcher")

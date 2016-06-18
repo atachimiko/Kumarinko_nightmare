@@ -174,7 +174,7 @@ namespace Mogami.CT.xUnit.Action
 			string sqltext = "";
 			System.Reflection.Assembly assm = System.Reflection.Assembly.GetExecutingAssembly();
 
-			using (var stream = assm.GetManifestResourceStream(string.Format("Mogami.CT.xUnit.Assets.Sql.App.{0}", ImportSqlFileName)))
+			using (var stream = assm.GetManifestResourceStream(string.Format("Mogami.CT.xUnit.Assets.Sql.{0}", ImportSqlFileName)))
 			{
 				using (StreamReader reader = new StreamReader(stream))
 				{

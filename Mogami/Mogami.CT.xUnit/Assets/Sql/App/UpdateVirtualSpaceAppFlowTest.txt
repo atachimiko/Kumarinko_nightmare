@@ -1,0 +1,4 @@
+﻿-- UnitTestData
+
+INSERT INTO alFileMappingInfo (Id, AclHash, MappingFilePath, Workspace_Id) VALUES (1, "Test", "Kinkaku.jpg", 1);
+
