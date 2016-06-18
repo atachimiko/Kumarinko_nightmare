@@ -291,7 +291,7 @@ namespace Mogami.Applus.Manager
 				if (sameDirectoryOperation_Name != "")
 				{
 					sameDirectoryOperation_Name = "";
-					var relativeDirPath = _Workspace.TrimWorekspacePath(sameDirectoryOperation_FullPath);
+					var relativeDirPath = _Workspace.TrimWorekspacePath(sameDirectoryOperation_FullPath, false);
 					using (var dbc = new AppDbContext())
 					{
 						var repo = new FileMappingInfoRepository(dbc);
@@ -644,7 +644,7 @@ namespace Mogami.Applus.Manager
 				}
 
 
-				var oldFullPath_relatived = _Workspace.TrimWorekspacePath(e.OldFullPath);
+				var oldFullPath_relatived = _Workspace.TrimWorekspacePath(e.OldFullPath, false);
 
 				if ((fileInfo.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
 				{
@@ -709,7 +709,7 @@ namespace Mogami.Applus.Manager
 
 					if (watcherChangeType == WatcherChangeTypes.Deleted)
 					{
-						var deletedFileRelativePath = this._Workspace.TrimWorekspacePath(watchTarget.FullName);
+						var deletedFileRelativePath = this._Workspace.TrimWorekspacePath(watchTarget.FullName, false);
 						var r = from u in _UpdatesWatchFiles
 								where u.Value.OldRenameNamePath == deletedFileRelativePath
 								select u;
@@ -750,7 +750,7 @@ namespace Mogami.Applus.Manager
 						}
 
 						// 最後に更新イベントが発生した時のファイルパスを格納しておく(Deleteイベント用)
-						fileUpdateQueueItem.OldRenameNamePath = this._Workspace.TrimWorekspacePath(watchTarget.FullName);
+						fileUpdateQueueItem.OldRenameNamePath = this._Workspace.TrimWorekspacePath(watchTarget.FullName, false);
 					}
 				}
 				else
@@ -763,8 +763,8 @@ namespace Mogami.Applus.Manager
 						// 名前変更後の項目として、新たにキューに再登録を行います。
 						var renamedFullName = watchTarget.FullName.Replace(watchTarget.FullName, beforeRenamedName);
 
-						var oldkey = this._Workspace.TrimWorekspacePath(renamedFullName);
-						key = this._Workspace.TrimWorekspacePath(watchTarget.FullName);
+						var oldkey = this._Workspace.TrimWorekspacePath(renamedFullName, false);
+						key = this._Workspace.TrimWorekspacePath(watchTarget.FullName, false);
 
 						if (_UpdatesWatchFiles.ContainsKey(oldkey))
 						{
@@ -776,11 +776,11 @@ namespace Mogami.Applus.Manager
 					}
 					else if (watcherChangeType == WatcherChangeTypes.Created)
 					{
-						key = this._Workspace.TrimWorekspacePath(watchTarget.FullName);
+						key = this._Workspace.TrimWorekspacePath(watchTarget.FullName, false);
 					}
 					else
 					{
-						key = this._Workspace.TrimWorekspacePath(watchTarget.FullName);
+						key = this._Workspace.TrimWorekspacePath(watchTarget.FullName, false);
 					}
 
 					// 更新通知があったファイルが処理キューに未登録の場合、キューに更新通知情報を新規登録します

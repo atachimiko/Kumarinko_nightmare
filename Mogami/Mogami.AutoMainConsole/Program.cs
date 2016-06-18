@@ -94,7 +94,7 @@ namespace Mogami.AutoMainConsole
 			foreach (string entry in entries)
 			{
 				LOG.InfoFormat("初期データ:{0}", entry);
-				var relativePath = workspace.TrimWorekspacePath(entry);
+				var relativePath = workspace.TrimWorekspacePath(entry, false);
 
 				var mapping = new FileMappingInfo();
 				mapping.Workspace = workspace;

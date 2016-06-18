@@ -58,6 +58,8 @@ namespace Mogami.Activity.Feature.VFS
 				return null;
 			}
 
+			pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, fileInfo);
+
 			using (var file = File.OpenRead(virtualFileFullPath))
 			{
 				return Serializer.Deserialize<AclFileStructure>(file);

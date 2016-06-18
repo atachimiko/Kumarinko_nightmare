@@ -2,10 +2,13 @@
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mab="clr-namespace:Mogami.Activity.Basic;assembly=Mogami.Activity"
  xmlns:mafv="clr-namespace:Mogami.Activity.Feature.VFS;assembly=Mogami.Activity"
+ xmlns:mam="clr-namespace:Mogami.Activity.Model;assembly=Mogami.Activity"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Mogami.Contrib.Akalib;assembly=Mogami.Contrib"
  xmlns:mca1="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:mcc="clr-namespace:Mogami.Core.Constructions;assembly=Mogami.Core"
+ xmlns:mcs="clr-namespace:Mogami.Core.Spp;assembly=Mogami.Core"
+ xmlns:mm="clr-namespace:Mogami.Model;assembly=Mogami.Model"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
@@ -25,6 +28,10 @@
       <x:String>System.Linq</x:String>
       <x:String>System.Text</x:String>
       <x:String>Mogami.Contrib.Akalib</x:String>
+      <x:String>Mogami.Core.Spp</x:String>
+      <x:String>Mogami.Model</x:String>
+      <x:String>Mogami.Core.Model</x:String>
+      <x:String>Mogami.Core.Definication</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -90,7 +97,111 @@
             </InArgument>
           </If.Condition>
           <If.Then>
-            <Sequence DisplayName="TargetIsAclFile" sap2010:WorkflowViewState.IdRef="Sequence_1" />
+            <Sequence DisplayName="TargetIsAclFile" sap2010:WorkflowViewState.IdRef="Sequence_1">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="mcs:AclFileStructure" Name="acldata" />
+                <Variable x:TypeArguments="mm:FileMappingInfo" Name="EntityFileMappingInfo" />
+              </Sequence.Variables>
+              <mafv:ReadACLFile sap2010:WorkflowViewState.IdRef="ReadACLFile_1">
+                <mafv:ReadACLFile.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:ReadACLFile.Parameter>
+                <mafv:ReadACLFile.Result>
+                  <OutArgument x:TypeArguments="mcs:AclFileStructure">
+                    <mca1:CSharpReference x:TypeArguments="mcs:AclFileStructure">acldata</mca1:CSharpReference>
+                  </OutArgument>
+                </mafv:ReadACLFile.Result>
+              </mafv:ReadACLFile>
+              <If sap2010:WorkflowViewState.IdRef="If_2">
+                <If.Condition>
+                  <InArgument x:TypeArguments="x:Boolean">
+                    <mca1:CSharpValue x:TypeArguments="x:Boolean">acldata != null</mca1:CSharpValue>
+                  </InArgument>
+                </If.Condition>
+                <If.Then>
+                  <Sequence DisplayName="ACLファイルに対応する、FileMappingInfoの操作" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="oldFilePath" />
+                    </Sequence.Variables>
+                    <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_1" KeyType="AclHash">
+                      <mam:LoadFileMappingInfoEntity.KeyValue>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">acldata.FindKeyValue("ACLHASH")</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:LoadFileMappingInfoEntity.KeyValue>
+                      <mam:LoadFileMappingInfoEntity.Parameter>
+                        <InArgument x:TypeArguments="mca:ParameterStack">
+                          <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:LoadFileMappingInfoEntity.Parameter>
+                      <mam:LoadFileMappingInfoEntity.ParameterResultKey>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.TARGET</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:LoadFileMappingInfoEntity.ParameterResultKey>
+                      <mam:LoadFileMappingInfoEntity.Result>
+                        <OutArgument x:TypeArguments="mm:FileMappingInfo">
+                          <mca1:CSharpReference x:TypeArguments="mm:FileMappingInfo">EntityFileMappingInfo</mca1:CSharpReference>
+                        </OutArgument>
+                      </mam:LoadFileMappingInfoEntity.Result>
+                    </mam:LoadFileMappingInfoEntity>
+                    <If sap2010:WorkflowViewState.IdRef="If_3">
+                      <If.Condition>
+                        <InArgument x:TypeArguments="x:Boolean">
+                          <mca1:CSharpValue x:TypeArguments="x:Boolean">EntityFileMappingInfo!=null</mca1:CSharpValue>
+                        </InArgument>
+                      </If.Condition>
+                      <If.Then>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
+                          <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">
+                                <mca1:CSharpReference x:TypeArguments="x:String">oldFilePath</mca1:CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">
+                                <mca1:CSharpValue x:TypeArguments="x:String">EntityFileMappingInfo.MappingFilePath</mca1:CSharpValue>
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">
+                                <mca1:CSharpReference x:TypeArguments="x:String">EntityFileMappingInfo.MappingFilePath</mca1:CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">
+                                <mca1:CSharpValue x:TypeArguments="x:String">ParameterStack.GetValue&lt;Workspace&gt;(Mogami.Core.Definication.ActivityParameterStack.WORKSPACE,false).TrimWorekspacePath(ParameterStack.GetValue&lt;System.IO.FileSystemInfo&gt;(Mogami.Core.Definication.ActivityParameterStack.WORKSPACE_FILEINFO,false).FullName, true)</mca1:CSharpValue>
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <mafv:MovePhysicalFile sap2010:WorkflowViewState.IdRef="MovePhysicalFile_1">
+                            <mafv:MovePhysicalFile.Parameter>
+                              <InArgument x:TypeArguments="mca:ParameterStack">
+                                <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                              </InArgument>
+                            </mafv:MovePhysicalFile.Parameter>
+                          </mafv:MovePhysicalFile>
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <mafv:RemoveACLFile sap2010:WorkflowViewState.IdRef="RemoveACLFile_1">
+                          <mafv:RemoveACLFile.Parameter>
+                            <InArgument x:TypeArguments="mca:ParameterStack">
+                              <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                            </InArgument>
+                          </mafv:RemoveACLFile.Parameter>
+                        </mafv:RemoveACLFile>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </If.Then>
+              </If>
+            </Sequence>
           </If.Then>
           <If.Else>
             <Sequence DisplayName="TargetIsPhysicalFile" sap2010:WorkflowViewState.IdRef="Sequence_2">
@@ -121,7 +232,50 @@
                   </InArgument>
                 </mafv:MakeFileMappingInfo.Parameter>
               </mafv:MakeFileMappingInfo>
-              <mab:AssaignParameterStackValue>
+              <mab:AssaignParameterStackValue sap2010:WorkflowViewState.IdRef="AssaignParameterStackValue_1">
+                <mab:AssaignParameterStackValue.Key>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.MOVEPHYSICALFILEFROMVIRTUAL_CLEAREDFLAG</mca1:CSharpValue>
+                  </InArgument>
+                </mab:AssaignParameterStackValue.Key>
+                <mab:AssaignParameterStackValue.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mab:AssaignParameterStackValue.Parameter>
+                <mab:AssaignParameterStackValue.Value>
+                  <InArgument x:TypeArguments="x:Object">
+                    <mca1:CSharpValue x:TypeArguments="x:Object">false</mca1:CSharpValue>
+                  </InArgument>
+                </mab:AssaignParameterStackValue.Value>
+              </mab:AssaignParameterStackValue>
+              <mafv:MovePhysicalFileFromVirtual sap2010:WorkflowViewState.IdRef="MovePhysicalFileFromVirtual_1">
+                <mafv:MovePhysicalFileFromVirtual.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:MovePhysicalFileFromVirtual.Parameter>
+              </mafv:MovePhysicalFileFromVirtual>
+              <mab:UpdateOrCreateEntity Entity="{x:Null}" sap2010:WorkflowViewState.IdRef="UpdateOrCreateEntity_1">
+                <mab:UpdateOrCreateEntity.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mab:UpdateOrCreateEntity.Parameter>
+                <mab:UpdateOrCreateEntity.ParameterKey>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.TARGET</mca1:CSharpValue>
+                  </InArgument>
+                </mab:UpdateOrCreateEntity.ParameterKey>
+              </mab:UpdateOrCreateEntity>
+              <mafv:CreateACLFile sap2010:WorkflowViewState.IdRef="CreateACLFile_1">
+                <mafv:CreateACLFile.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:CreateACLFile.Parameter>
+              </mafv:CreateACLFile>
+              <mab:AssaignParameterStackValue sap2010:WorkflowViewState.IdRef="AssaignParameterStackValue_2">
                 <mab:AssaignParameterStackValue.Key>
                   <InArgument x:TypeArguments="x:String">
                     <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.MOVEPHYSICALFILEFROMVIRTUAL_CLEAREDFLAG</mca1:CSharpValue>
@@ -137,9 +291,8 @@
                     <mca1:CSharpValue x:TypeArguments="x:Object">true</mca1:CSharpValue>
                   </InArgument>
                 </mab:AssaignParameterStackValue.Value>
-                <sap2010:WorkflowViewState.IdRef>AssaignParameterStackValue_1</sap2010:WorkflowViewState.IdRef>
               </mab:AssaignParameterStackValue>
-              <mafv:MovePhysicalFileFromVirtual sap2010:WorkflowViewState.IdRef="MovePhysicalFileFromVirtual_1">
+              <mafv:MovePhysicalFileFromVirtual sap2010:WorkflowViewState.IdRef="MovePhysicalFileFromVirtual_2">
                 <mafv:MovePhysicalFileFromVirtual.Parameter>
                   <InArgument x:TypeArguments="mca:ParameterStack">
                     <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
@@ -150,15 +303,191 @@
           </If.Else>
         </If>
       </Sequence>
-      <x:Null x:Key="RENAME" />
-      <x:Null x:Key="DELETE" />
+      <Sequence x:Key="RENAME" DisplayName="DoRename" sap2010:WorkflowViewState.IdRef="Sequence_7">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:Boolean" Default="False" Name="bAcl" />
+          <Variable x:TypeArguments="mcs:AclFileStructure" Name="acldata" />
+        </Sequence.Variables>
+        <mafv:IsACLFile sap2010:WorkflowViewState.IdRef="IsACLFile_2">
+          <mafv:IsACLFile.Parameter>
+            <InArgument x:TypeArguments="mca:ParameterStack">
+              <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+            </InArgument>
+          </mafv:IsACLFile.Parameter>
+          <mafv:IsACLFile.Result>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca1:CSharpReference x:TypeArguments="x:Boolean">bAcl</mca1:CSharpReference>
+            </OutArgument>
+          </mafv:IsACLFile.Result>
+        </mafv:IsACLFile>
+        <If sap2010:WorkflowViewState.IdRef="If_4">
+          <If.Condition>
+            <InArgument x:TypeArguments="x:Boolean">
+              <mca1:CSharpValue x:TypeArguments="x:Boolean">bAcl == true</mca1:CSharpValue>
+            </InArgument>
+          </If.Condition>
+          <If.Then>
+            <Sequence DisplayName="ファイルがACLファイルの場合の処理" sap2010:WorkflowViewState.IdRef="Sequence_8">
+              <mafv:ReadACLFile sap2010:WorkflowViewState.IdRef="ReadACLFile_2">
+                <mafv:ReadACLFile.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:ReadACLFile.Parameter>
+                <mafv:ReadACLFile.Result>
+                  <OutArgument x:TypeArguments="mcs:AclFileStructure">
+                    <mca1:CSharpReference x:TypeArguments="mcs:AclFileStructure">acldata</mca1:CSharpReference>
+                  </OutArgument>
+                </mafv:ReadACLFile.Result>
+              </mafv:ReadACLFile>
+              <If sap2010:WorkflowViewState.IdRef="If_5">
+                <If.Condition>
+                  <InArgument x:TypeArguments="x:Boolean">
+                    <mca1:CSharpValue x:TypeArguments="x:Boolean">acldata != null</mca1:CSharpValue>
+                  </InArgument>
+                </If.Condition>
+                <If.Then>
+                  <Sequence DisplayName="ACLファイルに対応する、FileMappingInfoの操作" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="oldFilePath" />
+                      <Variable x:TypeArguments="mm:FileMappingInfo" Name="EntityFileMappingInfo" />
+                      <Variable x:TypeArguments="x:String" Name="oldFilePathFromMappingInfo" />
+                    </Sequence.Variables>
+                    <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_2" KeyType="AclHash">
+                      <mam:LoadFileMappingInfoEntity.KeyValue>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">acldata.FindKeyValue("ACLHASH")</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:LoadFileMappingInfoEntity.KeyValue>
+                      <mam:LoadFileMappingInfoEntity.Parameter>
+                        <InArgument x:TypeArguments="mca:ParameterStack">
+                          <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:LoadFileMappingInfoEntity.Parameter>
+                      <mam:LoadFileMappingInfoEntity.ParameterResultKey>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.TARGET</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:LoadFileMappingInfoEntity.ParameterResultKey>
+                      <mam:LoadFileMappingInfoEntity.Result>
+                        <OutArgument x:TypeArguments="mm:FileMappingInfo">
+                          <mca1:CSharpReference x:TypeArguments="mm:FileMappingInfo">EntityFileMappingInfo</mca1:CSharpReference>
+                        </OutArgument>
+                      </mam:LoadFileMappingInfoEntity.Result>
+                    </mam:LoadFileMappingInfoEntity>
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">
+                          <mca1:CSharpReference x:TypeArguments="x:String">oldFilePathFromMappingInfo</mca1:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">EntityFileMappingInfo.MappingFilePath</mca1:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">
+                          <mca1:CSharpReference x:TypeArguments="x:String">EntityFileMappingInfo.MappingFilePath</mca1:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">ParameterStack.GetValue&lt;Workspace&gt;(Mogami.Core.Definication.ActivityParameterStack.WORKSPACE, false).TrimWorekspacePath(ParameterStack.GetValue&lt;System.IO.FileSystemInfo&gt;(Mogami.Core.Definication.ActivityParameterStack.WORKSPACE_FILEINFO, false).FullName, true)</mca1:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <mafv:MovePhysicalFile sap2010:WorkflowViewState.IdRef="MovePhysicalFile_2">
+                      <mafv:MovePhysicalFile.Parameter>
+                        <InArgument x:TypeArguments="mca:ParameterStack">
+                          <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                        </InArgument>
+                      </mafv:MovePhysicalFile.Parameter>
+                    </mafv:MovePhysicalFile>
+                  </Sequence>
+                </If.Then>
+              </If>
+            </Sequence>
+          </If.Then>
+        </If>
+      </Sequence>
+      <Sequence x:Key="DELETE" DisplayName="DoDelete" sap2010:WorkflowViewState.IdRef="Sequence_10">
+        <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_3" KeyType="AclHash">
+          <mam:LoadFileMappingInfoEntity.KeyValue>
+            <InArgument x:TypeArguments="x:String">
+              <mca1:CSharpValue x:TypeArguments="x:String">ParameterStack.GetValue&lt;string&gt;("WF_DeleteAclHash",true)</mca1:CSharpValue>
+            </InArgument>
+          </mam:LoadFileMappingInfoEntity.KeyValue>
+          <mam:LoadFileMappingInfoEntity.Parameter>
+            <InArgument x:TypeArguments="mca:ParameterStack">
+              <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+            </InArgument>
+          </mam:LoadFileMappingInfoEntity.Parameter>
+          <mam:LoadFileMappingInfoEntity.ParameterResultKey>
+            <InArgument x:TypeArguments="x:String">
+              <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.TARGET</mca1:CSharpValue>
+            </InArgument>
+          </mam:LoadFileMappingInfoEntity.ParameterResultKey>
+        </mam:LoadFileMappingInfoEntity>
+        <If sap2010:WorkflowViewState.IdRef="If_6">
+          <If.Condition>
+            <InArgument x:TypeArguments="x:Boolean">
+              <mca1:CSharpValue x:TypeArguments="x:Boolean">ParameterStack.GetValue(ActivityParameterStack.TARGET,true) != null</mca1:CSharpValue>
+            </InArgument>
+          </If.Condition>
+          <If.Then>
+            <Sequence DisplayName="物理ファイルとエンティティの削除" sap2010:WorkflowViewState.IdRef="Sequence_11">
+              <mafv:RemovePhysicalFile sap2010:WorkflowViewState.IdRef="RemovePhysicalFile_1">
+                <mafv:RemovePhysicalFile.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafv:RemovePhysicalFile.Parameter>
+              </mafv:RemovePhysicalFile>
+              <mam:DeleteFileMappingInfoEntity Entity="{x:Null}" sap2010:WorkflowViewState.IdRef="DeleteFileMappingInfoEntity_1">
+                <mam:DeleteFileMappingInfoEntity.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mam:DeleteFileMappingInfoEntity.Parameter>
+                <mam:DeleteFileMappingInfoEntity.ParameterTargetKey>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.TARGET</mca1:CSharpValue>
+                  </InArgument>
+                </mam:DeleteFileMappingInfoEntity.ParameterTargetKey>
+              </mam:DeleteFileMappingInfoEntity>
+            </Sequence>
+          </If.Then>
+        </If>
+      </Sequence>
     </Switch>
-    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sGD8DnQEOAgEBQAWbAQ4CAQJDC0PHAQIBA0YHmAESAgEFSDlIQAIBBkoJVRoCATFWCZcBDgIBB00PTWcCATVSD1JcAgEyWQ9ZXAIBCF0NXWQCATBgDZUBGAIBC2QPaiYCAStrD3sqAgEefA+NATACARGOAQ+UATICAQxnFWdkAgEseBV4bQIBJ3MVc4sBAgEjbhVuXAIBH4kBFYkBWQIBGoQBFYQBbQIBFn8Vf6wBAgESkQEVkQFtAgEN</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sZkYD0wMOAgEBRwXRAw4CAQJKC0rHAQIBA00HsQISAgF+sgIHnwMSAgEaoAMH0AMSAgEFTzlPQAIBf1EJXBoDAaYCXQmwAg4DAYABtAI5tAJAAgEbtwIJwgIaAgF1wwIJngMOAgEcoQMJsQMpAgESsgMJzwMOAgEGVA9UZwMBqgJZD1lcAwGnAmAPYFwDAYEBZA3MARgDAckBzwENrgIYAwGEAboCD7oCZwIBer8CD78CXAIBdsYCD8YCXAIBHcoCDZwDGAIBIakDD6kDZwIBGKQDD6QDjQECARahA26hA3cCARWuAw+uA2wCARO1Aw+1A5MBAgEHuQMNzQMYAgEJaQ90IgMBmwJ1D8sBFAMBygHTAQ/ZASYDAcQB2gEP6gEqAwG3AesBD/sBMAMBqgH8AQ+CAjIDAaUBgwIPjgIqAwGcAY8CD5UCJAMBlwGWAg+mAjADAYoBpwIPrQIyAwGFAcsCD9YCIgIBbNcCD5sDFAIBIroDD8ADKQIBD8EDD8wDMQIBCmwVbG0DAaECcRVxcAMBnAJ4FXhlAwHLAXwTyQEeAwHQAdYBFdYBZAMBxQHnARXnAW0DAcAB4gEV4gGLAQMBvAHdARXdAVwDAbgB+AEV+AFaAwGzAfMBFfMBbQMBrwHuARXuAawBAwGrAf8BFf8BbQMBpgGLAhWLAosBAwGhAYYCFYYCbQMBnQGSAhWSAm0DAZgBowIVowJZAwGTAZ4CFZ4CbQMBjwGZAhWZAqwBAwGLAaoCFaoCbQMBhgHOAhXOAm0CAXHTAhXTAnACAW3aAhXaAmUCASPeAhOZAx4CASe9AxW9A20CARDEAxXEA20CAQ3JAxXJA3ICAQuAARWVATUDAYEClgEVyAEaAwHRAeQCFfkCNQIBTvoCFYUDHgIBP4YDFZEDHgIBMJIDFZgDLQIBKIgBG4gBcwMBlQKDARuDAXoDAY8CkgEbkgGCAQMBiQKAAXqAAYMBAwGIAo0BG40BkQEDAYICmQEbmQF3AwHSAZ0BGb0BJAMB3wHAARnGAS4DAdgB7AIb7AJzAgFl5wIb5wJ6AgFe9gIb9gKCAQIBV+QCeuQCgwECAVbxAhvxApEBAgFPggMbggOAAQIBR/0CG/0CfQIBQI4DG44D6wICATiJAxuJA4gBAgExlQMblQNzAgEpngEbqQEkAwH0AaoBG7UBJAMB5wG2ARu8ATMDAeABwwEfwwF3AwHZAaYBIaYBhgEDAfsBoQEhoQF0AwH1AbIBIbIB7wIDAe4BrQEhrQGOAQMB6AG5ASG5AXkDAeEB</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="IsACLFile_1" sap:VirtualizedContainerService.HintSize="464,22" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="202,102">
+      <sap2010:ViewStateData Id="IsACLFile_1" sap:VirtualizedContainerService.HintSize="960,22" />
+      <sap2010:ViewStateData Id="ReadACLFile_1" sap:VirtualizedContainerService.HintSize="691,22" />
+      <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_1" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="200,264">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="RemoveACLFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,422" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="486,608">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="691,766" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="713,952">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -169,15 +498,64 @@
       <sap2010:ViewStateData Id="MakeFileMappingInfo_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="AssaignParameterStackValue_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MovePhysicalFileFromVirtual_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,332">
+      <sap2010:ViewStateData Id="UpdateOrCreateEntity_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="CreateACLFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="AssaignParameterStackValue_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,578">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,490" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,676">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="960,1110" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,400">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="IsACLFile_2" sap:VirtualizedContainerService.HintSize="698,22" />
+      <sap2010:ViewStateData Id="ReadACLFile_2" sap:VirtualizedContainerService.HintSize="471,22" />
+      <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_2" sap:VirtualizedContainerService.HintSize="244,22" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="244,64" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="244,64" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="266,414">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="471,572" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="493,758">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="698,916" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="486,400">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_3" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="RemovePhysicalFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="DeleteFileMappingInfoEntity_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="222,208">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="464,366" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="486,552">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>

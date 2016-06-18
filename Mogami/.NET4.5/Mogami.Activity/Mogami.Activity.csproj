@@ -94,6 +94,8 @@
     <Compile Include="Feature\VFS\ReadACLFile.cs" />
     <Compile Include="Feature\VFS\RemoveACLFile.cs" />
     <Compile Include="Feature\VFS\RemovePhysicalFile.cs" />
+    <Compile Include="Model\DeleteFileMappingInfoEntity.cs" />
+    <Compile Include="Model\LoadFileMappingInfoEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

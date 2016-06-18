@@ -48,7 +48,7 @@ namespace Mogami.Core.Model
 		/// <param name="path"></param>
 		/// <param name="removeAclExtension">ACLファイル拡張子を除去する</param>
 		/// <returns></returns>
-		public static string TrimWorekspacePath(this IWorkspace @this, string path, bool removeAclExtension = false)
+		public static string TrimWorekspacePath(this IWorkspace @this, string path, bool removeAclExtension)
 		{
 			var escaped = Regex.Escape(@this.WorkspacePath);
 			Regex re = new Regex("^" + escaped + @"[\\]*", RegexOptions.Singleline);
