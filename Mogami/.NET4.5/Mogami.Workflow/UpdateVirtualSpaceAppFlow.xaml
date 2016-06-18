@@ -1,5 +1,6 @@
 ﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Mogami.Workflow.UpdateVirtualSpaceAppFlow"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mab="clr-namespace:Mogami.Activity.Basic;assembly=Mogami.Activity"
  xmlns:mafv="clr-namespace:Mogami.Activity.Feature.VFS;assembly=Mogami.Activity"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Mogami.Contrib.Akalib;assembly=Mogami.Contrib"
@@ -120,13 +121,30 @@
                   </InArgument>
                 </mafv:MakeFileMappingInfo.Parameter>
               </mafv:MakeFileMappingInfo>
-              <mafv:MovePhysicalFileFromVirtual>
+              <mab:AssaignParameterStackValue>
+                <mab:AssaignParameterStackValue.Key>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">Mogami.Core.Definication.ActivityParameterStack.MOVEPHYSICALFILEFROMVIRTUAL_CLEAREDFLAG</mca1:CSharpValue>
+                  </InArgument>
+                </mab:AssaignParameterStackValue.Key>
+                <mab:AssaignParameterStackValue.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mab:AssaignParameterStackValue.Parameter>
+                <mab:AssaignParameterStackValue.Value>
+                  <InArgument x:TypeArguments="x:Object">
+                    <mca1:CSharpValue x:TypeArguments="x:Object">true</mca1:CSharpValue>
+                  </InArgument>
+                </mab:AssaignParameterStackValue.Value>
+                <sap2010:WorkflowViewState.IdRef>AssaignParameterStackValue_1</sap2010:WorkflowViewState.IdRef>
+              </mab:AssaignParameterStackValue>
+              <mafv:MovePhysicalFileFromVirtual sap2010:WorkflowViewState.IdRef="MovePhysicalFileFromVirtual_1">
                 <mafv:MovePhysicalFileFromVirtual.Parameter>
                   <InArgument x:TypeArguments="mca:ParameterStack">
                     <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
                   </InArgument>
                 </mafv:MovePhysicalFileFromVirtual.Parameter>
-                <sap2010:WorkflowViewState.IdRef>MovePhysicalFileFromVirtual_1</sap2010:WorkflowViewState.IdRef>
               </mafv:MovePhysicalFileFromVirtual>
             </Sequence>
           </If.Else>
@@ -135,7 +153,7 @@
       <x:Null x:Key="RENAME" />
       <x:Null x:Key="DELETE" />
     </Switch>
-    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sFD4DiwEOAgEBPwWJAQ4CAQJCC0LHAQIBA0UHhgESAgEFRzlHQAIBBkkJVBoCASRVCYUBDgIBB0wPTGcCAShRD1FcAgElWA9YXAIBCFwNXGQCASNfDYMBGAIBC2MPaSYCAR5qD3oqAgERew+CATICAQxmFWZkAgEfdxV3bQIBGnIVcosBAgEWbRVtXAIBEn4Vfm0CAQ0=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sGD8DnQEOAgEBQAWbAQ4CAQJDC0PHAQIBA0YHmAESAgEFSDlIQAIBBkoJVRoCATFWCZcBDgIBB00PTWcCATVSD1JcAgEyWQ9ZXAIBCF0NXWQCATBgDZUBGAIBC2QPaiYCAStrD3sqAgEefA+NATACARGOAQ+UATICAQxnFWdkAgEseBV4bQIBJ3MVc4sBAgEjbhVuXAIBH4kBFYkBWQIBGoQBFYQBbQIBFn8Vf6wBAgESkQEVkQFtAgEN</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -149,16 +167,17 @@
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="GenerateACLHash_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MakeFileMappingInfo_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="AssaignParameterStackValue_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MovePhysicalFileFromVirtual_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,270">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,332">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,428" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,614">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,490" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,676">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
