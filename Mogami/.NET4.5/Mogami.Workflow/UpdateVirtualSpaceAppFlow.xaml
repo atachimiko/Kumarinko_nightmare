@@ -122,9 +122,6 @@
                 </If.Condition>
                 <If.Then>
                   <Sequence DisplayName="ACLファイルに対応する、FileMappingInfoの操作" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                    <Sequence.Variables>
-                      <Variable x:TypeArguments="x:String" Name="oldFilePath" />
-                    </Sequence.Variables>
                     <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_1" KeyType="AclHash">
                       <mam:LoadFileMappingInfoEntity.KeyValue>
                         <InArgument x:TypeArguments="x:String">
@@ -155,18 +152,23 @@
                       </If.Condition>
                       <If.Then>
                         <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
-                          <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
-                            <Assign.To>
-                              <OutArgument x:TypeArguments="x:String">
-                                <mca1:CSharpReference x:TypeArguments="x:String">oldFilePath</mca1:CSharpReference>
-                              </OutArgument>
-                            </Assign.To>
-                            <Assign.Value>
+                          <mab:AssaignParameterStackValue sap2010:WorkflowViewState.IdRef="AssaignParameterStackValue_4">
+                            <mab:AssaignParameterStackValue.Key>
                               <InArgument x:TypeArguments="x:String">
-                                <mca1:CSharpValue x:TypeArguments="x:String">EntityFileMappingInfo.MappingFilePath</mca1:CSharpValue>
+                                <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.WORKSPACE_PHYFILEPATH_OLD</mca1:CSharpValue>
                               </InArgument>
-                            </Assign.Value>
-                          </Assign>
+                            </mab:AssaignParameterStackValue.Key>
+                            <mab:AssaignParameterStackValue.Parameter>
+                              <InArgument x:TypeArguments="mca:ParameterStack">
+                                <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                              </InArgument>
+                            </mab:AssaignParameterStackValue.Parameter>
+                            <mab:AssaignParameterStackValue.Value>
+                              <InArgument x:TypeArguments="x:Object">
+                                <mca1:CSharpValue x:TypeArguments="x:Object">EntityFileMappingInfo.MappingFilePath</mca1:CSharpValue>
+                              </InArgument>
+                            </mab:AssaignParameterStackValue.Value>
+                          </mab:AssaignParameterStackValue>
                           <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">
@@ -349,9 +351,7 @@
                 <If.Then>
                   <Sequence DisplayName="ACLファイルに対応する、FileMappingInfoの操作" sap2010:WorkflowViewState.IdRef="Sequence_9">
                     <Sequence.Variables>
-                      <Variable x:TypeArguments="x:String" Name="oldFilePath" />
                       <Variable x:TypeArguments="mm:FileMappingInfo" Name="EntityFileMappingInfo" />
-                      <Variable x:TypeArguments="x:String" Name="oldFilePathFromMappingInfo" />
                     </Sequence.Variables>
                     <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_2" KeyType="AclHash">
                       <mam:LoadFileMappingInfoEntity.KeyValue>
@@ -375,18 +375,23 @@
                         </OutArgument>
                       </mam:LoadFileMappingInfoEntity.Result>
                     </mam:LoadFileMappingInfoEntity>
-                    <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
-                      <Assign.To>
-                        <OutArgument x:TypeArguments="x:String">
-                          <mca1:CSharpReference x:TypeArguments="x:String">oldFilePathFromMappingInfo</mca1:CSharpReference>
-                        </OutArgument>
-                      </Assign.To>
-                      <Assign.Value>
+                    <mab:AssaignParameterStackValue sap2010:WorkflowViewState.IdRef="AssaignParameterStackValue_3">
+                      <mab:AssaignParameterStackValue.Key>
                         <InArgument x:TypeArguments="x:String">
-                          <mca1:CSharpValue x:TypeArguments="x:String">EntityFileMappingInfo.MappingFilePath</mca1:CSharpValue>
+                          <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.WORKSPACE_PHYFILEPATH_OLD</mca1:CSharpValue>
                         </InArgument>
-                      </Assign.Value>
-                    </Assign>
+                      </mab:AssaignParameterStackValue.Key>
+                      <mab:AssaignParameterStackValue.Parameter>
+                        <InArgument x:TypeArguments="mca:ParameterStack">
+                          <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                        </InArgument>
+                      </mab:AssaignParameterStackValue.Parameter>
+                      <mab:AssaignParameterStackValue.Value>
+                        <InArgument x:TypeArguments="x:Object">
+                          <mca1:CSharpValue x:TypeArguments="x:Object">EntityFileMappingInfo.MappingFilePath</mca1:CSharpValue>
+                        </InArgument>
+                      </mab:AssaignParameterStackValue.Value>
+                    </mab:AssaignParameterStackValue>
                     <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:String">
@@ -463,14 +468,17 @@
         </If>
       </Sequence>
     </Switch>
-    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sZkYD0wMOAgEBRwXRAw4CAQJKC0rHAQIBA00HsQISAgF+sgIHnwMSAgEaoAMH0AMSAgEFTzlPQAIBf1EJXBoDAaYCXQmwAg4DAYABtAI5tAJAAgEbtwIJwgIaAgF1wwIJngMOAgEcoQMJsQMpAgESsgMJzwMOAgEGVA9UZwMBqgJZD1lcAwGnAmAPYFwDAYEBZA3MARgDAckBzwENrgIYAwGEAboCD7oCZwIBer8CD78CXAIBdsYCD8YCXAIBHcoCDZwDGAIBIakDD6kDZwIBGKQDD6QDjQECARahA26hA3cCARWuAw+uA2wCARO1Aw+1A5MBAgEHuQMNzQMYAgEJaQ90IgMBmwJ1D8sBFAMBygHTAQ/ZASYDAcQB2gEP6gEqAwG3AesBD/sBMAMBqgH8AQ+CAjIDAaUBgwIPjgIqAwGcAY8CD5UCJAMBlwGWAg+mAjADAYoBpwIPrQIyAwGFAcsCD9YCIgIBbNcCD5sDFAIBIroDD8ADKQIBD8EDD8wDMQIBCmwVbG0DAaECcRVxcAMBnAJ4FXhlAwHLAXwTyQEeAwHQAdYBFdYBZAMBxQHnARXnAW0DAcAB4gEV4gGLAQMBvAHdARXdAVwDAbgB+AEV+AFaAwGzAfMBFfMBbQMBrwHuARXuAawBAwGrAf8BFf8BbQMBpgGLAhWLAosBAwGhAYYCFYYCbQMBnQGSAhWSAm0DAZgBowIVowJZAwGTAZ4CFZ4CbQMBjwGZAhWZAqwBAwGLAaoCFaoCbQMBhgHOAhXOAm0CAXHTAhXTAnACAW3aAhXaAmUCASPeAhOZAx4CASe9AxW9A20CARDEAxXEA20CAQ3JAxXJA3ICAQuAARWVATUDAYEClgEVyAEaAwHRAeQCFfkCNQIBTvoCFYUDHgIBP4YDFZEDHgIBMJIDFZgDLQIBKIgBG4gBcwMBlQKDARuDAXoDAY8CkgEbkgGCAQMBiQKAAXqAAYMBAwGIAo0BG40BkQEDAYICmQEbmQF3AwHSAZ0BGb0BJAMB3wHAARnGAS4DAdgB7AIb7AJzAgFl5wIb5wJ6AgFe9gIb9gKCAQIBV+QCeuQCgwECAVbxAhvxApEBAgFPggMbggOAAQIBR/0CG/0CfQIBQI4DG44D6wICATiJAxuJA4gBAgExlQMblQNzAgEpngEbqQEkAwH0AaoBG7UBJAMB5wG2ARu8ATMDAeABwwEfwwF3AwHZAaYBIaYBhgEDAfsBoQEhoQF0AwH1AbIBIbIB7wIDAe4BrQEhrQGOAQMB6AG5ASG5AXkDAeEB</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1saEYD2AMOAgEBRwXWAw4CAQJKC0rHAQIBA00HswISAgFxtAIHpAMSAgEapQMH1QMSAgEFTzlPQAIBclEJXBoDAZMCXQmyAg4CAXO2Ajm2AkACARu5AgnEAhoCAWjFAgmjAw4CARymAwm2AykCARK3AwnUAw4CAQZUD1RnAwGXAlkPWVwDAZQCYA9gXAIBdGQNzgEYAwG8AdEBDbACGAIBd7wCD7wCZwIBbcECD8ECXAIBacgCD8gCXAIBHcwCDaEDGAIBIa4DD64DZwIBGKkDD6kDjQECARamA26mA3cCARWzAw+zA2wCARO6Aw+6A5MBAgEHvgMN0gMYAgEJaQ90IgMBiAJ1D80BFAMBvQHVAQ/bASYDAbcB3AEP7AEqAwGqAe0BD/0BMAMBnQH+AQ+EAjIDAZgBhQIPkAIqAwGPAZECD5cCJAMBigGYAg+oAjACAX2pAg+vAjICAXjNAg/YAiICAV/ZAg+gAxQCASK/Aw/FAykCAQ/GAw/RAzECAQpsFWxtAwGOAnEVcXADAYkCeBV4ZQMBvgF8E8sBHgMBwwHYARXYAWQDAbgB6QEV6QFtAwGzAeQBFeQBiwEDAa8B3wEV3wFcAwGrAfoBFfoBWgMBpgH1ARX1AW0DAaIB8AEV8AGsAQMBngGBAhWBAm0DAZkBjQIVjQKLAQMBlAGIAhWIAm0DAZABlAIVlAJtAwGLAaUCFaUCWQMBhgGgAhWgAm0DAYIBmwIVmwKsAQIBfqwCFawCbQIBedACFdACbQIBZNUCFdUCcAIBYNwCFdwCZQIBI+ACE54DHgIBJ8IDFcIDbQIBEMkDFckDbQIBDc4DFc4DcgIBC30VkgE1AwHyAZMBFcoBGgMBxAHkAhX5AjUCAUn6AhWKAzYCATmLAxWWAx4CAS6XAxWdAy0CASiFARuFAXMDAYMCgAEbgAF6AwH+AY8BG48BggEDAfkBfXp9gwEDAfgBigEbigGRAQMB8wGWARuWAXcDAcUBmgEZvwEkAwHQAcIBGcgBLgMBygHsAhvsAnMCAVrnAhvnAnoCAVX2Ahv2AoIBAgFQ5AJ65AKDAQIBT/ECG/ECkQECAUqHAxuHA4ABAgFEggMbggNzAgE//QIb/QKLAQIBOpMDG5MD6wICATSOAxuOA4gBAgEvmgMbmgNzAgEpmwEbqwE8AwHiAawBG7cBJAMB1wG4ARu+ATMDAdEBxQEfxQF3AwHLAagBIagBhgEDAe0BowEhowF5AwHoAZ4BIZ4BkQEDAeMBtAEhtAHvAgMB3QGvASGvAY4BAwHYAbsBIbsBeQMB0gE=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="IsACLFile_1" sap:VirtualizedContainerService.HintSize="960,22" />
-      <sap2010:ViewStateData Id="ReadACLFile_1" sap:VirtualizedContainerService.HintSize="691,22" />
-      <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_1" sap:VirtualizedContainerService.HintSize="464,22" />
-      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="200,264">
+      <sap2010:ViewStateData Id="IsACLFile_1" sap:VirtualizedContainerService.HintSize="987,22" />
+      <sap2010:ViewStateData Id="ReadACLFile_1" sap:VirtualizedContainerService.HintSize="718,22" />
+      <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_1" sap:VirtualizedContainerService.HintSize="491,22" />
+      <sap2010:ViewStateData Id="AssaignParameterStackValue_4" sap:VirtualizedContainerService.HintSize="244,22" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="244,64" />
+      <sap2010:ViewStateData Id="MovePhysicalFile_1" sap:VirtualizedContainerService.HintSize="244,22" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="266,312">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -478,16 +486,16 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="RemoveACLFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,422" />
-      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="486,608">
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="491,470" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="513,656">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="691,766" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="713,952">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="718,814" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="740,1000">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -501,15 +509,16 @@
       <sap2010:ViewStateData Id="UpdateOrCreateEntity_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="CreateACLFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="AssaignParameterStackValue_2" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,578">
+      <sap2010:ViewStateData Id="MovePhysicalFileFromVirtual_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,580">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="960,1110" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,400">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="987,1158" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="1009,1344">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -519,25 +528,26 @@
       <sap2010:ViewStateData Id="IsACLFile_2" sap:VirtualizedContainerService.HintSize="698,22" />
       <sap2010:ViewStateData Id="ReadACLFile_2" sap:VirtualizedContainerService.HintSize="471,22" />
       <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_2" sap:VirtualizedContainerService.HintSize="244,22" />
-      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="244,64" />
+      <sap2010:ViewStateData Id="AssaignParameterStackValue_3" sap:VirtualizedContainerService.HintSize="244,22" />
       <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="244,64" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="266,414">
+      <sap2010:ViewStateData Id="MovePhysicalFile_2" sap:VirtualizedContainerService.HintSize="244,23" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="266,375">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="471,572" />
-      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="493,758">
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="471,533" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="493,719">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="698,916" />
-      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="486,400">
+      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="698,877" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="720,1019">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -555,22 +565,22 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="464,366" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="486,552">
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="486,508">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="689,799" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="711,923">
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="1029,1591" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="1051,1715">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="751,1003" />
+      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="1091,1795" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

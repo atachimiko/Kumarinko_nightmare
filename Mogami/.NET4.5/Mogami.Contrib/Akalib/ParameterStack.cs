@@ -91,10 +91,16 @@ namespace Mogami.Contrib.Akalib
 				}
 			}
 
-			if (string.IsNullOrEmpty(retobj.AliasKey))
-				return retobj.Value;
+			if (retobj != null)
+			{
+				if (string.IsNullOrEmpty(retobj.AliasKey))
+					return retobj.Value;
 
-			return GetValue(retobj.AliasKey, hierarchy);
+				return GetValue(retobj.AliasKey, hierarchy);
+			}else
+			{
+				throw new ApplicationException(string.Format("キー{0}が、ValueStackに見つかりません。", key));
+			}
 		}
 
 		/// <summary>
@@ -131,7 +137,10 @@ namespace Mogami.Contrib.Akalib
 		/// <param name="value">値</param>
 		public void SetValue(string key, object value)
 		{
-			this._KeyValueStack.Peek()[key].Value = value;
+			if (this._KeyValueStack.Peek().ContainsKey(key))
+				this._KeyValueStack.Peek()[key].Value = value;
+			else
+				this._KeyValueStack.Peek().Add(key, new ValueObject { Value = value });
 		}
 
 		#endregion メソッド

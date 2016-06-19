@@ -8,6 +8,7 @@ using Mogami.Core.Definication;
 using Mogami.Core.Infrastructure;
 using Mogami.Model;
 using System.IO;
+using EnsureThat;
 
 namespace Mogami.Activity.Feature.VFS
 {
@@ -34,6 +35,9 @@ namespace Mogami.Activity.Feature.VFS
 			var filepath = pstack.GetValue<string>(ActivityParameterStack.WORKSPACE_FILEPATH);
 			var workspace = pstack.GetValue<Workspace>(ActivityParameterStack.WORKSPACE);
 
+			// Guard
+			Ensure.That(workspace).IsNotNull();
+			Ensure.That(filepath).IsNotNullOrEmpty();
 
 			string path = Path.Combine(workspace.WorkspacePath, filepath);
 			var fi = new FileInfo(path);
