@@ -34,6 +34,15 @@ namespace Mogami.Contrib.Akalib
 		#region メソッド
 
 		/// <summary>
+		/// キーを削除します
+		/// </summary>
+		/// <param name="key"></param>
+		public void ClearKey(string key)
+		{
+			this._KeyValueStack.Peek().Remove(key);
+		}
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key">ハッシュキー</param>
@@ -151,14 +160,17 @@ namespace Mogami.Contrib.Akalib
 		class ValueObject
 		{
 
+
 			#region フィールド
 
 			internal string AliasKey;
 			internal object Value;
 
 			#endregion フィールド
+
 		}
 
 		#endregion 内部クラス
+
 	}
 }
