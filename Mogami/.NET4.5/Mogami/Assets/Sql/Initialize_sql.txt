@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS [alFileMappingInfo]
 	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
 	[AclHash] TEXT NOT NULL,
 	[MappingFilePath] TEXT DEFAULT NULL,
+	[Mimetype] TEXT,
 	[Workspace_Id] INTEGER NOT NULL
 );
 

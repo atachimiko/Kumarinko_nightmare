@@ -23,6 +23,11 @@ namespace Mogami.Model.Repository
 
 		#region メソッド
 
+		public Artifact LoadByFileMappingInfo(FileMappingInfo filemappinginfo)
+		{
+			return _dbset.Where(prop => prop.FileMappingInfo.Id == filemappinginfo.Id).FirstOrDefault();
+		}
+
 		/// <summary>
 		/// Artifactを読み込みます
 		/// </summary>

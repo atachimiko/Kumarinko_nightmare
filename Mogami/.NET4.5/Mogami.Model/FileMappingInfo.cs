@@ -18,6 +18,8 @@ namespace Mogami.Model
 
 		private string _MappingFilePath;
 
+		private string _Mimetype;
+
 		private Workspace _Workspace;
 
 		#endregion フィールド
@@ -36,6 +38,7 @@ namespace Mogami.Model
 				_AclHash = value;
 			}
 		}
+
 		public string MappingFilePath
 		{
 			get
@@ -45,6 +48,16 @@ namespace Mogami.Model
 				if (_MappingFilePath == value)
 					return;
 				_MappingFilePath = value;
+			}
+		}
+
+		public string Mimetype
+		{
+			get { return _Mimetype; }
+			set
+			{
+				if (_Mimetype == value) return;
+				_Mimetype = value;
 			}
 		}
 		public virtual Workspace Workspace

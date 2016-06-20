@@ -53,6 +53,7 @@ namespace Mogami.Activity.Feature.VFS
 			{
 				AclHash = aclhash,
 				Workspace = workspace,
+				Mimetype = "image/png", // 未実装(テスト実装)
 				MappingFilePath = workspace.TrimWorekspacePath(fileinfo.FullName, false),
 			};
 
