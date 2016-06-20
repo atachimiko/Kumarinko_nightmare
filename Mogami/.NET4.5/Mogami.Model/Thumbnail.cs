@@ -16,7 +16,6 @@ namespace Mogami.Model
 		#region フィールド
 
 		private byte[] _BitmapBytes;
-		private string _ThumbnailHash;
 		private ThumbnailType _ThumbnailType;
 
 		#endregion フィールド
@@ -30,16 +29,6 @@ namespace Mogami.Model
 			set
 			{
 				_BitmapBytes = value;
-			}
-		}
-
-		public string ThumbnailHash
-		{
-			get { return _ThumbnailHash; }
-			set
-			{
-				if (_ThumbnailHash == value) return;
-				_ThumbnailHash = value;
 			}
 		}
 

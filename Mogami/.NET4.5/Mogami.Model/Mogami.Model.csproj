@@ -75,10 +75,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApMetadata.cs" />
+    <Compile Include="Artifact.cs" />
     <Compile Include="FileMappingInfo.cs" />
+    <Compile Include="ImageArtifact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ApMetadataRepository.cs" />
+    <Compile Include="Repository\ArtifactRepository.cs" />
     <Compile Include="Repository\FileMappingInfoRepository.cs" />
+    <Compile Include="Repository\ImageArtifactRepository.cs" />
     <Compile Include="Repository\ThumbnailRepository.cs" />
     <Compile Include="Repository\WorkspaceRepository.cs" />
     <Compile Include="ServiceModel.cs" />

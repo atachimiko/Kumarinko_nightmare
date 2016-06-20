@@ -36,6 +36,7 @@ namespace Mogami.Gateway
 		#region プロパティ
 
 		public DbSet<ApMetadata> ApMetadatas { get; set; }
+		public DbSet<Artifact> Artifacts { get; set; }
 		public DbSet<FileMappingInfo> FileMappingInfos { get; set; }
 		public DbSet<Workspace> Workspaces { get; set; }
 
@@ -51,6 +52,19 @@ namespace Mogami.Gateway
 
 		protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)
 		{
+			if (entityEntry.Entity is Artifact)
+			{
+				var artifact = entityEntry.Entity as Artifact;
+
+				if (entityEntry.CurrentValues.GetValue<string>("Title") == "")
+				{
+					var list = new List<System.Data.Entity.Validation.DbValidationError>();
+					list.Add(new System.Data.Entity.Validation.DbValidationError("Title", "Title is required"));
+
+					return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
+				}
+			}
+
 			return base.ValidateEntity(entityEntry, items);
 		}
 

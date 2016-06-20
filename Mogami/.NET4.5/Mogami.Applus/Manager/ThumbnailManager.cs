@@ -192,7 +192,7 @@ namespace Mogami.Applus.Manager
 						using (var dbc = new ThumbDbContext())
 						{
 							var thumbnail = new Thumbnail();
-							thumbnail.ThumbnailHash = this._OutputPath;
+							//thumbnail.ThumbnailHash = this._OutputPath;
 							thumbnail.ThumbnailType = ThumbnailType.PREVIEWIMAGE;
 							thumbnail.BitmapBytes = memoryStream.ToArray();
 

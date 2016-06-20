@@ -136,6 +136,7 @@ namespace Mogami.AutoMainConsole
 				bool isExitWatch = false;
 				while (!isExitWatch)
 				{
+					Console.WriteLine("");
 					Console.WriteLine("監視動作モード入力:");
 					Console.WriteLine(" 1=Dump Workspace");
 					Console.WriteLine(" 2=Toggle Suspend Mode [" + manager.IsSuspendIndex + "]");
@@ -155,6 +156,10 @@ namespace Mogami.AutoMainConsole
 							break;
 						case "e":
 							isExitWatch = true;
+							break;
+						default:
+							if(!string.IsNullOrEmpty(watchmode))
+								Console.WriteLine("不明なコマンドです。");
 							break;
 					}
 				}

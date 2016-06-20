@@ -17,6 +17,8 @@ using Mogami.Core.Utils;
 using Mogami.Core.Spp;
 using Mogami.Core.Constructions;
 using Mogami.Workflow;
+using Mogami.Contrib.Akalib;
+using Mogami.Core.Definication;
 
 namespace Mogami.Applus.Manager
 {
@@ -336,6 +338,7 @@ namespace Mogami.Applus.Manager
 								var workspace = WorkspaceRepository.Load(dbc, _Workspace.Id);
 								var workflow = new WorkflowInvoker(new UpdateVirtualSpaceAppFlow());
 								workflow.Extensions.Add(new WorkflowExtention(dbc));
+								var pstack = new ParameterStack();
 
 								// 処理対象のファイルがACLファイルか、物理ファイルかで処理を切り分けます
 								// ■ACLファイルの場合
@@ -347,30 +350,50 @@ namespace Mogami.Applus.Manager
 									switch (@lastItem.EventType)
 									{
 										case WatcherChangeTypes.Renamed:
+											pstack.SetValue("Event", Mogami.Core.Constructions.UpdateVirtualStatusEventType.RENAME);
+											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, item.Target);
+											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEPATH, item.Target.Name); // リネーム後のファイル名
+											pstack.SetValue(ActivityParameterStack.WORKSPACE, workspace);
+
 											var results_renamed = workflow.Invoke(new Dictionary<string, object>
 											{
-												{"EventType", UpdateVirtualStatusEventType.RENAME},
-												{"Target", item.Target},
-												{"BeforeRenameName",item.OldRenameNamePath},
-												{"Workspace", workspace}
+												{"ParameterStack", pstack},
+												//{"EventType", UpdateVirtualStatusEventType.RENAME},
+												//{"Target", item.Target},
+												//{"BeforeRenameName",item.OldRenameNamePath},
+												//{"Workspace", workspace}
 											});
 											break;
 										case WatcherChangeTypes.Changed:
 										case WatcherChangeTypes.Created:
+											var aclfileLocalPath = workspace.TrimWorekspacePath(item.Target.FullName, false);
+											pstack.SetValue("Event", Mogami.Core.Constructions.UpdateVirtualStatusEventType.UPDATE);
+											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, item.Target);
+											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEPATH, aclfileLocalPath); // 移動後のファイルパス
+											pstack.SetValue(ActivityParameterStack.WORKSPACE, workspace);
 											var results_changed = workflow.Invoke(new Dictionary<string, object>
 											{
-												{"EventType", UpdateVirtualStatusEventType.UPDATE},
-												{"Target", item.Target},
-												{"Workspace", workspace}
+												{"ParameterStack", pstack},
+												//{"EventType", UpdateVirtualStatusEventType.UPDATE},
+												//{"Target", item.Target},
+												//{"Workspace", workspace}
 											});
 											break;
 										case WatcherChangeTypes.Deleted:
+											var aclfileLocalPath_Delete = workspace.TrimWorekspacePath(item.Target.FullName, false);
+											pstack.SetValue("Event", Mogami.Core.Constructions.UpdateVirtualStatusEventType.DELETE);
+											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, item.Target);
+											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEPATH, aclfileLocalPath_Delete); // 削除したファイル
+											pstack.SetValue(ActivityParameterStack.WORKSPACE, workspace);
+											pstack.SetValue("WF_DeleteAclHash", @pair.Key);
+
 											var results_deleted = workflow.Invoke(new Dictionary<string, object>
 											{
-												{"EventType", UpdateVirtualStatusEventType.DELETE},
-												{"Target", item.Target},
-												{"DeleteAclHash", @pair.Key},
-												{"Workspace", workspace}
+												{"ParameterStack", pstack},
+												//{"EventType", UpdateVirtualStatusEventType.DELETE},
+												//{"Target", item.Target},
+												//{"DeleteAclHash", @pair.Key},
+												//{"Workspace", workspace}
 											});
 											break;
 									}
@@ -384,19 +407,33 @@ namespace Mogami.Applus.Manager
 											case WatcherChangeTypes.Renamed:
 											case WatcherChangeTypes.Changed:
 											case WatcherChangeTypes.Created:
+												var aclfileLocalPath_Update = workspace.TrimWorekspacePath(item.Target.FullName, false);
+												pstack.SetValue("Event", Mogami.Core.Constructions.UpdateVirtualStatusEventType.UPDATE);
+												pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, item.Target);
+												pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEPATH, aclfileLocalPath_Update); // 削除したファイル
+												pstack.SetValue(ActivityParameterStack.WORKSPACE, workspace);
+
 												var results_changed = workflow.Invoke(new Dictionary<string, object>
 												{
-													{"EventType", UpdateVirtualStatusEventType.UPDATE},
-													{"Target", item.Target},
-													{"Workspace", workspace}
+													{"ParameterStack", pstack},
+													//{"EventType", UpdateVirtualStatusEventType.UPDATE},
+													//{"Target", item.Target},
+													//{"Workspace", workspace}
 												});
 												break;
 											case WatcherChangeTypes.Deleted:
+												var aclfileLocalPath_Delete = workspace.TrimWorekspacePath(item.Target.FullName, false);
+												pstack.SetValue("Event", Mogami.Core.Constructions.UpdateVirtualStatusEventType.DELETE);
+												pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, item.Target);
+												pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEPATH, aclfileLocalPath_Delete); // 削除したファイル
+												pstack.SetValue(ActivityParameterStack.WORKSPACE, workspace);
+
 												var results_deleted = workflow.Invoke(new Dictionary<string, object>
 												{
-													{"EventType", UpdateVirtualStatusEventType.DELETE},
-													{"Target", item.Target},
-													{"Workspace", workspace}
+													{"ParameterStack", pstack},
+													//{"EventType", UpdateVirtualStatusEventType.DELETE},
+													//{"Target", item.Target},
+													//{"Workspace", workspace}
 												});
 												break;
 										}

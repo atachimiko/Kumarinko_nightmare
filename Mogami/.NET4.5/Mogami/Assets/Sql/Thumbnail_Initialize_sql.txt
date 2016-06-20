@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS `ApMetadata`
 CREATE TABLE IF NOT	EXISTS [alThumbnail]
 (
 	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
-	[ThumbnailHash] TEXT NOT NULL,
 	[ThumbnailType] INTEGER DEFAULT 1,
 	[BitmapBytes] BLOB
 );
