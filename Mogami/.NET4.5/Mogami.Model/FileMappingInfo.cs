@@ -20,6 +20,7 @@ namespace Mogami.Model
 
 		private string _Mimetype;
 
+		private string _ThumbnailKey;
 		private Workspace _Workspace;
 
 		#endregion フィールド
@@ -58,6 +59,16 @@ namespace Mogami.Model
 			{
 				if (_Mimetype == value) return;
 				_Mimetype = value;
+			}
+		}
+
+		public string ThumbnailKey
+		{
+			get { return _ThumbnailKey; }
+			set
+			{
+				if (_ThumbnailKey == value) return;
+				_ThumbnailKey = value;
 			}
 		}
 		public virtual Workspace Workspace

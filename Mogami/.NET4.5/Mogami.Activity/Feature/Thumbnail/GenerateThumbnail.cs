@@ -67,13 +67,22 @@ namespace Mogami.Activity.Feature.Thumbnail
 		private void GenerateArtifact(IWorkflowContext workflowContext, ParameterStack pstack)
 		{
 			var artifact = pstack.GetValue<ImageArtifact>(ActivityParameterStack.TARGET);
+			if (artifact == null) throw new ArgumentNullException();
 
 			var imageArtifactRepository = new ImageArtifactRepository(workflowContext.DbContext);
 			artifact = imageArtifactRepository.Load(artifact.Id);
 
 			var fullpath = System.IO.Path.Combine(artifact.FileMappingInfo.Workspace.PhysicalPath, artifact.FileMappingInfo.MappingFilePath);
 			var thumbnailManager = workflowContext.ThumbnailManager;
-			thumbnailManager.BuildThumbnail(artifact.IdentifyKey, fullpath);
+			if (string.IsNullOrEmpty(artifact.FileMappingInfo.ThumbnailKey))
+			{
+				var thumbnailKey = thumbnailManager.BuildThumbnail(null, fullpath);
+				artifact.FileMappingInfo.ThumbnailKey = thumbnailKey;
+			}
+			else
+			{
+				var thumbnailKey = thumbnailManager.BuildThumbnail(artifact.FileMappingInfo.ThumbnailKey, fullpath);
+			}
 		}
 
 		/// <summary>

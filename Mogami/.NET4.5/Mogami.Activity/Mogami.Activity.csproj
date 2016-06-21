@@ -87,6 +87,7 @@
     <Compile Include="Basic\UpdateOrCreateEntity.cs" />
     <Compile Include="Feature\Content\MakeArtifact.cs" />
     <Compile Include="Feature\Content\ReadArtifact.cs" />
+    <Compile Include="Feature\Thumbnail\DeleteThumbnail.cs" />
     <Compile Include="Feature\Thumbnail\GenerateThumbnail.cs" />
     <Compile Include="Feature\VFS\CreateACLFile.cs" />
     <Compile Include="Feature\VFS\GenerateACLHash.cs" />

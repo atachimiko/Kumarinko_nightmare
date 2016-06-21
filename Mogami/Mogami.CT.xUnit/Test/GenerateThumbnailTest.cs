@@ -39,7 +39,7 @@ namespace Mogami.CT.xUnit.Test
 			var imageFile = GetAssetsImageFile("Lighthouse.jpg");
 			LOG.Info("サムネイルの生成を開始します");
 			var manager = new ThumbnailManager();
-			manager.BuildThumbnail("aabbccddeeff00112233", imageFile.FullName);
+			manager.BuildThumbnail(null, imageFile.FullName);
 			LOG.Info("サムネイルの生成を終了します");
 		}
 

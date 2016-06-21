@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Akalib.String;
+using log4net;
 using Mogami.Core;
 using Mogami.Core.Attributes;
 using Mogami.Core.Constructions;
@@ -21,43 +22,44 @@ namespace Mogami.Applus.Manager
 	public class ThumbnailManager : IThumbnailManager
 	{
 
+
 		#region フィールド
 
 		static ILog LOG = LogManager.GetLogger(typeof(ThumbnailManager));
 
 		#endregion フィールド
 
-
 		#region メソッド
 
 		/// <summary>
 		/// サムネイル作成
 		/// </summary>
-		/// <param name="baseImageFilePath">サムネイルハッシュ</param>
+		/// <param name="thumbnailhash">既存のサムネイルを、baseImageFilePathで生成しなおしたい場合、
+		/// 既存のサムネイル情報を示すキーを指定します。それ以外は、NULLを指定します。</param>
+		/// <param name="baseImageFilePath">サムネイル生成元の画像ファイルパス</param>
 		/// <returns></returns>
-		public void BuildThumbnail(string thumbnailhash, string baseImageFilePath)
+		public string BuildThumbnail(string thumbnailhash, string baseImageFilePath)
 		{
 			LOG.Debug("サムネイルの作成を開始します");
+			string _ThumbnailKey = null;
 			Byte[] imageByte = null;
 			{
 				imageByte = LoadImageBytes(baseImageFilePath);
 
-				if (imageByte == null) return; // 画像ファイルを取得できなかった。
+				if (imageByte == null) throw new ApplicationException(); // 画像ファイルを取得できなかった。
 
 
 				//　サムネイル種類別にすべてのサムネイルを生成する
-				foreach (var thmbType in Enum.GetValues(typeof(ThumbnailType)))
+				foreach (ThumbnailType thmbType in Enum.GetValues(typeof(ThumbnailType)))
 				{
 					ThumbnailInfoAttribute[] infos = (ThumbnailInfoAttribute[])thmbType.GetType().GetField(thmbType.ToString()).GetCustomAttributes(typeof(ThumbnailInfoAttribute), false);
 					if (infos.Length > 0)
 					{
 						var @attr = infos[0];
-						//var dir = ThumbnailFileDir(thumbnailhash, @attr);
-						//System.IO.Directory.CreateDirectory(dir); // ディレクトリが無い場合は、作成します。
-
+						
 						var resizedImage = CreateImage(imageByte, @attr.Width, @attr.Height); // 生成するサムネイル画像の大きさは「300」(TODO?)
 
-						var invoker = new ThumbnailEncodingInvoker(resizedImage, thumbnailhash);
+						var invoker = new ThumbnailEncodingInvoker(thumbnailhash, resizedImage, thmbType);
 						var encodingBackground = new BackgroundWorker();
 						encodingBackground.DoWork += invoker.Do;
 						encodingBackground.RunWorkerAsync();
@@ -67,11 +69,32 @@ namespace Mogami.Applus.Manager
 							//await Task.Delay(10);
 							System.Threading.Thread.Sleep(1);
 
+						_ThumbnailKey = invoker.ThumbnailKey;
 						encodingBackground.DoWork -= invoker.Do;
 					}
 				}
 			}
 			LOG.Debug("サムネイルの作成を完了します");
+			return _ThumbnailKey;
+		}
+
+		public bool RemoveThumbnail(string thumbnailhash)
+		{
+			bool bResult = false;
+
+			using (var dbc = new ThumbDbContext())
+			{
+				var repo = new ThumbnailRepository(dbc);
+				var thumbs = repo.FindFromKey(thumbnailhash);
+				
+				foreach (var prop in thumbs)
+				{
+					repo.Delete(prop);
+				}
+				bResult = true;
+			}
+
+			return bResult;
 		}
 
 		/// <summary>
@@ -136,11 +159,14 @@ namespace Mogami.Applus.Manager
 		class ThumbnailEncodingInvoker
 		{
 
+
 			#region フィールド
 
 			readonly ImageSource _ImageSource;
-			readonly string _OutputPath;
+			readonly string _rebuildThumbnailKey;
+			readonly ThumbnailType _ThumbnailType;
 
+			private string _ThumbnailKey;
 			#endregion フィールド
 
 			#region コンストラクタ
@@ -148,16 +174,26 @@ namespace Mogami.Applus.Manager
 			/// <summary>
 			/// コンストラクタ
 			/// </summary>
+			/// <param name="thumbnailKey">リビルド対象のサムネイルキー</param>
 			/// <param name="imageSource"></param>
-			/// <param name="outputPath">サムネイル画像ファイルの出力先ファイルパス</param>
-			public ThumbnailEncodingInvoker(ImageSource imageSource, string outputPath)
+			public ThumbnailEncodingInvoker(string thumbnailKey, ImageSource imageSource, ThumbnailType thumbnailType)
 			{
 				this._ImageSource = imageSource;
-				this._OutputPath = outputPath;
+				_rebuildThumbnailKey = thumbnailKey;
+				_ThumbnailType = thumbnailType;
 			}
 
 			#endregion コンストラクタ
 
+
+			#region プロパティ
+
+			public string ThumbnailKey
+			{
+				get { return _ThumbnailKey; }
+			}
+
+			#endregion プロパティ
 
 			#region メソッド
 
@@ -170,17 +206,6 @@ namespace Mogami.Applus.Manager
 			{
 				try
 				{
-					/*
-					// ファイルに出力
-					using (FileStream wstream = new FileStream(this._OutputPath, FileMode.Create))
-					{
-						PngBitmapEncoder encoder = new PngBitmapEncoder();
-						var frame = BitmapFrame.Create((BitmapImage)this._ImageSource);
-						encoder.Frames.Add(frame);
-						encoder.Save(wstream);
-						wstream.Close();
-					}
-					*/
 					// バイナリに出力
 					using (MemoryStream memoryStream = new MemoryStream())
 					{
@@ -191,14 +216,42 @@ namespace Mogami.Applus.Manager
 
 						using (var dbc = new ThumbDbContext())
 						{
-							var thumbnail = new Thumbnail();
-							//thumbnail.ThumbnailHash = this._OutputPath;
-							thumbnail.ThumbnailType = ThumbnailType.PREVIEWIMAGE;
-							thumbnail.BitmapBytes = memoryStream.ToArray();
-
 							var repo = new ThumbnailRepository(dbc);
-							repo.Add(thumbnail);
 
+							if (string.IsNullOrEmpty(_rebuildThumbnailKey))
+							{
+								string key = null;
+								while (key == null)
+								{
+									var tal = RandomAlphameric.RandomAlphanumeric(20);
+									var r = repo.FindFromKey(tal);
+									if (r.Count == 0) key = tal;
+									foreach(var p in r)
+									{
+										if (p.ThumbnailType != _ThumbnailType) key = tal;
+									}
+
+								}
+
+								var thumbnail = new Thumbnail();
+								thumbnail.ThumbnailKey = key;
+								thumbnail.ThumbnailType = _ThumbnailType;
+								thumbnail.BitmapBytes = memoryStream.ToArray();
+
+								repo.Add(thumbnail);
+
+								_ThumbnailKey = key;
+							}else
+							{
+								var thumbnail = repo.FindFromKey(_rebuildThumbnailKey);
+								if (thumbnail == null) throw new ApplicationException("不明なサムネイルキーです");
+								foreach (var prop in thumbnail)
+								{
+									if (prop.ThumbnailType == _ThumbnailType)
+										prop.BitmapBytes = memoryStream.ToArray();
+								}
+								_ThumbnailKey = _rebuildThumbnailKey;
+							}
 							dbc.SaveChanges();
 						}
 					}
@@ -210,8 +263,10 @@ namespace Mogami.Applus.Manager
 			}
 
 			#endregion メソッド
+
 		}
 
 		#endregion 内部クラス
+
 	}
 }

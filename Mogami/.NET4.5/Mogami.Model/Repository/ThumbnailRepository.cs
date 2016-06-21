@@ -11,6 +11,7 @@ namespace Mogami.Model.Repository
 	public sealed class ThumbnailRepository : GenericRepository<Thumbnail>
 	{
 
+
 		#region コンストラクタ
 
 		public ThumbnailRepository(DbContext context) : base(context)
@@ -25,6 +26,11 @@ namespace Mogami.Model.Repository
 		public Thumbnail load(long id)
 		{
 			return _dbset.Where(x => x.Id == id).FirstOrDefault();
+		}
+
+		public IList<Thumbnail> FindFromKey(string key)
+		{
+			return _dbset.Where(x => x.ThumbnailKey == key).ToArray();
 		}
 
 		#endregion メソッド

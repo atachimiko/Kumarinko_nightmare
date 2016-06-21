@@ -16,6 +16,7 @@ namespace Mogami.Model
 		#region フィールド
 
 		private byte[] _BitmapBytes;
+		private string _ThumbnailKey;
 		private ThumbnailType _ThumbnailType;
 
 		#endregion フィールド
@@ -32,6 +33,15 @@ namespace Mogami.Model
 			}
 		}
 
+		public string ThumbnailKey
+		{
+			get { return _ThumbnailKey; }
+			set
+			{
+				if (_ThumbnailKey == value) return;
+				_ThumbnailKey = value;
+			}
+		}
 		public ThumbnailType ThumbnailType
 		{
 			get { return _ThumbnailType; }
@@ -42,5 +52,6 @@ namespace Mogami.Model
 		}
 
 		#endregion プロパティ
+
 	}
 }

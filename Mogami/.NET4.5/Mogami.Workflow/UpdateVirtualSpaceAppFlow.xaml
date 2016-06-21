@@ -2,6 +2,7 @@
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mab="clr-namespace:Mogami.Activity.Basic;assembly=Mogami.Activity"
  xmlns:mafc="clr-namespace:Mogami.Activity.Feature.Content;assembly=Mogami.Activity"
+ xmlns:maft="clr-namespace:Mogami.Activity.Feature.Thumbnail;assembly=Mogami.Activity"
  xmlns:mafv="clr-namespace:Mogami.Activity.Feature.VFS;assembly=Mogami.Activity"
  xmlns:mam="clr-namespace:Mogami.Activity.Model;assembly=Mogami.Activity"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -189,13 +190,20 @@
                               </InArgument>
                             </mafv:MovePhysicalFile.Parameter>
                           </mafv:MovePhysicalFile>
-                          <mafc:ReadArtifact sap2010:WorkflowViewState.IdRef="ReadArtifact_1" OutputName="RESULT" ReadKey="FileMappingInfo">
+                          <mafc:ReadArtifact sap2010:WorkflowViewState.IdRef="ReadArtifact_1" OutputName="TARGET" ReadKey="FileMappingInfo">
                             <mafc:ReadArtifact.Parameter>
                               <InArgument x:TypeArguments="mca:ParameterStack">
                                 <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
                               </InArgument>
                             </mafc:ReadArtifact.Parameter>
                           </mafc:ReadArtifact>
+                          <maft:GenerateThumbnail sap2010:WorkflowViewState.IdRef="GenerateThumbnail_1" ReadKey="Artifact">
+                            <maft:GenerateThumbnail.Parameter>
+                              <InArgument x:TypeArguments="mca:ParameterStack">
+                                <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                              </InArgument>
+                            </maft:GenerateThumbnail.Parameter>
+                          </maft:GenerateThumbnail>
                         </Sequence>
                       </If.Then>
                       <If.Else>
@@ -309,13 +317,20 @@
                   </InArgument>
                 </mafv:MovePhysicalFileFromVirtual.Parameter>
               </mafv:MovePhysicalFileFromVirtual>
-              <mafc:MakeArtifact sap2010:WorkflowViewState.IdRef="MakeArtifact_1" OutputName="RESULT">
+              <mafc:MakeArtifact sap2010:WorkflowViewState.IdRef="MakeArtifact_1" OutputName="TARGET">
                 <mafc:MakeArtifact.Parameter>
                   <InArgument x:TypeArguments="mca:ParameterStack">
                     <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
                   </InArgument>
                 </mafc:MakeArtifact.Parameter>
               </mafc:MakeArtifact>
+              <maft:GenerateThumbnail sap2010:WorkflowViewState.IdRef="GenerateThumbnail_2" ReadKey="Artifact">
+                <maft:GenerateThumbnail.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </maft:GenerateThumbnail.Parameter>
+              </maft:GenerateThumbnail>
             </Sequence>
           </If.Else>
         </If>
@@ -483,7 +498,7 @@
         </If>
       </Sequence>
     </Switch>
-    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sb0cD5wMOAgEBSAXlAw4CAQJLC0vHAQIBA04HwgISAgFxwwIHswMSAgEatAMH5AMSAgEFUDlQQAIBclIJXRoDAaECXgnBAg4CAXPFAjnFAkACARvIAgnTAhoCAWjUAgmyAw4CARy1AwnFAykCARLGAwnjAw4CAQZVD1VnAwGlAloPWlwDAaICYQ9hXAIBdGUN1gEYAwHCAdkBDb8CGAIBd8sCD8sCZwIBbdACD9ACXAIBadcCD9cCXAIBHdsCDbADGAIBIb0DD70DZwIBGLgDD7gDjQECARa1A261A3cCARXCAw/CA2wCARPJAw/JA5MBAgEHzQMN4QMYAgEJag91IgMBlgJ2D9UBFAMBwwHdAQ/jASYDAb0B5AEP9AEqAwGwAfUBD4UCMAMBowGGAg+MAjIDAZ4BjQIPmAIqAwGVAZkCD58CJAMBkAGgAg+wAjADAYMBsQIPtwIyAgF+uAIPvgIjAgF43AIP5wIiAgFf6AIPrwMUAgEizgMP1AMpAgEP1QMP4AMxAgEKbRVtbQMBnAJyFXJwAwGXAnkVeWUDAcQBfRPTAR4DAckB4AEV4AFkAwG+AfEBFfEBbQMBuQHsARXsAYsBAwG1AecBFecBXAMBsQGCAhWCAloDAawB/QEV/QFtAwGoAfgBFfgBrAEDAaQBiQIViQJtAwGfAZUCFZUCiwEDAZoBkAIVkAJtAwGWAZwCFZwCbQMBkQGtAhWtAlkDAYwBqAIVqAJtAwGIAaMCFaMCrAEDAYQBtAIVtAJtAgF/uwIVuwJtAgF6uAJeuAJmAgF53wIV3wJtAgFk5AIV5AJwAgFg6wIV6wJlAgEj7wITrQMeAgEn0QMV0QNtAgEQ2AMV2ANtAgEN3QMV3QNyAgELfhWTATUDAYAClAEV0gEaAwHKAfMCFYgDNQIBSYkDFZkDNgIBOZoDFaUDHgIBLqYDFawDLQIBKIYBG4YBcwMBkQKBARuBAXoDAYwCkAEbkAGCAQMBhwJ+en6DAQMBhgKLARuLAZEBAwGBApcBG5cBdwMBywGbARnHASQDAdYBygEZ0AEuAwHQAfsCG/sCcwIBWvYCG/YCegIBVYUDG4UDggECAVDzAnrzAoMBAgFPgAMbgAORAQIBSpYDG5YDgAECAUSRAxuRA3MCAT+MAxuMA4sBAgE6ogMbogPrAgIBNJ0DG50DiAECAS+pAxupA3MCASmcARusATwDAfABrQEbuAEkAwHlAbkBG78BMwMB3wHAARvGAS8DAdcBzQEfzQF3AwHRAakBIakBhgEDAfsBpAEhpAF5AwH2AZ8BIZ8BkQEDAfEBtQEhtQHvAgMB6wGwASGwAY4BAwHmAbwBIbwBeQMB4AHAAXvAAYwBAwHeAcMBIcMBeQMB2QHAAWrAAXIDAdgB</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sdUgD9gMOAgEBSQX0Aw4CAQJMC0zHAQIBA08H0QISAgFx0gIHwgMSAgEawwMH8wMSAgEFUTlRQAIBclMJXhoDAa4CXwnQAg4CAXPUAjnUAkACARvXAgniAhoCAWjjAgnBAw4CARzEAwnUAykCARLVAwnyAw4CAQZWD1ZnAwGyAlsPW1wDAa8CYg9iXAIBdGYN3gEYAwHIAeEBDc4CGAIBd9oCD9oCZwIBbd8CD98CXAIBaeYCD+YCXAIBHeoCDb8DGAIBIcwDD8wDZwIBGMcDD8cDjQECARbEA27EA3cCARXRAw/RA2wCARPYAw/YA5MBAgEH3AMN8AMYAgEJaw92IgMBowJ3D90BFAMByQHlAQ/rASYDAcMB7AEP/AEqAwG2Af0BD40CMAMBqQGOAg+UAjIDAaQBlQIPoAIqAwGbAaECD6cCJAMBlgGoAg+4AjADAYkBuQIPvwIyAwGEAcACD8YCIwIBfscCD80CKAIBeOsCD/YCIgIBX/cCD74DFAIBIt0DD+MDKQIBD+QDD+8DMQIBCm4Vbm0DAakCcxVzcAMBpAJ6FXplAwHKAX4T2wEeAwHPAegBFegBZAMBxAH5ARX5AW0DAb8B9AEV9AGLAQMBuwHvARXvAVwDAbcBigIVigJaAwGyAYUCFYUCbQMBrgGAAhWAAqwBAwGqAZECFZECbQMBpQGdAhWdAosBAwGgAZgCFZgCbQMBnAGkAhWkAm0DAZcBtQIVtQJZAwGSAbACFbACbQMBjgGrAhWrAqwBAwGKAbwCFbwCbQMBhQHDAhXDAm0DAYABwAJewAJmAgF/xwJlxwJvAgF9ygIVygJtAgF57gIV7gJtAgFk8wIV8wJwAgFg+gIV+gJlAgEj/gITvAMeAgEn4AMV4ANtAgEQ5wMV5wNtAgEN7AMV7ANyAgELfxWUATUDAY0ClQEV2gEaAwHQAYIDFZcDNQIBSZgDFagDNgIBOakDFbQDHgIBLrUDFbsDLQIBKIcBG4cBcwMBngKCARuCAXoDAZkCkQEbkQGCAQMBlAJ/en+DAQMBkwKMARuMAZEBAwGOApgBG5gBdwMB0QGcARnPASQDAdwB0gEZ2AEuAwHWAYoDG4oDcwIBWoUDG4UDegIBVZQDG5QDggECAVCCA3qCA4MBAgFPjwMbjwORAQIBSqUDG6UDgAECAUSgAxugA3MCAT+bAxubA4sBAgE6sQMbsQPrAgIBNKwDG6wDiAECAS+4Axu4A3MCASmdARutATwDAf0BrgEbuQEkAwHyAboBG8ABMwMB7AHBARvHAS8DAeQByAEbzgE0AwHdAdUBH9UBdwMB1wGqASGqAYYBAwGIAqUBIaUBeQMBgwKgASGgAZEBAwH+AbYBIbYB7wIDAfgBsQEhsQGOAQMB8wG9ASG9AXkDAe0BwQF7wQGMAQMB6wHEASHEAXkDAeYBwQFqwQFyAwHlAcgBccgBewMB4wHLASHLAXkDAd4B</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -494,7 +509,8 @@
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="244,64" />
       <sap2010:ViewStateData Id="MovePhysicalFile_1" sap:VirtualizedContainerService.HintSize="244,22" />
       <sap2010:ViewStateData Id="ReadArtifact_1" sap:VirtualizedContainerService.HintSize="244,22" />
-      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="266,374">
+      <sap2010:ViewStateData Id="GenerateThumbnail_1" sap:VirtualizedContainerService.HintSize="244,22" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="266,436">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -502,16 +518,16 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="RemoveACLFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="491,532" />
-      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="513,718">
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="491,594" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="513,780">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="718,876" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="740,1062">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="718,938" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="740,1124">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -527,15 +543,16 @@
       <sap2010:ViewStateData Id="AssaignParameterStackValue_2" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MovePhysicalFileFromVirtual_2" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MakeArtifact_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,642">
+      <sap2010:ViewStateData Id="GenerateThumbnail_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,704">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="987,1220" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="1009,1406">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="987,1282" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="1009,1468">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -589,15 +606,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="1029,1653" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="1051,1777">
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="1029,1715" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="1051,1839">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="1091,1857" />
+      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="1091,1919" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
