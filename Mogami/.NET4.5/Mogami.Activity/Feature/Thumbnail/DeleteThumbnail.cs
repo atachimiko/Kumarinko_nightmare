@@ -54,7 +54,7 @@ namespace Mogami.Activity.Feature.Thumbnail
 			var thumbnailManager = workflowContext.ThumbnailManager;
 			if (artifact == null) throw new ArgumentNullException();
 
-			thumbnailManager.RemoveThumbnail(artifact.IdentifyKey);
+			thumbnailManager.RemoveThumbnail(artifact.ThumbnailKey);
 		}
 
 		private void DeleteMisc(IWorkflowContext workflowContext, ParameterStack pstack)

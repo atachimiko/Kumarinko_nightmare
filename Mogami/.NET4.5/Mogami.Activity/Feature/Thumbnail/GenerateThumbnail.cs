@@ -74,14 +74,14 @@ namespace Mogami.Activity.Feature.Thumbnail
 
 			var fullpath = System.IO.Path.Combine(artifact.FileMappingInfo.Workspace.PhysicalPath, artifact.FileMappingInfo.MappingFilePath);
 			var thumbnailManager = workflowContext.ThumbnailManager;
-			if (string.IsNullOrEmpty(artifact.FileMappingInfo.ThumbnailKey))
+			if (string.IsNullOrEmpty(artifact.ThumbnailKey))
 			{
 				var thumbnailKey = thumbnailManager.BuildThumbnail(null, fullpath);
-				artifact.FileMappingInfo.ThumbnailKey = thumbnailKey;
+				artifact.ThumbnailKey = thumbnailKey;
 			}
 			else
 			{
-				var thumbnailKey = thumbnailManager.BuildThumbnail(artifact.FileMappingInfo.ThumbnailKey, fullpath);
+				var thumbnailKey = thumbnailManager.BuildThumbnail(artifact.ThumbnailKey, fullpath);
 			}
 		}
 

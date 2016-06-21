@@ -15,6 +15,7 @@ namespace Mogami.Model
 
 		private FileMappingInfo _FileMappingInfo;
 		private string _IdentifyKey;
+		private string _ThumbnailKey;
 		private string _Title;
 
 		#endregion フィールド
@@ -37,6 +38,15 @@ namespace Mogami.Model
 			}
 		}
 
+		public string ThumbnailKey
+		{
+			get { return _ThumbnailKey; }
+			set
+			{
+				if (_ThumbnailKey == value) return;
+				_ThumbnailKey = value;
+			}
+		}
 		public string Title
 		{
 			get { return _Title; }

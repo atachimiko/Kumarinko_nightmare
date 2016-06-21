@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS [alArtifact]
 	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
 	[Title] TEXT,
 	[IdentifyKey] TEXT NOT NULL UNIQUE,
+	[ThumbnailKey] TEXT,
 	[FileMappingInfo_Id] INTEGER
 );
 
@@ -49,7 +50,6 @@ CREATE TABLE IF NOT EXISTS [alFileMappingInfo]
 	[AclHash] TEXT NOT NULL,
 	[MappingFilePath] TEXT DEFAULT NULL,
 	[Mimetype] TEXT,
-	[ThumbnailKey] TEXT,
 	[Workspace_Id] INTEGER NOT NULL
 );
 
