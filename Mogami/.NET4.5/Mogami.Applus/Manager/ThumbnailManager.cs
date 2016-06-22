@@ -70,6 +70,7 @@ namespace Mogami.Applus.Manager
 							System.Threading.Thread.Sleep(1);
 
 						_ThumbnailKey = invoker.ThumbnailKey;
+						thumbnailhash = _ThumbnailKey;
 						encodingBackground.DoWork -= invoker.Do;
 					}
 				}
@@ -241,16 +242,36 @@ namespace Mogami.Applus.Manager
 								repo.Add(thumbnail);
 
 								_ThumbnailKey = key;
-							}else
+							}
+							else
 							{
 								var thumbnail = repo.FindFromKey(_rebuildThumbnailKey);
-								if (thumbnail == null) throw new ApplicationException("不明なサムネイルキーです");
+
+								// サムネイルタイプのエンティティがある場合、trueをセットする。
+								bool isThumbnailSave = false;
 								foreach (var prop in thumbnail)
 								{
 									if (prop.ThumbnailType == _ThumbnailType)
+									{
 										prop.BitmapBytes = memoryStream.ToArray();
+										isThumbnailSave = true;
+									}
 								}
-								_ThumbnailKey = _rebuildThumbnailKey;
+
+								if (!isThumbnailSave)
+								{
+									// 指定したサムネイルタイプのエンティティを、
+									// 新規作成する。
+									var thumbnail_NewThumbnailType = new Thumbnail();
+									thumbnail_NewThumbnailType.ThumbnailKey = _rebuildThumbnailKey;
+									thumbnail_NewThumbnailType.ThumbnailType = _ThumbnailType;
+									thumbnail_NewThumbnailType.BitmapBytes = memoryStream.ToArray();
+									repo.Add(thumbnail_NewThumbnailType);
+								}
+								else
+								{
+									_ThumbnailKey = _rebuildThumbnailKey;
+								}
 							}
 							dbc.SaveChanges();
 						}

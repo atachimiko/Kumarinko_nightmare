@@ -757,9 +757,17 @@ namespace Mogami.Applus.Manager
 						}
 						else
 						{
+							
+							fileUpdateQueueItem = new FileUpdateQueueItem { Target = watchTarget };
+
+							_UpdatesWatchFiles.AddOrUpdate(deletedFileRelativePath,
+								fileUpdateQueueItem, (_key, _value) => fileUpdateQueueItem
+							);
+
 							// 発生はありえないが、発生した場合は処理せず終了
-							LOG.Warn("更新キューに登録されていないACLファイルの削除イベント");
-							return null;
+							// →発生はありうる。
+							//LOG.Warn("更新キューに登録されていないACLファイルの削除イベント");
+							//return null;
 						}
 					}
 					else

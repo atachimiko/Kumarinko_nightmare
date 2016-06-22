@@ -70,7 +70,8 @@ namespace Mogami.Activity.Feature.Thumbnail
 			if (artifact == null) throw new ArgumentNullException();
 
 			var imageArtifactRepository = new ImageArtifactRepository(workflowContext.DbContext);
-			artifact = imageArtifactRepository.Load(artifact.Id);
+			if (artifact.Id != 0L)
+				artifact = imageArtifactRepository.Load(artifact.Id);
 
 			var fullpath = System.IO.Path.Combine(artifact.FileMappingInfo.Workspace.PhysicalPath, artifact.FileMappingInfo.MappingFilePath);
 			var thumbnailManager = workflowContext.ThumbnailManager;
