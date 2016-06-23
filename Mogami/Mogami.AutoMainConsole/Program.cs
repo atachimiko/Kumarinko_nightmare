@@ -83,30 +83,6 @@ namespace Mogami.AutoMainConsole
 			((ApplicationContextImpl)ApplicationContextImpl.GetInstance()).InitializeApplication();
 		}
 
-		/// <summary>
-		/// サンプルで使用する仮想ディレクトリ空間のファイルリストを
-		/// データベースに初期データとして追加します。
-		/// </summary>
-		static void InitializeSampleAclFileImport(Workspace workspace, AppDbContext dbcontext)
-		{
-			var repo = new FileMappingInfoRepository(dbcontext);
-			string[] entries = Directory.GetFiles(workspace.WorkspacePath, "*.alcgene.*", SearchOption.AllDirectories);
-			foreach (string entry in entries)
-			{
-				LOG.InfoFormat("初期データ:{0}", entry);
-				var relativePath = workspace.TrimWorekspacePath(entry, false);
-
-				var mapping = new FileMappingInfo();
-				mapping.Workspace = workspace;
-				mapping.AclHash = "SAMPLE";
-				mapping.MappingFilePath = relativePath;
-
-				repo.Add(mapping);
-			}
-
-			repo.Save();
-		}
-
 		static void Main(string[] args)
 		{
 			VirtualFileSystemWatcherManager manager = null;
@@ -114,13 +90,6 @@ namespace Mogami.AutoMainConsole
 
 			InitializeMogamiApplication();
 			ImportSqlFile("OriginalData.sql.txt");
-
-			using (var dbc = new AppDbContext())
-			{
-				var repo = new WorkspaceRepository(dbc);
-				var entity = repo.Load(2L);
-				InitializeSampleAclFileImport(entity, dbc);
-			}
 
 			PrintWorkspaces();
 

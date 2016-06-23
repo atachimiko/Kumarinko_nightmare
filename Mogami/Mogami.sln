@@ -87,8 +87,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.CT.xUnit", "Mogami.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.Applus", ".NET4.5\Mogami.Applus\Mogami.Applus.csproj", "{AB280D7B-F16F-4B60-AE6E-130B563447FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.AutoMainConsole", "Mogami.AutoMainConsole\Mogami.AutoMainConsole.csproj", "{3EA8D251-E9EC-4603-8192-EA2BF66E40C1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,10 +149,6 @@ Global
 		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB280D7B-F16F-4B60-AE6E-130B563447FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3EA8D251-E9EC-4603-8192-EA2BF66E40C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3EA8D251-E9EC-4603-8192-EA2BF66E40C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3EA8D251-E9EC-4603-8192-EA2BF66E40C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3EA8D251-E9EC-4603-8192-EA2BF66E40C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
