@@ -1,5 +1,0 @@
-﻿
-
-INSERT OR REPLACE INTO alWorkspace (Id, Name, PhysicalPath, WorkspacePath) VALUES (2, "DefaultWorkspace", "C:\Mogami_Physical", "C:\Mogami_Workspace");
-
-

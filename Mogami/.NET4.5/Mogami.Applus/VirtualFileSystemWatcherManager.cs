@@ -347,6 +347,7 @@ namespace Mogami.Applus.Manager
 								//    リネーム更新イベントも、UPDATEイベントとして処理します。
 								if (item.Target.Extension == ".aclgene")
 								{
+									var fileNameWithputExtension = item.Target.Name.Replace(item.Target.Extension, "");
 									switch (@lastItem.EventType)
 									{
 										case WatcherChangeTypes.Renamed:
@@ -385,7 +386,7 @@ namespace Mogami.Applus.Manager
 											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEINFO, item.Target);
 											pstack.SetValue(ActivityParameterStack.WORKSPACE_FILEPATH, aclfileLocalPath_Delete); // 削除したファイル
 											pstack.SetValue(ActivityParameterStack.WORKSPACE, workspace);
-											pstack.SetValue("WF_DeleteAclHash", @pair.Key);
+											pstack.SetValue("WF_DeleteAclMappingFilePath", fileNameWithputExtension);
 
 											var results_deleted = workflow.Invoke(new Dictionary<string, object>
 											{

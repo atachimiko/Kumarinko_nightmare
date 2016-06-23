@@ -449,56 +449,85 @@
         </If>
       </Sequence>
       <Sequence x:Key="DELETE" DisplayName="DoDelete" sap2010:WorkflowViewState.IdRef="Sequence_10">
-        <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_3" KeyType="AclHash">
-          <mam:LoadFileMappingInfoEntity.KeyValue>
-            <InArgument x:TypeArguments="x:String">
-              <mca1:CSharpValue x:TypeArguments="x:String">ParameterStack.GetValue&lt;string&gt;("WF_DeleteAclHash",true)</mca1:CSharpValue>
-            </InArgument>
-          </mam:LoadFileMappingInfoEntity.KeyValue>
-          <mam:LoadFileMappingInfoEntity.Parameter>
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:Boolean" Default="False" Name="bAcl" />
+        </Sequence.Variables>
+        <mafv:IsACLFile>
+          <mafv:IsACLFile.Parameter>
             <InArgument x:TypeArguments="mca:ParameterStack">
               <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
             </InArgument>
-          </mam:LoadFileMappingInfoEntity.Parameter>
-          <mam:LoadFileMappingInfoEntity.ParameterResultKey>
-            <InArgument x:TypeArguments="x:String">
-              <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.TARGET</mca1:CSharpValue>
-            </InArgument>
-          </mam:LoadFileMappingInfoEntity.ParameterResultKey>
-        </mam:LoadFileMappingInfoEntity>
-        <If sap2010:WorkflowViewState.IdRef="If_6">
+          </mafv:IsACLFile.Parameter>
+          <mafv:IsACLFile.Result>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca1:CSharpReference x:TypeArguments="x:Boolean">bAcl</mca1:CSharpReference>
+            </OutArgument>
+          </mafv:IsACLFile.Result>
+          <sap2010:WorkflowViewState.IdRef>IsACLFile_3</sap2010:WorkflowViewState.IdRef>
+        </mafv:IsACLFile>
+        <If>
           <If.Condition>
             <InArgument x:TypeArguments="x:Boolean">
-              <mca1:CSharpValue x:TypeArguments="x:Boolean">ParameterStack.GetValue(ActivityParameterStack.TARGET,true) != null</mca1:CSharpValue>
+              <mca1:CSharpValue x:TypeArguments="x:Boolean">bAcl == true</mca1:CSharpValue>
             </InArgument>
           </If.Condition>
           <If.Then>
-            <Sequence DisplayName="物理ファイルとエンティティの削除" sap2010:WorkflowViewState.IdRef="Sequence_11">
-              <mafv:RemovePhysicalFile sap2010:WorkflowViewState.IdRef="RemovePhysicalFile_1">
-                <mafv:RemovePhysicalFile.Parameter>
+            <Sequence>
+              <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_3" KeyType="MappingFilePath">
+                <mam:LoadFileMappingInfoEntity.KeyValue>
+                  <InArgument x:TypeArguments="x:String">
+                    <mca1:CSharpValue x:TypeArguments="x:String">ParameterStack.GetValue&lt;string&gt;("WF_DeleteAclMappingFilePath", true)</mca1:CSharpValue>
+                  </InArgument>
+                </mam:LoadFileMappingInfoEntity.KeyValue>
+                <mam:LoadFileMappingInfoEntity.Parameter>
                   <InArgument x:TypeArguments="mca:ParameterStack">
                     <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
                   </InArgument>
-                </mafv:RemovePhysicalFile.Parameter>
-              </mafv:RemovePhysicalFile>
-              <mam:DeleteFileMappingInfoEntity Entity="{x:Null}" sap2010:WorkflowViewState.IdRef="DeleteFileMappingInfoEntity_1">
-                <mam:DeleteFileMappingInfoEntity.Parameter>
-                  <InArgument x:TypeArguments="mca:ParameterStack">
-                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
-                  </InArgument>
-                </mam:DeleteFileMappingInfoEntity.Parameter>
-                <mam:DeleteFileMappingInfoEntity.ParameterTargetKey>
+                </mam:LoadFileMappingInfoEntity.Parameter>
+                <mam:LoadFileMappingInfoEntity.ParameterResultKey>
                   <InArgument x:TypeArguments="x:String">
                     <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.TARGET</mca1:CSharpValue>
                   </InArgument>
-                </mam:DeleteFileMappingInfoEntity.ParameterTargetKey>
-              </mam:DeleteFileMappingInfoEntity>
+                </mam:LoadFileMappingInfoEntity.ParameterResultKey>
+              </mam:LoadFileMappingInfoEntity>
+              <If sap2010:WorkflowViewState.IdRef="If_6">
+                <If.Condition>
+                  <InArgument x:TypeArguments="x:Boolean">
+                    <mca1:CSharpValue x:TypeArguments="x:Boolean">ParameterStack.GetValue(ActivityParameterStack.TARGET,true) != null</mca1:CSharpValue>
+                  </InArgument>
+                </If.Condition>
+                <If.Then>
+                  <Sequence DisplayName="物理ファイルとエンティティの削除" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                    <mafv:RemovePhysicalFile sap2010:WorkflowViewState.IdRef="RemovePhysicalFile_1">
+                      <mafv:RemovePhysicalFile.Parameter>
+                        <InArgument x:TypeArguments="mca:ParameterStack">
+                          <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                        </InArgument>
+                      </mafv:RemovePhysicalFile.Parameter>
+                    </mafv:RemovePhysicalFile>
+                    <mam:DeleteFileMappingInfoEntity Entity="{x:Null}" sap2010:WorkflowViewState.IdRef="DeleteFileMappingInfoEntity_1">
+                      <mam:DeleteFileMappingInfoEntity.Parameter>
+                        <InArgument x:TypeArguments="mca:ParameterStack">
+                          <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:DeleteFileMappingInfoEntity.Parameter>
+                      <mam:DeleteFileMappingInfoEntity.ParameterTargetKey>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca1:CSharpValue x:TypeArguments="x:String">ActivityParameterStack.TARGET</mca1:CSharpValue>
+                        </InArgument>
+                      </mam:DeleteFileMappingInfoEntity.ParameterTargetKey>
+                    </mam:DeleteFileMappingInfoEntity>
+                  </Sequence>
+                </If.Then>
+              </If>
+              <sap2010:WorkflowViewState.IdRef>Sequence_12</sap2010:WorkflowViewState.IdRef>
             </Sequence>
           </If.Then>
+          <sap2010:WorkflowViewState.IdRef>If_7</sap2010:WorkflowViewState.IdRef>
         </If>
       </Sequence>
     </Switch>
-    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sdUgD9gMOAgEBSQX0Aw4CAQJMC0zHAQIBA08H0QISAgFx0gIHwgMSAgEawwMH8wMSAgEFUTlRQAIBclMJXhoDAa4CXwnQAg4CAXPUAjnUAkACARvXAgniAhoCAWjjAgnBAw4CARzEAwnUAykCARLVAwnyAw4CAQZWD1ZnAwGyAlsPW1wDAa8CYg9iXAIBdGYN3gEYAwHIAeEBDc4CGAIBd9oCD9oCZwIBbd8CD98CXAIBaeYCD+YCXAIBHeoCDb8DGAIBIcwDD8wDZwIBGMcDD8cDjQECARbEA27EA3cCARXRAw/RA2wCARPYAw/YA5MBAgEH3AMN8AMYAgEJaw92IgMBowJ3D90BFAMByQHlAQ/rASYDAcMB7AEP/AEqAwG2Af0BD40CMAMBqQGOAg+UAjIDAaQBlQIPoAIqAwGbAaECD6cCJAMBlgGoAg+4AjADAYkBuQIPvwIyAwGEAcACD8YCIwIBfscCD80CKAIBeOsCD/YCIgIBX/cCD74DFAIBIt0DD+MDKQIBD+QDD+8DMQIBCm4Vbm0DAakCcxVzcAMBpAJ6FXplAwHKAX4T2wEeAwHPAegBFegBZAMBxAH5ARX5AW0DAb8B9AEV9AGLAQMBuwHvARXvAVwDAbcBigIVigJaAwGyAYUCFYUCbQMBrgGAAhWAAqwBAwGqAZECFZECbQMBpQGdAhWdAosBAwGgAZgCFZgCbQMBnAGkAhWkAm0DAZcBtQIVtQJZAwGSAbACFbACbQMBjgGrAhWrAqwBAwGKAbwCFbwCbQMBhQHDAhXDAm0DAYABwAJewAJmAgF/xwJlxwJvAgF9ygIVygJtAgF57gIV7gJtAgFk8wIV8wJwAgFg+gIV+gJlAgEj/gITvAMeAgEn4AMV4ANtAgEQ5wMV5wNtAgEN7AMV7ANyAgELfxWUATUDAY0ClQEV2gEaAwHQAYIDFZcDNQIBSZgDFagDNgIBOakDFbQDHgIBLrUDFbsDLQIBKIcBG4cBcwMBngKCARuCAXoDAZkCkQEbkQGCAQMBlAJ/en+DAQMBkwKMARuMAZEBAwGOApgBG5gBdwMB0QGcARnPASQDAdwB0gEZ2AEuAwHWAYoDG4oDcwIBWoUDG4UDegIBVZQDG5QDggECAVCCA3qCA4MBAgFPjwMbjwORAQIBSqUDG6UDgAECAUSgAxugA3MCAT+bAxubA4sBAgE6sQMbsQPrAgIBNKwDG6wDiAECAS+4Axu4A3MCASmdARutATwDAf0BrgEbuQEkAwHyAboBG8ABMwMB7AHBARvHAS8DAeQByAEbzgE0AwHdAdUBH9UBdwMB1wGqASGqAYYBAwGIAqUBIaUBeQMBgwKgASGgAZEBAwH+AbYBIbYB7wIDAfgBsQEhsQGOAQMB8wG9ASG9AXkDAe0BwQF7wQGMAQMB6wHEASHEAXkDAeYBwQFqwQFyAwHlAcgBccgBewMB4wHLASHLAXkDAd4B</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sfEgDkwQOAgEBSQWRBA4CAQJMC0zHAQIBA08H0QISAwGFAdICB8IDEgIBLsMDB5AEEgIBBVE5UUADAYYBUwleGgMBwgJfCdACDgMBhwHUAjnUAkACAS/XAgniAhoCAXzjAgnBAw4CATDFAznFA0ACAQbHAwnTAxoCASfUAwmPBA4CAQdWD1ZnAwHGAlsPW1wDAcMCYg9iXAMBiAFmDd4BGAMB3AHhAQ3OAhgDAYsB2gIP2gJnAwGBAd8CD98CXAIBfeYCD+YCXAIBMeoCDb8DGAIBNcoDD8oDZwIBK88DD88DXAIBKNcDD9cDXAIBCNsDDYwEGAIBC2sPdiIDAbcCdw/dARQDAd0B5QEP6wEmAwHXAewBD/wBKgMBygH9AQ+NAjADAb0BjgIPlAIyAwG4AZUCD6ACKgMBrwGhAg+nAiQDAaoBqAIPuAIwAwGdAbkCD78CMgMBmAHAAg/GAiMDAZIBxwIPzQIoAwGMAesCD/YCIgIBc/cCD74DFAIBNtwDD+wDLwIBHO0DD4oEFAIBDG4Vbm0DAb0CcxVzcAMBuAJ6FXplAwHeAX4T2wEeAwHjAegBFegBZAMB2AH5ARX5AW0DAdMB9AEV9AGLAQMBzwHvARXvAVwDAcsBigIVigJaAwHGAYUCFYUCbQMBwgGAAhWAAqwBAwG+AZECFZECbQMBuQGdAhWdAosBAwG0AZgCFZgCbQMBsAGkAhWkAm0DAasBtQIVtQJZAwGmAbACFbACbQMBogGrAhWrAqwBAwGeAbwCFbwCbQMBmQHDAhXDAm0DAZQBwAJewAJmAwGTAccCZccCbwMBkQHKAhXKAm0DAY0B7gIV7gJtAgF48wIV8wJwAgF0+gIV+gJlAgE3/gITvAMeAgE75AMV5ANtAgEk3wMV3wOfAQIBIdwDdNwDhQECASDpAxXpA3ICAR3wAxXwA5kBAgEN9AMTiAQeAgEQfxWUATUDAaEClQEV2gEaAwHkAYIDFZcDNQIBXZgDFagDNgIBTakDFbQDHgIBQrUDFbsDLQIBPPUDFfsDLwIBGPwDFYcENwIBEYcBG4cBcwMBsgKCARuCAXoDAa0CkQEbkQGCAQMBqAJ/en+DAQMBpwKMARuMAZEBAwGiApgBG5gBdwMB5QGcARnPASQDAfAB0gEZ2AEuAwHqAYoDG4oDcwIBboUDG4UDegIBaZQDG5QDggECAWSCA3qCA4MBAgFjjwMbjwORAQIBXqUDG6UDgAECAVigAxugA3MCAVObAxubA4sBAgFOsQMbsQPrAgIBSKwDG6wDiAECAUO4Axu4A3MCAT34Axv4A3MCARn/Axv/A3MCARWEBBuEBHgCARKdARutATwDAZECrgEbuQEkAwGGAroBG8ABMwMBgALBARvHAS8DAfgByAEbzgE0AwHxAdUBH9UBdwMB6wGqASGqAYYBAwGcAqUBIaUBeQMBlwKgASGgAZEBAwGSArYBIbYB7wIDAYwCsQEhsQGOAQMBhwK9ASG9AXkDAYECwQF7wQGMAQMB/wHEASHEAXkDAfoBwQFqwQFyAwH5AcgBccgBewMB9wHLASHLAXkDAfIB</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -588,6 +617,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="IsACLFile_3" sap:VirtualizedContainerService.HintSize="691,22" />
       <sap2010:ViewStateData Id="LoadFileMappingInfoEntity_3" sap:VirtualizedContainerService.HintSize="464,22" />
       <sap2010:ViewStateData Id="RemovePhysicalFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="DeleteFileMappingInfoEntity_1" sap:VirtualizedContainerService.HintSize="200,22" />
@@ -599,22 +629,30 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="464,366" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="486,508">
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="486,552">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="1029,1715" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="1051,1839">
+      <sap2010:ViewStateData Id="If_7" sap:VirtualizedContainerService.HintSize="691,710" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="713,896">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="1091,1919" />
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="733,1143" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="755,1267">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="795,1347" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

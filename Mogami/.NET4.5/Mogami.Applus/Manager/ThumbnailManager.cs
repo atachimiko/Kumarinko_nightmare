@@ -247,7 +247,7 @@ namespace Mogami.Applus.Manager
 							{
 								var thumbnail = repo.FindFromKey(_rebuildThumbnailKey);
 
-								// サムネイルタイプのエンティティがある場合、trueをセットする。
+								// サムネイルタイプのエンティティが存在する場合、trueをセットする。
 								bool isThumbnailSave = false;
 								foreach (var prop in thumbnail)
 								{
@@ -267,6 +267,8 @@ namespace Mogami.Applus.Manager
 									thumbnail_NewThumbnailType.ThumbnailType = _ThumbnailType;
 									thumbnail_NewThumbnailType.BitmapBytes = memoryStream.ToArray();
 									repo.Add(thumbnail_NewThumbnailType);
+									_ThumbnailKey = _rebuildThumbnailKey;
+
 								}
 								else
 								{

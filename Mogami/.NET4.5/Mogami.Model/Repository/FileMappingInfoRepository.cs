@@ -14,16 +14,22 @@ namespace Mogami.Model.Repository
 	public class FileMappingInfoRepository : GenericRepository<FileMappingInfo>
 	{
 
+		#region フィールド
+
+		DbContext _Context;
+
+		#endregion フィールド
+
 
 		#region コンストラクタ
 
 		public FileMappingInfoRepository(DbContext context)
 			: base(context)
 		{
+			_Context = context;
 		}
 
 		#endregion コンストラクタ
-
 
 		#region メソッド
 
@@ -39,6 +45,14 @@ namespace Mogami.Model.Repository
 			return repo.Load(id);
 		}
 
+		public override FileMappingInfo Delete(FileMappingInfo entity)
+		{
+			var repo = new ArtifactRepository(_Context);
+			var artifact = repo.LoadByFileMappingInfo(entity);
+			if (artifact != null) artifact.FileMappingInfo = null;
+
+			return base.Delete(entity);
+		}
 		public FileMappingInfo Load(long id)
 		{
 			return _dbset.Where(x => x.Id == id).FirstOrDefault();

@@ -24,7 +24,6 @@ namespace Mogami.Model
 
 		#endregion フィールド
 
-
 		#region プロパティ
 
 		public string AclHash
