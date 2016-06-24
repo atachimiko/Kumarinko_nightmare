@@ -81,6 +81,7 @@
     <Compile Include="Constractures\ApplicationSettingInfo.cs" />
     <Compile Include="Infrastructures\IApplicationContext.cs" />
     <Compile Include="Infrastructures\IWorkspaceViewModel.cs" />
+    <Compile Include="Presentation\ImageListLazyItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -127,8 +127,17 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resource\ImageListStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Container\ImageListView.cs" />
     <Compile Include="LocalNameTemplateSelector.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -197,11 +206,8 @@
     <Folder Include="Assets\" />
     <Folder Include="Behavior\" />
     <Folder Include="Component\" />
-    <Folder Include="Container\" />
     <Folder Include="Converter\" />
     <Folder Include="Dialog\" />
-    <Folder Include="Resource\" />
-    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml">

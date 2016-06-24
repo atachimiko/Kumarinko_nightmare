@@ -101,6 +101,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructures\IDataSource.cs" />
+    <Compile Include="Infrastructures\ILazyLoadingItem.cs" />
+    <Compile Include="Infrastructures\ItemDataBase.cs" />
+    <Compile Include="Infrastructures\LazyDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AvalonDockWorkspaceViewModel.cs" />
   </ItemGroup>
