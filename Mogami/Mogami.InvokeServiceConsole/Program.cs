@@ -59,7 +59,7 @@ namespace Mogami.InvokeServiceConsole
 				// ① エンドポイントの手動構成設定 (C/B/A を指定)
 				//   バインディングの構成設定を行いたい場合には、Binding インスタンスのプロパティを設定する
 				host.AddServiceEndpoint(typeof(IMogamiApiService), new NetNamedPipeBinding(),
-					"net.pipe://localhost/Alcedines.Server/Halcyon");
+					"net.pipe://localhost/Kumarinko.Server/Halcyon");
 				// ② ビヘイビアの手動構成設定
 				//   すでにいくつかのビヘイビアは既定で追加されているため、取り払ってから再設定する
 				host.Description.Behaviors.Remove(typeof(ServiceDebugBehavior));
