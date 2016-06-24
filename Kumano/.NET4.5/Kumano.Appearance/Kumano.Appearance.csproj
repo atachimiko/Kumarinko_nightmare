@@ -139,6 +139,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\TagTreeExplorer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container\ImageListView.cs" />
@@ -207,7 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Action\" />
-    <Folder Include="Assets\" />
     <Folder Include="Behavior\" />
     <Folder Include="Component\" />
     <Folder Include="Converter\" />
@@ -218,6 +221,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\property-blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
