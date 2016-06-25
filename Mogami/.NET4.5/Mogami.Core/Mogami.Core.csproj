@@ -102,6 +102,10 @@
     <Compile Include="Constructions\UpdateVirtualStatusEventType.cs" />
     <Compile Include="Definication\ActivityParameterStack.cs" />
     <Compile Include="Definication\WorkflowParameterStack.cs" />
+    <Compile Include="Expression\ExpKeyValue.cs" />
+    <Compile Include="Expression\SearchExpression.cs" />
+    <Compile Include="Expression\LogicalType.cs" />
+    <Compile Include="Expression\RelationalType.cs" />
     <Compile Include="Infrastructure\IApplicationContext.cs" />
     <Compile Include="Infrastructure\IWorkflowContext.cs" />
     <Compile Include="Infrastructure\IThumbnailManager.cs" />
