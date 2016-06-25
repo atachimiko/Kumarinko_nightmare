@@ -3,6 +3,7 @@ using Akalib.Wpf.Mvvm;
 using Kumano.Contrib.ViewModel;
 using Kumano.Core.Infrastructures;
 using Kumano.Data.Construction;
+using Kumano.Data.Service;
 using Livet;
 using Livet.Messaging.IO;
 using log4net;
@@ -120,6 +121,27 @@ namespace Kumano.Data.ViewModel
 			LOG.Debug("Execute ShowImageListDocument");
 
 			//this.ShowDocument(new ImageListDocumentViewModel());
+
+			try
+			{
+				using (var proxy = new MogamiApiServiceClient())
+				{
+					proxy.Login();
+					var resval = proxy.GetServerVersion(VERSION_SELECTOR.API_VERSION);
+					LOG.Debug(resval);
+
+					var resval2 = proxy.GetServerVersion(VERSION_SELECTOR.DATABASE_VERSION);
+					LOG.Debug(resval2);
+
+					var resval3 = proxy.GetServerVersion(VERSION_SELECTOR.SERVICE_VERSION);
+					LOG.Debug(resval3);
+					proxy.Logout();
+				}
+			}
+			catch (Exception expr)
+			{
+				LOG.Error(expr.Message);
+			}
 
 			/*
 			try

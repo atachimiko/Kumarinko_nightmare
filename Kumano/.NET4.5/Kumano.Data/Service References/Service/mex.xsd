@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Core.Expression" />
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
+  <xs:complexType name="REQUEST_FINDARTIFACT">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Core.Expression" minOccurs="0" name="Expression" nillable="true" type="q1:FindExpression" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="TargetType" type="q2:FINDTARGET_SELECTOR" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_FINDARTIFACT" nillable="true" type="tns:REQUEST_FINDARTIFACT" />
+</xs:schema>

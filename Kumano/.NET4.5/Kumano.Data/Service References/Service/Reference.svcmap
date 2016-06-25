@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bdd0809b-192c-4a3a-9878-355f18dc45a8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8000/Kumarinko.Server/Mogami/mex" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="mex.xsd" MetadataType="Schema" ID="234cbdcc-fa91-4800-af6b-5aea364a8fd5" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd2" />
+    <MetadataFile FileName="mex1.xsd" MetadataType="Schema" ID="86b2bca2-0c8b-4ad1-85c9-843eef2f9b99" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" />
+    <MetadataFile FileName="mex4.xsd" MetadataType="Schema" ID="1cc76a9d-7b55-4e1f-ac44-c36d39cf1be3" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd4" />
+    <MetadataFile FileName="mex5.xsd" MetadataType="Schema" ID="a1e5a7f9-f14f-4646-9440-8874bdb058f1" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" />
+    <MetadataFile FileName="MogamiApiService.wsdl" MetadataType="Wsdl" ID="6e8b7d98-07c1-46fe-8bf2-fb9a33864efa" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex" />
+    <MetadataFile FileName="mex2.xsd" MetadataType="Schema" ID="34af87c3-3d7e-4674-a22a-7ff87aebde37" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd0" />
+    <MetadataFile FileName="mex3.xsd" MetadataType="Schema" ID="bda887a1-34f9-48de-83cd-08fb82076489" SourceId="1" SourceUrl="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
