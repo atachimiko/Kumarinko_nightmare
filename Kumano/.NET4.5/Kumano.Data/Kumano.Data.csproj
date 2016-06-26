@@ -124,6 +124,7 @@
     <Compile Include="ViewModel\PropertyPaneViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ArtifactNavigationListPropertyViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ImagePreviewPropertyViewModel.cs" />
+    <Compile Include="ViewModel\TagTreeExplorerPaneViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
