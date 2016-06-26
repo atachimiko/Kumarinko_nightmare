@@ -164,10 +164,11 @@ namespace Kumano.Data.ViewModel
 
 			using (var proxy = new MogamiApiServiceClient())
 			{
+				proxy.Login();
 				// TODO: とりあえず、カテゴリ固定(ID:1)でアーティファクトを検索する
 				var param = new REQUEST_FINDARTIFACT();
 				//param.Limit = 100;
-				var result = await proxy.FindArtifactAsync(param);
+				RESPONSE_FINDARTIFACT result = await proxy.FindArtifactAsync(param);
 				foreach (var prop in result.Artifacts)
 				{
 					this._Images.AddItem(new ImageListLazyItem
@@ -176,6 +177,14 @@ namespace Kumano.Data.ViewModel
 						ArtifactId = prop.Id,
 						Label = prop.Title,
 					});
+
+					if (!string.IsNullOrEmpty(prop.ThumbnailKey))
+					{
+						var loadthumbparam = new REQUEST_LOADTHUMBNAIL { ThumbnailKey = prop.ThumbnailKey };
+						var rsp = await proxy.LoadThumbnailAsync(loadthumbparam);
+
+						LOG.InfoFormat("サムネイル読み込み={0}", rsp.ThumbnailBytes.Count());
+					}
 				}
 			}
 			

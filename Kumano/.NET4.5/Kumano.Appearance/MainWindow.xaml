@@ -29,6 +29,39 @@
             <akaWpfConverter:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <localConverter:BooleanToVisibilityConverterForAvalonDock x:Key="BooleanToVisibilityConverterForAvalonDock" />
+
+            <DataTemplate DataType="{x:Type localVm:CategoryTreeExplorerPaneViewModel}">
+                <localComp:CategoryTreeExplorerPane />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type localVm:PropertyPaneViewModel}">
+                <localComp:PropertyPane />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type localVm:TagTreeExplorerPaneViewModel}">
+                <localComp:TagTreeExplorerPane />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type localVm:ArtifactNavigationListDocumentViewModel}">
+                <localComp:ArtifactNavigationListDocument />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type localVm:ImagePreviewDocumentViewModel}">
+                <localComp:ImagePreviewDocument />
+            </DataTemplate>
+
+            <!--  プロパティペインに表示するデータテンプレートの定義  -->
+            <!--  Keyにクラスと同じ名称を入力します。  -->
+            <DataTemplate x:Key="ImagePreviewPropertyViewModel" DataType="{x:Type localVm:ImagePreviewPropertyViewModel}">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>ImagePreviewのプロパティです</TextBlock>
+                        <TextBlock Text="{Binding SampleText}" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ArtifactNavigationListPropertyViewModel" DataType="{x:Type localVm:ArtifactNavigationListPropertyViewModel}">
+                <Grid>
+                    <TextBlock>ImageListのプロパティです</TextBlock>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </Fluent:RibbonWindow.Resources>
     <Grid Name="MainGrid">

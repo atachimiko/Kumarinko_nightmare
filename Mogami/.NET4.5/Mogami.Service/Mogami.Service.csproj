@@ -88,9 +88,11 @@
     <Compile Include="MogamiApiService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\REQUEST_FINDARTIFACT.cs" />
+    <Compile Include="Request\REQUEST_LOADTHUMBNAIL.cs" />
     <Compile Include="Response\RESPONSEAPI_BASE.cs" />
     <Compile Include="Response\RESPONSE_FINDARTIFACT.cs" />
     <Compile Include="Response\RESPONSE_GETSERVERVERSION.cs" />
+    <Compile Include="Response\RESPONSE_LOADTHUMBNAIL.cs" />
     <Compile Include="Serialized\DataArtifact.cs" />
   </ItemGroup>
   <ItemGroup>

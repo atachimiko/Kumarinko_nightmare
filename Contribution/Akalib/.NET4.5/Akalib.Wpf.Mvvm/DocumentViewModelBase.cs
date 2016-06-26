@@ -114,7 +114,7 @@ namespace Akalib.Wpf.Mvvm
 		public string Title
 		{
 			get { return this._Title; }
-			protected set
+			set
 			{
 				this._Title = value;
 				RaisePropertyChanged(() => Title);
@@ -125,7 +125,7 @@ namespace Akalib.Wpf.Mvvm
 		public string ToolTip
 		{
 			get { return _ToolTip; }
-			protected set
+			set
 			{
 				if (Equals(_ToolTip, value)) return;
 				this._ToolTip = value;

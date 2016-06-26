@@ -58,7 +58,13 @@ namespace Mogami.InvokeServiceConsole
 			{
 				// ① エンドポイントの手動構成設定 (C/B/A を指定)
 				//   バインディングの構成設定を行いたい場合には、Binding インスタンスのプロパティを設定する
-				host.AddServiceEndpoint(typeof(IMogamiApiService), new NetNamedPipeBinding(),
+				var binder = new NetNamedPipeBinding();
+				binder.MaxBufferSize = 1073741824;
+				binder.MaxBufferPoolSize = 1073741824;
+				binder.MaxReceivedMessageSize = 1073741824;
+				binder.ReaderQuotas.MaxArrayLength = 1073741824;
+
+				host.AddServiceEndpoint(typeof(IMogamiApiService), binder,
 					"net.pipe://localhost/Kumarinko.Server/Halcyon");
 				// ② ビヘイビアの手動構成設定
 				//   すでにいくつかのビヘイビアは既定で追加されているため、取り払ってから再設定する
