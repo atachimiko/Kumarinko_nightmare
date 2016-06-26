@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:simpleType name="FINDTARGET_SELECTOR">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="CATEGORY" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="FINDTARGET_SELECTOR" nillable="true" type="tns:FINDTARGET_SELECTOR" />
-  <xs:simpleType name="VERSION_SELECTOR">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SERVICE_VERSION" />
-      <xs:enumeration value="DATABASE_VERSION" />
-      <xs:enumeration value="API_VERSION" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="VERSION_SELECTOR" nillable="true" type="tns:VERSION_SELECTOR" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mogami.Model" />
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="RESPONSE_FINDARTIFACT">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RESPONSEAPI_BASE">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Model" minOccurs="0" name="Artifacts" nillable="true" type="q1:ArrayOfArtifact" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Thumbnails" nillable="true" type="q2:ArrayOfbase64Binary" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RESPONSE_FINDARTIFACT" nillable="true" type="tns:RESPONSE_FINDARTIFACT" />
+  <xs:complexType name="RESPONSEAPI_BASE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RESPONSEAPI_BASE" nillable="true" type="tns:RESPONSEAPI_BASE" />
+  <xs:complexType name="RESPONSE_GETSERVERVERSION">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RESPONSEAPI_BASE">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="VersionText" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RESPONSE_GETSERVERVERSION" nillable="true" type="tns:RESPONSE_GETSERVERVERSION" />
 </xs:schema>

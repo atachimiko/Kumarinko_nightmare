@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="RESPONSE_FINDARTIFACT">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:RESPONSEAPI_BASE">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="RESPONSE_FINDARTIFACT" nillable="true" type="tns:RESPONSE_FINDARTIFACT" />
-  <xs:complexType name="RESPONSEAPI_BASE">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfArtifact">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Artifact" nillable="true" type="tns:Artifact" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RESPONSEAPI_BASE" nillable="true" type="tns:RESPONSEAPI_BASE" />
-  <xs:complexType name="RESPONSE_GETSERVERVERSION">
+  <xs:element name="ArrayOfArtifact" nillable="true" type="tns:ArrayOfArtifact" />
+  <xs:complexType name="Artifact">
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:RESPONSEAPI_BASE">
+      <xs:extension base="tns:ServiceModel">
         <xs:sequence>
-          <xs:element minOccurs="0" name="VersionText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileMappingInfo" nillable="true" type="tns:FileMappingInfo" />
+          <xs:element minOccurs="0" name="IdentifyKey" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ThumbnailKey" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="RESPONSE_GETSERVERVERSION" nillable="true" type="tns:RESPONSE_GETSERVERVERSION" />
+  <xs:element name="Artifact" nillable="true" type="tns:Artifact" />
+  <xs:complexType name="ServiceModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceModel" nillable="true" type="tns:ServiceModel" />
+  <xs:complexType name="FileMappingInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AclHash" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MappingFilePath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Mimetype" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Workspace" nillable="true" type="tns:Workspace" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FileMappingInfo" nillable="true" type="tns:FileMappingInfo" />
+  <xs:complexType name="Workspace">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PhysicalPath" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WorkspacePath" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Workspace" nillable="true" type="tns:Workspace" />
 </xs:schema>

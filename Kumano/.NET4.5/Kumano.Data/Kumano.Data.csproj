@@ -105,13 +105,24 @@
   <ItemGroup>
     <Compile Include="Construction\MainWindowRibbonVisibilities.cs" />
     <Compile Include="Construction\ShowPropertyPaneItemType.cs" />
+    <Compile Include="Infrastructure\DoArtifactNavigationListPaneMessage.cs" />
+    <Compile Include="Infrastructure\DoImagePreviewPaneMessage.cs" />
+    <Compile Include="Infrastructure\FindDocumentPaneMessage.cs" />
+    <Compile Include="Infrastructure\ShowDocumentPaneMessage.cs" />
+    <Compile Include="Infrastructure\ShowPropertyPaneMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Struction\CategoryTreeItem.cs" />
+    <Compile Include="Struction\TagTreeItem.cs" />
+    <Compile Include="ViewModel\ArtifactNavigationListDocumentViewModel.cs" />
+    <Compile Include="ViewModel\ImagePreviewDocumentViewModel.cs" />
     <Compile Include="ViewModel\PropertyPaneViewModel.cs" />
+    <Compile Include="ViewModel\PropertyPane\ArtifactNavigationListPropertyViewModel.cs" />
+    <Compile Include="ViewModel\PropertyPane\ImagePreviewPropertyViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,13 +180,12 @@
     <None Include="Service References\Service\mex5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\Service\mex6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\Service\MogamiApiService.wsdl" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Struction\" />
-    <Folder Include="ViewModel\PropertyPane\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

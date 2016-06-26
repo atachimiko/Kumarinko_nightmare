@@ -34,9 +34,10 @@
       <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" />
-      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Core.Expression" />
-      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
-      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" />
+      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
+      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" />
+      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mogami.Model" />
+      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMogamiApiService_FindArtifact_InputMessage">
