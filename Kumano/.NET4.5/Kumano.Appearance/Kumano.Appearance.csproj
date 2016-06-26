@@ -165,6 +165,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behavior\TreeListSetStateToSourceAction.cs" />
     <Compile Include="Component\ArtifactNavigationListDocument.xaml.cs">
       <DependentUpon>ArtifactNavigationListDocument.xaml</DependentUpon>
     </Compile>
@@ -247,7 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Action\" />
-    <Folder Include="Behavior\" />
     <Folder Include="Dialog\" />
   </ItemGroup>
   <ItemGroup>

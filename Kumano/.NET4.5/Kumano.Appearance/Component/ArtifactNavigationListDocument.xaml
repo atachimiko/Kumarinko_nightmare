@@ -1,12 +1,51 @@
 ﻿<UserControl x:Class="Kumano.View.Component.ArtifactNavigationListDocument"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
              xmlns:local="clr-namespace:Kumano.View.Component"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:localContainer="clr-namespace:Kumano.View.Container"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <s:Boolean x:Key="True">True</s:Boolean>
+        <s:Boolean x:Key="False">False</s:Boolean>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodName="LoadComponentListView"
+                                     MethodParameter="{Binding ElementName=ListViewSampleContainer}"
+                                     MethodTarget="{Binding}" />
+            <l:LivetCallMethodAction MethodName="LoadServiceImageList" MethodTarget="{Binding}" />
+            <l:LivetCallMethodAction MethodName="UpdatePropertyPane"
+                                     MethodParameter="{StaticResource False}"
+                                     MethodTarget="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-            
+        <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
+            <ListView x:Name="ListViewSampleContainer"
+                      IsSynchronizedWithCurrentItem="True"
+                      ItemsSource="{Binding Items}"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <localContainer:ImageListView />
+                </ListView.View>
+                <i:Interaction.Triggers>
+                    <l:RoutedEventTrigger RoutedEvent="ListViewItem.MouseDoubleClick">
+                        <l:LivetCallMethodAction MethodName="OutputLog"
+                                                 MethodParameter="ListViewのアイテムでダブルクリックが行われました。"
+                                                 MethodTarget="{Binding}" />
+                        <l:LivetCallMethodAction MethodName="ShowSelectedImagePreview" MethodTarget="{Binding}" />
+                    </l:RoutedEventTrigger>
+                </i:Interaction.Triggers>
+            </ListView>
+        </xctk:BusyIndicator>
     </Grid>
 </UserControl>
