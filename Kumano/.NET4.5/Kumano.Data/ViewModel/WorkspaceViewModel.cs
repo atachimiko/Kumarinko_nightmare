@@ -168,7 +168,7 @@ namespace Kumano.Data.ViewModel
 			/*
 			if (_pp == null)
 			{
-				_pp = new ImageDocumentViewModel();
+				_pp = new ImagePreviewDocumentViewModel();
 				this.ShowDocument(_pp);
 			}
 			else
@@ -178,7 +178,7 @@ namespace Kumano.Data.ViewModel
 			*/
 		}
 
-		//ImageDocumentViewModel _pp = null;
+		//ImagePreviewDocumentViewModel _pp = null;
 
 		public void ShowPropertyPane()
 		{

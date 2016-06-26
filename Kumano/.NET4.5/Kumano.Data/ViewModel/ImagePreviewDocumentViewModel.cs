@@ -23,7 +23,7 @@ namespace Kumano.Data.ViewModel
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ImageDocumentViewModel : DocumentViewModelBase, IDocumentPaneViewModel
+	public class ImagePreviewDocumentViewModel : DocumentViewModelBase, IDocumentPaneViewModel
 	{
 
 		#region フィールド
@@ -38,7 +38,7 @@ namespace Kumano.Data.ViewModel
 		/// </summary>
 		const double SCALE_MIN = 0.01;
 
-		static ILog LOG = LogManager.GetLogger(typeof(ImageDocumentViewModel));
+		static ILog LOG = LogManager.GetLogger(typeof(ImagePreviewDocumentViewModel));
 
 		private int _CurrentImagePosition;
 
@@ -96,7 +96,7 @@ namespace Kumano.Data.ViewModel
 
 		#region コンストラクタ
 
-		public ImageDocumentViewModel()
+		public ImagePreviewDocumentViewModel()
 		{
 			this.Title = "○○○画像"; // TODO: ドキュメントペインのタイトルを適切なもので表示
 		}
@@ -312,7 +312,7 @@ namespace Kumano.Data.ViewModel
 
 		public void ActiveChanged()
 		{
-			LOG.DebugFormat("Active ImageDocumentViewModel IsActive={0}",this.IsActive);
+			LOG.DebugFormat("Active ImagePreviewDocumentViewModel IsActive={0}",this.IsActive);
 
 			// プロパティペインへの表示を行います
 			if (this.IsActive)

@@ -123,6 +123,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Action\DoArtifactNavigationListPaneMessageAction.cs" />
+    <Compile Include="Action\DoImagePreviewPaneMessageAction.cs" />
+    <Compile Include="Action\FindDocumentPaneMessageAction.cs" />
+    <Compile Include="Action\ShowDocumentPaneMessageAction.cs" />
+    <Compile Include="Action\ShowPropertyPaneMessageAction.cs" />
     <Compile Include="Application.xaml.cs">
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -247,7 +252,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Action\" />
     <Folder Include="Dialog\" />
   </ItemGroup>
   <ItemGroup>

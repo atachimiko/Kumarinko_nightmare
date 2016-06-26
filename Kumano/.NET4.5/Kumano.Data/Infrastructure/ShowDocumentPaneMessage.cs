@@ -12,9 +12,9 @@ namespace Kumano.Data.Infrastructure
 	public enum ShowDocumentPaneType
 	{
 		/// <summary>
-		/// 画像一覧
+		/// 一覧
 		/// </summary>
-		DocumentPaneImageList,
+		DocumentPaneArtifactList,
 
 		/// <summary>
 		/// 画像プレビュー

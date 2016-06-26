@@ -16,7 +16,7 @@ namespace Kumano.Data.Infrastructure
 
 		public DoArtifactNavigationListPaneMessage()
 		{
-			this.MessageKey = "DoImageListPane";
+			this.MessageKey = "DoArtifactNavigationListPane";
 		}
 
 		#endregion コンストラクタ
