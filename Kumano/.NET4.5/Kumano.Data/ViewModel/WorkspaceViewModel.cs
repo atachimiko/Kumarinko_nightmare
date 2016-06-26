@@ -22,11 +22,11 @@ namespace Kumano.Data.ViewModel
 		static ILog LOG = LogManager.GetLogger(typeof(WorkspaceViewModel));
 		private readonly MainWindowRibbonVisibilities _MainWindowRibbonVisibilities = new MainWindowRibbonVisibilities();
 
-		//CategoryTreeExplorerPaneViewModel _CategoryTreeExplorerPaneViewModel;
+		CategoryTreeExplorerPaneViewModel _CategoryTreeExplorerPaneViewModel;
 
 		PropertyPaneViewModel _PropertyPaneViewModel;
 
-		//TagTreeExplorerPaneViewModel _TagTreeExplorerPaneViewModel;
+		TagTreeExplorerPaneViewModel _TagTreeExplorerPaneViewModel;
 
 		#endregion フィールド
 
