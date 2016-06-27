@@ -48,6 +48,17 @@ namespace Mogami.Gateway
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
+			// Tag <-> Artifact
+			modelBuilder.Entity<Tag>()
+				.HasMany(c => c.Artifacts)
+				.WithMany(p => p.Tags)
+				.Map(m =>
+				{
+					m.MapLeftKey("TagId");
+					m.MapRightKey("ArtifactId");
+					m.ToTable("TS_Artifact2Tag");
+				});
 		}
 
 		protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)

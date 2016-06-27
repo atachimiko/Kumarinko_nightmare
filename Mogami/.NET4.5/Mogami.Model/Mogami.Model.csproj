@@ -86,6 +86,7 @@
     <Compile Include="Repository\ThumbnailRepository.cs" />
     <Compile Include="Repository\WorkspaceRepository.cs" />
     <Compile Include="ServiceModel.cs" />
+    <Compile Include="Tag.cs" />
     <Compile Include="Thumbnail.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>
