@@ -64,6 +64,22 @@
             </DataTemplate>
         </ResourceDictionary>
     </Fluent:RibbonWindow.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodName="LoadLayout"
+                                     MethodParameter="{Binding ElementName=dockManager}"
+                                     MethodTarget="{Binding}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <l:LivetCallMethodAction MethodName="SaveLayout"
+                                     MethodParameter="{Binding ElementName=dockManager}"
+                                     MethodTarget="{Binding}" />
+        </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="NotifyDialog" Messenger="{Binding Messenger}">
+            <l:InformationDialogInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+        <i:EventTrigger EventName="ContentRendered" />
+    </i:Interaction.Triggers>
     <Grid Name="MainGrid">
         <DockPanel Grid.Row="0" LastChildFill="True">
             <Fluent:Ribbon x:Name="ribbon"

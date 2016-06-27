@@ -174,12 +174,13 @@ namespace Kumano.Data.ViewModel
 				this._PropertyPaneViewModel = new PropertyPaneViewModel();
 				this.AnchorContents.Add(this._PropertyPaneViewModel);
 			}
-			/*
+			
 			if (this._CategoryTreeExplorerPaneViewModel == null)
 			{
 				this._CategoryTreeExplorerPaneViewModel = new CategoryTreeExplorerPaneViewModel();
 				this.AnchorContents.Add(this._CategoryTreeExplorerPaneViewModel);
 			}
+			/*
 			if (this._TagTreeExplorerPaneViewModel == null)
 			{
 				this._TagTreeExplorerPaneViewModel = new TagTreeExplorerPaneViewModel();
