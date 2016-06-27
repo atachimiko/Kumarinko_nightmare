@@ -8,4 +8,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_FINDARTIFACT" nillable="true" type="tns:REQUEST_FINDARTIFACT" />
+  <xs:complexType name="REQUEST_LOADTHUMBNAIL">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ThumbnailKey" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_LOADTHUMBNAIL" nillable="true" type="tns:REQUEST_LOADTHUMBNAIL" />
 </xs:schema>

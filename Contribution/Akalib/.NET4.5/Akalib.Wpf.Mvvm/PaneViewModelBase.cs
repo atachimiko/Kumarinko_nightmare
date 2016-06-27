@@ -64,7 +64,7 @@ namespace Akalib.Wpf.Mvvm
 		public string ContentId
 		{
 			get { return _ContentId; }
-			protected set { _ContentId = value; }
+			set { _ContentId = value; }
 		}
 
 		public ViewModelCommand HideCommand
@@ -83,7 +83,7 @@ namespace Akalib.Wpf.Mvvm
 		public ImageSource IconSource
 		{
 			get;
-			protected set;
+			set;
 		}
 
 		/*
@@ -151,7 +151,7 @@ namespace Akalib.Wpf.Mvvm
 		public string Title
 		{
 			get { return this._Title; }
-			protected set
+			set
 			{
 				if (Equals(_Title, value)) return;
 				this._Title = value;
@@ -163,7 +163,7 @@ namespace Akalib.Wpf.Mvvm
 		public string ToolTip
 		{
 			get { return _ToolTip; }
-			protected set
+			set
 			{
 				if (Equals(_ToolTip, value)) return;
 				this._ToolTip = value;

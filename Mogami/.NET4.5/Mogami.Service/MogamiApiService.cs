@@ -46,6 +46,10 @@ namespace Mogami.Service
 			Mapper = MapperConfig.CreateMapper();
 		}
 
+		#endregion コンストラクタ
+
+		#region メソッド
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -60,32 +64,14 @@ namespace Mogami.Service
 				var repo = new ArtifactRepository(dbc);
 				foreach(var prop in repo.GetAll())
 				{
-					rsp.Artifacts.Add(prop);
+					var mapped = Mapper.Map<DataArtifact>(prop);
+					rsp.Artifacts.Add(mapped);
 				}
 			}
-
-			using(var tdbc = new ThumbDbContext())
-			{
-				rsp.Thumbnails = new List<byte[]>();
-				var repo = new ThumbnailRepository(tdbc);
-				foreach (var prop in rsp.Artifacts)
-				{
-					if (!string.IsNullOrEmpty(prop.ThumbnailKey))
-					{
-						var thumb = repo.FindFromKey(prop.ThumbnailKey).FirstOrDefault();
-						if (thumb != null) rsp.Thumbnails.Add(thumb.BitmapBytes);
-						else rsp.Thumbnails.Add(null);
-					}
-				}
-			}
-
+			
 			rsp.Success = true;
 			return rsp;
 		}
-
-		#endregion コンストラクタ
-
-		#region メソッド
 
 		/// <summary>
 		/// 
@@ -117,6 +103,25 @@ namespace Mogami.Service
 			return result;
 		}
 
+		public RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam)
+		{
+			var rsp = new RESPONSE_LOADTHUMBNAIL();
+
+			using (var tdbc = new ThumbDbContext())
+			{
+				var repo = new ThumbnailRepository(tdbc);
+
+				var thumb = repo.FindFromKey(reqparam.ThumbnailKey).FirstOrDefault();
+				if (thumb != null)
+				{
+					LOG.InfoFormat("サムネイルの送信={0}", thumb.BitmapBytes.Count());
+					rsp.ThumbnailBytes = thumb.BitmapBytes;
+				}
+			}
+			rsp.Success = true;
+			return rsp;
+		}
+
 		public void Login()
 		{
 			
@@ -124,9 +129,10 @@ namespace Mogami.Service
 
 		public void Logout()
 		{
-			
+
 		}
 
 		#endregion メソッド
+
 	}
 }

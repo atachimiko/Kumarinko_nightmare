@@ -23,6 +23,7 @@ namespace Kumano.Data.ViewModel
 	public class ArtifactNavigationListDocumentViewModel : DocumentViewModelBase, IDocumentPaneViewModel
 	{
 
+
 		#region フィールド
 
 		static ILog LOG = LogManager.GetLogger(typeof(ArtifactNavigationListDocumentViewModel));
@@ -44,6 +45,8 @@ namespace Kumano.Data.ViewModel
 		/// </summary>
 		Timer _ScrollingTimer;
 		private ImageListLazyItem _SelectedItem;
+
+		bool IsListLoaded = false;
 
 		#endregion フィールド
 
@@ -136,16 +139,7 @@ namespace Kumano.Data.ViewModel
 			this._ScrollingListView = listView;
 		}
 
-		bool IsListLoaded = false; // 画像リストの読み込みを、最初の一度だけ実行するようにする
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public async void ReloadImageList()
-		{
-			this.IsListLoaded = false;
-			LoadServiceImageList();
-		}
+		// 画像リストの読み込みを、最初の一度だけ実行するようにする
 
 		/// <summary>
 		/// サーバーから画像一覧を取得する(async)
@@ -164,10 +158,11 @@ namespace Kumano.Data.ViewModel
 
 			using (var proxy = new MogamiApiServiceClient())
 			{
+				proxy.Login();
 				// TODO: とりあえず、カテゴリ固定(ID:1)でアーティファクトを検索する
 				var param = new REQUEST_FINDARTIFACT();
 				//param.Limit = 100;
-				var result = await proxy.FindArtifactAsync(param);
+				RESPONSE_FINDARTIFACT result = await proxy.FindArtifactAsync(param);
 				foreach (var prop in result.Artifacts)
 				{
 					this._Images.AddItem(new ImageListLazyItem
@@ -175,10 +170,11 @@ namespace Kumano.Data.ViewModel
 						IdText = prop.Id.ToString(),
 						ArtifactId = prop.Id,
 						Label = prop.Title,
+						ThumbnailKey = prop.ThumbnailKey
 					});
 				}
 			}
-			
+
 			this.IsBusy = false;
 		}
 
@@ -189,6 +185,14 @@ namespace Kumano.Data.ViewModel
 				LOG.InfoFormat("   Selected={0}", this.SelectedItem.Label);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public async void ReloadImageList()
+		{
+			this.IsListLoaded = false;
+			LoadServiceImageList();
+		}
 		public void Scrolling()
 		{
 			//this._ScrollingTimer.Stop();
@@ -297,19 +301,22 @@ namespace Kumano.Data.ViewModel
 		static ILog LOG = LogManager.GetLogger(typeof(ImageListLazyItem));
 
 		private long _ArtifactId;
+
 		private string _IdText;
 
 		private string _Label;
+
+		private BitmapSource _Thumbnail;
+
+		private string _ThumbnailKey;
 
 		/// <summary>
 		/// 画像のキャッシュを行ったかどうかのフラグ
 		/// </summary>
 		/// <remarks>
-		/// 読み込みに失敗していても、このフラグをTrueに設定すべきです。
 		/// </remarks>
 		private bool IsCached = false;
 
-		private BitmapSource _Thumbnail;
 		#endregion フィールド
 
 
@@ -320,7 +327,7 @@ namespace Kumano.Data.ViewModel
 			get
 			{ return _ArtifactId; }
 			set
-			{ 
+			{
 				if (_ArtifactId == value)
 					return;
 				_ArtifactId = value;
@@ -367,6 +374,18 @@ namespace Kumano.Data.ViewModel
 			}
 		}
 
+		public string ThumbnailKey
+		{
+			get
+			{
+				return _ThumbnailKey;
+			}
+			set
+			{
+				_ThumbnailKey = value;
+			}
+		}
+
 		#endregion プロパティ
 
 
@@ -374,38 +393,36 @@ namespace Kumano.Data.ViewModel
 
 		public override void LoadedFromData(ILazyLoadingItem loadedData)
 		{
-			if (IsCached) return; // 読み込み済みの場合は、再度読み込みは行わない。
+			if (IsCached) return;
 			IsCached = true;
-			/*
-			try
+			
+			if (!string.IsNullOrEmpty(this.ThumbnailKey))
 			{
-				string filePath = this.FilePath;
-				using (Stream stream = new FileStream(
-					filePath,
-					FileMode.Open,
-					FileAccess.Read,
-					FileShare.ReadWrite | FileShare.Delete
-				))
+				using (var proxy = new MogamiApiServiceClient())
 				{
-					// ロックしないように指定したstreamを使用する。
-					BitmapDecoder decoder = BitmapDecoder.Create(
-						stream,
-						BitmapCreateOptions.None, // この辺のオプションは適宜
-						BitmapCacheOption.Default // これも
-					);
-					BitmapSource bmp = new WriteableBitmap(decoder.Frames[0]);
-					bmp.Freeze();
+					proxy.Login();
 
-					this.Thumbnail = bmp;
+					var loadthumbparam = new REQUEST_LOADTHUMBNAIL { ThumbnailKey = ThumbnailKey };
+					var rsp = proxy.LoadThumbnail(loadthumbparam);
+					
+					using(Stream stream = new MemoryStream(rsp.ThumbnailBytes))
+					{
+						// ロックしないように指定したstreamを使用する。
+						BitmapDecoder decoder = BitmapDecoder.Create(
+							stream,
+							BitmapCreateOptions.None, // この辺のオプションは適宜
+							BitmapCacheOption.Default // これも
+						);
+						BitmapSource bmp = new WriteableBitmap(decoder.Frames[0]);
+						bmp.Freeze();
+
+						this.Thumbnail = bmp;
+					}
 				}
 			}
-			catch (Exception exc)
-			{
-				LOG.WarnFormat("[" + exc.Message + "]\n" + exc.StackTrace);
-			}
-			*/
 		}
 
 		#endregion メソッド
+
 	}
 }

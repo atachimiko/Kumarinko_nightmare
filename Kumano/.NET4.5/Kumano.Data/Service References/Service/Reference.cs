@@ -87,6 +87,7 @@ namespace Kumano.Data.Service {
     [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSEAPI_BASE", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_GETSERVERVERSION))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_FINDARTIFACT))]
     public partial class RESPONSEAPI_BASE : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -170,18 +171,38 @@ namespace Kumano.Data.Service {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSE_LOADTHUMBNAIL", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
+    [System.SerializableAttribute()]
+    public partial class RESPONSE_LOADTHUMBNAIL : Kumano.Data.Service.RESPONSEAPI_BASE {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] ThumbnailBytesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] ThumbnailBytes {
+            get {
+                return this.ThumbnailBytesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbnailBytesField, value) != true)) {
+                    this.ThumbnailBytesField = value;
+                    this.RaisePropertyChanged("ThumbnailBytes");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSE_FINDARTIFACT", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
     [System.SerializableAttribute()]
     public partial class RESPONSE_FINDARTIFACT : Kumano.Data.Service.RESPONSEAPI_BASE {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Kumano.Data.Service.Artifact[] ArtifactsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private byte[][] ThumbnailsField;
+        private System.Collections.Generic.LinkedList<Kumano.Data.Service.DataArtifact> ArtifactsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Kumano.Data.Service.Artifact[] Artifacts {
+        public System.Collections.Generic.LinkedList<Kumano.Data.Service.DataArtifact> Artifacts {
             get {
                 return this.ArtifactsField;
             }
@@ -192,106 +213,28 @@ namespace Kumano.Data.Service {
                 }
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[][] Thumbnails {
-            get {
-                return this.ThumbnailsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ThumbnailsField, value) != true)) {
-                    this.ThumbnailsField = value;
-                    this.RaisePropertyChanged("Thumbnails");
-                }
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Artifact", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DataArtifact", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized")]
     [System.SerializableAttribute()]
-    public partial class Artifact : Kumano.Data.Service.ServiceModel {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Kumano.Data.Service.FileMappingInfo FileMappingInfoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdentifyKeyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ThumbnailKeyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TitleField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Kumano.Data.Service.FileMappingInfo FileMappingInfo {
-            get {
-                return this.FileMappingInfoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileMappingInfoField, value) != true)) {
-                    this.FileMappingInfoField = value;
-                    this.RaisePropertyChanged("FileMappingInfo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IdentifyKey {
-            get {
-                return this.IdentifyKeyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdentifyKeyField, value) != true)) {
-                    this.IdentifyKeyField = value;
-                    this.RaisePropertyChanged("IdentifyKey");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ThumbnailKey {
-            get {
-                return this.ThumbnailKeyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ThumbnailKeyField, value) != true)) {
-                    this.ThumbnailKeyField = value;
-                    this.RaisePropertyChanged("ThumbnailKey");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Title {
-            get {
-                return this.TitleField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
-                    this.TitleField = value;
-                    this.RaisePropertyChanged("Title");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceModel", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Model")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.FileMappingInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.Workspace))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.Artifact))]
-    public partial class ServiceModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class DataArtifact : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdentifyKeyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TitleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThumbnailKeyField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -316,138 +259,51 @@ namespace Kumano.Data.Service {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IdentifyKey {
+            get {
+                return this.IdentifyKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdentifyKeyField, value) != true)) {
+                    this.IdentifyKeyField = value;
+                    this.RaisePropertyChanged("IdentifyKey");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Title {
+            get {
+                return this.TitleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
+                    this.TitleField = value;
+                    this.RaisePropertyChanged("Title");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string ThumbnailKey {
+            get {
+                return this.ThumbnailKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbnailKeyField, value) != true)) {
+                    this.ThumbnailKeyField = value;
+                    this.RaisePropertyChanged("ThumbnailKey");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FileMappingInfo", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Model")]
-    [System.SerializableAttribute()]
-    public partial class FileMappingInfo : Kumano.Data.Service.ServiceModel {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AclHashField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MappingFilePathField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MimetypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Kumano.Data.Service.Workspace WorkspaceField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AclHash {
-            get {
-                return this.AclHashField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AclHashField, value) != true)) {
-                    this.AclHashField = value;
-                    this.RaisePropertyChanged("AclHash");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MappingFilePath {
-            get {
-                return this.MappingFilePathField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MappingFilePathField, value) != true)) {
-                    this.MappingFilePathField = value;
-                    this.RaisePropertyChanged("MappingFilePath");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Mimetype {
-            get {
-                return this.MimetypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MimetypeField, value) != true)) {
-                    this.MimetypeField = value;
-                    this.RaisePropertyChanged("Mimetype");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Kumano.Data.Service.Workspace Workspace {
-            get {
-                return this.WorkspaceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WorkspaceField, value) != true)) {
-                    this.WorkspaceField = value;
-                    this.RaisePropertyChanged("Workspace");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Workspace", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Model")]
-    [System.SerializableAttribute()]
-    public partial class Workspace : Kumano.Data.Service.ServiceModel {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PhysicalPathField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string WorkspacePathField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PhysicalPath {
-            get {
-                return this.PhysicalPathField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PhysicalPathField, value) != true)) {
-                    this.PhysicalPathField = value;
-                    this.RaisePropertyChanged("PhysicalPath");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WorkspacePath {
-            get {
-                return this.WorkspacePathField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WorkspacePathField, value) != true)) {
-                    this.WorkspacePathField = value;
-                    this.RaisePropertyChanged("WorkspacePath");
-                }
             }
         }
     }
@@ -466,6 +322,51 @@ namespace Kumano.Data.Service {
         API_VERSION = 2,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="REQUEST_LOADTHUMBNAIL", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request")]
+    [System.SerializableAttribute()]
+    public partial class REQUEST_LOADTHUMBNAIL : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThumbnailKeyField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThumbnailKey {
+            get {
+                return this.ThumbnailKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbnailKeyField, value) != true)) {
+                    this.ThumbnailKeyField = value;
+                    this.RaisePropertyChanged("ThumbnailKey");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Service.IMogamiApiService", SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IMogamiApiService {
@@ -481,6 +382,12 @@ namespace Kumano.Data.Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/GetServerVersion", ReplyAction="http://tempuri.org/IMogamiApiService/GetServerVersionResponse")]
         System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_GETSERVERVERSION> GetServerVersionAsync(Kumano.Data.Service.VERSION_SELECTOR versionType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadThumbnail", ReplyAction="http://tempuri.org/IMogamiApiService/LoadThumbnailResponse")]
+        Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL LoadThumbnail(Kumano.Data.Service.REQUEST_LOADTHUMBNAIL reqparam);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadThumbnail", ReplyAction="http://tempuri.org/IMogamiApiService/LoadThumbnailResponse")]
+        System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL> LoadThumbnailAsync(Kumano.Data.Service.REQUEST_LOADTHUMBNAIL reqparam);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/Login", ReplyAction="http://tempuri.org/IMogamiApiService/LoginResponse")]
         void Login();
@@ -536,6 +443,14 @@ namespace Kumano.Data.Service {
         
         public System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_GETSERVERVERSION> GetServerVersionAsync(Kumano.Data.Service.VERSION_SELECTOR versionType) {
             return base.Channel.GetServerVersionAsync(versionType);
+        }
+        
+        public Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL LoadThumbnail(Kumano.Data.Service.REQUEST_LOADTHUMBNAIL reqparam) {
+            return base.Channel.LoadThumbnail(reqparam);
+        }
+        
+        public System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL> LoadThumbnailAsync(Kumano.Data.Service.REQUEST_LOADTHUMBNAIL reqparam) {
+            return base.Channel.LoadThumbnailAsync(reqparam);
         }
         
         public void Login() {

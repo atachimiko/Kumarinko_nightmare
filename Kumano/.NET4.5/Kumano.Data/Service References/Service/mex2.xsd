@@ -31,6 +31,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="LoadThumbnail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q5:REQUEST_LOADTHUMBNAIL" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadThumbnailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadThumbnailResult" nillable="true" type="q6:RESPONSE_LOADTHUMBNAIL" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence />

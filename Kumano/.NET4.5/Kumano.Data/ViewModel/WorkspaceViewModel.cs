@@ -120,29 +120,8 @@ namespace Kumano.Data.ViewModel
 		{
 			LOG.Debug("Execute ShowImageListDocument");
 
-			//this.ShowDocument(new ImageListDocumentViewModel());
-
-			try
-			{
-				using (var proxy = new MogamiApiServiceClient())
-				{
-					proxy.Login();
-					var resval = proxy.GetServerVersion(VERSION_SELECTOR.API_VERSION);
-					LOG.Debug(resval);
-
-					var resval2 = proxy.GetServerVersion(VERSION_SELECTOR.DATABASE_VERSION);
-					LOG.Debug(resval2);
-
-					var resval3 = proxy.GetServerVersion(VERSION_SELECTOR.SERVICE_VERSION);
-					LOG.Debug(resval3);
-					proxy.Logout();
-				}
-			}
-			catch (Exception expr)
-			{
-				LOG.Error(expr.Message);
-			}
-
+			this.ShowDocument(new ArtifactNavigationListDocumentViewModel());
+			
 			/*
 			try
 			{
@@ -195,12 +174,13 @@ namespace Kumano.Data.ViewModel
 				this._PropertyPaneViewModel = new PropertyPaneViewModel();
 				this.AnchorContents.Add(this._PropertyPaneViewModel);
 			}
-			/*
+			
 			if (this._CategoryTreeExplorerPaneViewModel == null)
 			{
 				this._CategoryTreeExplorerPaneViewModel = new CategoryTreeExplorerPaneViewModel();
 				this.AnchorContents.Add(this._CategoryTreeExplorerPaneViewModel);
 			}
+			/*
 			if (this._TagTreeExplorerPaneViewModel == null)
 			{
 				this._TagTreeExplorerPaneViewModel = new TagTreeExplorerPaneViewModel();

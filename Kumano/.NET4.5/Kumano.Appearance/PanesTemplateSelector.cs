@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Kumano.Data.ViewModel;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace Kumano.View
 
 		#region プロパティ
 
-		//[DataTemplateSelectMark(typeof(CategoryTreeExplorerPaneViewModel))]
+		[DataTemplateSelectMark(typeof(CategoryTreeExplorerPaneViewModel))]
 		public DataTemplate CategoryTreeExplorerPaneTemplate { get; set; }
 
 		//[DataTemplateSelectMark(typeof(PropertyPaneViewModel))]

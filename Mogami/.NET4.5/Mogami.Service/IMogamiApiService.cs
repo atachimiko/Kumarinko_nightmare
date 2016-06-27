@@ -33,6 +33,14 @@ namespace Mogami.Service
 		[OperationContract]
 		RESPONSE_GETSERVERVERSION GetServerVersion(VERSION_SELECTOR versionType);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam);
+
 		[OperationContract(IsInitiating = true, IsTerminating = false)]
 		void Login();
 
@@ -40,5 +48,6 @@ namespace Mogami.Service
 		void Logout();
 
 		#endregion メソッド
+
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Mogami.Model;
+using Mogami.Service.Serialized;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Mogami.Service.Response
 
 		public RESPONSE_FINDARTIFACT()
 		{
-			this.Artifacts = new List<Artifact>();
+			this.Artifacts = new List<DataArtifact>();
 		}
 
 		#endregion コンストラクタ
@@ -23,9 +24,7 @@ namespace Mogami.Service.Response
 
 		#region プロパティ
 
-		public List<Artifact> Artifacts { get; set; }
-
-		public List<byte[]> Thumbnails { get; set; }
+		public List<DataArtifact> Artifacts { get; set; }
 
 		#endregion プロパティ
 

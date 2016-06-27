@@ -1,0 +1,112 @@
+﻿<Window x:Class="Kumano.View.Dialog.VersionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:local="clr-namespace:Kumano.View.Dialog"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="バージョン情報"
+        Width="550"
+        Height="400"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <!--  WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます  -->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodName="InitRendered" MethodTarget="{Binding}" />
+        </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="Close" Messenger="{Binding Messenger}">
+            <l:WindowInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="CloseCanceled" Messenger="{Binding Messenger}">
+            <l:ConfirmationDialogInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <DockPanel>
+        <DockPanel.Background>
+            <LinearGradientBrush ColorInterpolationMode="SRgbLinearInterpolation" SpreadMethod="Pad" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#FFFFFFFF" />
+                <GradientStop Offset="1" Color="#FFE7FFF2" />
+                <GradientStop Offset="0.23" Color="#FFF6FFFA" />
+            </LinearGradientBrush>
+
+        </DockPanel.Background>
+        <StackPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+            <Button Width="120"
+                    Margin="0,5,5,10"
+                    Content="閉じる">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <l:LivetCallMethodAction MethodName="RequestClose" MethodTarget="{Binding}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="150*" />
+                <RowDefinition Height="80*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="1"
+                           FontSize="30"
+                           Foreground="#0F532F">
+                    Kumarinko -くまりんこ-
+                </TextBlock>
+            </Grid>
+            <StackPanel Grid.Row="1"
+                        Grid.RowSpan="2"
+                        Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="100"
+                               VerticalAlignment="Center"
+                               Text="バージョン"
+                               TextAlignment="Right" />
+                    <TextBlock Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="{Binding VersionText}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="100"
+                               VerticalAlignment="Center"
+                               Text="所有ライセンス"
+                               TextAlignment="Right" />
+                    <TextBlock Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="なし" />
+                </StackPanel>
+                <StackPanel Margin="50,15,0,0">
+                    <TextBlock Foreground="#0F532F">Copyright © 2016 atachimiko All Rights Reserved.</TextBlock>
+                </StackPanel>
+                <StackPanel Margin="10,20,10,10">
+                    <TextBlock FontSize="11" TextWrapping="WrapWithOverflow">
+                        警告：このコンピュータープログラムは、著作権に関する法律および国際条約により保護されています。
+                        このプログラムまたは、その一部を著作権者の許可無く、複製／改竄または配布することは、刑事および民事上の問題を起こす可能性があるとともに、法により厳しく処罰されることがあります。
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="80*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0">SpecialThanks(アルファベット順)</TextBlock>
+                <TextBox Grid.Row="1"
+                         Margin="1"
+                         Background="Transparent"
+                         IsReadOnly="True">
+                    github・掲示板・ブログでバグ報告していただいた方々
+                </TextBox>
+            </Grid>
+
+        </Grid>
+    </DockPanel>
+</Window>

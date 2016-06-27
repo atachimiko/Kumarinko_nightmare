@@ -110,6 +110,7 @@
     <Compile Include="Infrastructure\IWorkflowContext.cs" />
     <Compile Include="Infrastructure\IThumbnailManager.cs" />
     <Compile Include="Model\IArtifact.cs" />
+    <Compile Include="Model\ITag.cs" />
     <Compile Include="Model\IWorkspace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spp\AclFileStructure.cs" />
