@@ -83,5 +83,7 @@ CREATE TABLE IF NOT	EXISTS [TS_Artifact2Tag]
 --
 -- Initialize Data
 --
--- INSERT INTO alCategory (Id, Name, CategortTypeCode) VALUES (1, "RootCategory", 0);
--- INSERT INTO alCategory (Id, Name, CategortTypeCode) VALUES (2, "RecycleCategory", 0);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (1, "RootCategory", 1);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (2, "SystemCategory", 1);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (3, "ApplicationCategory", 3);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (4, "RecycleCategory", 2);
