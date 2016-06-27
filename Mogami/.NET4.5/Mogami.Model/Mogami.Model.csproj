@@ -76,11 +76,13 @@
   <ItemGroup>
     <Compile Include="ApMetadata.cs" />
     <Compile Include="Artifact.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="FileMappingInfo.cs" />
     <Compile Include="ImageArtifact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ApMetadataRepository.cs" />
     <Compile Include="Repository\ArtifactRepository.cs" />
+    <Compile Include="Repository\CategoryRepository.cs" />
     <Compile Include="Repository\FileMappingInfoRepository.cs" />
     <Compile Include="Repository\ImageArtifactRepository.cs" />
     <Compile Include="Repository\TagRepository.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="ServiceModel.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Thumbnail.cs" />
+    <Compile Include="T_Artifact2Category.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>
   <ItemGroup>

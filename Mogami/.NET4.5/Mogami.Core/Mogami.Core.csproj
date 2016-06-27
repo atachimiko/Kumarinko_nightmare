@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="Attributes\ThumbnailInfoAttribute.cs" />
+    <Compile Include="Constructions\CategoryType.cs" />
     <Compile Include="Constructions\InitializeParamType.cs" />
     <Compile Include="Constructions\ThumbnailType.cs" />
     <Compile Include="Constructions\UpdateVirtualStatusEventType.cs" />

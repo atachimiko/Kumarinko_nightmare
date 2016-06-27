@@ -15,6 +15,8 @@ namespace Mogami.Model
 
 		#region フィールド
 
+		private T_Artifact2Category _Category;
+
 		private FileMappingInfo _FileMappingInfo;
 
 		private string _IdentifyKey;
@@ -40,6 +42,17 @@ namespace Mogami.Model
 
 		#region プロパティ
 
+		public virtual T_Artifact2Category Category
+		{
+			get
+			{ return _Category; }
+			set
+			{
+				if (_Category == value)
+					return;
+				_Category = value;
+			}
+		}
 		public virtual FileMappingInfo FileMappingInfo
 		{
 			get { return _FileMappingInfo; }

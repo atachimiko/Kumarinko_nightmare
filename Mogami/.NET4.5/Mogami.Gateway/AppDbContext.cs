@@ -38,6 +38,7 @@ namespace Mogami.Gateway
 		public DbSet<ApMetadata> ApMetadatas { get; set; }
 		public DbSet<Artifact> Artifacts { get; set; }
 		public DbSet<FileMappingInfo> FileMappingInfos { get; set; }
+		public DbSet<T_Artifact2Category> Relations_Artifact2Category { get; set; }
 		public DbSet<Workspace> Workspaces { get; set; }
 
 		#endregion プロパティ
@@ -48,6 +49,14 @@ namespace Mogami.Gateway
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
+			// Configure StudentId as PK for StudentAddress
+			modelBuilder.Entity<T_Artifact2Category>()
+				.HasKey(e => e.Id);
+			// Configure StudentId as FK for StudentAddress
+			modelBuilder.Entity<Artifact>()
+						.HasOptional(s => s.Category) // Mark StudentAddress is optional for Student
+						.WithRequired(ad => ad.Artifact); // Create inverse relationship
 
 			// Tag <-> Artifact
 			modelBuilder.Entity<Tag>()
@@ -71,6 +80,25 @@ namespace Mogami.Gateway
 				{
 					var list = new List<System.Data.Entity.Validation.DbValidationError>();
 					list.Add(new System.Data.Entity.Validation.DbValidationError("Title", "Title is required"));
+
+					return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
+				}
+			}
+			else if (entityEntry.Entity is Category)
+			{
+				var category = entityEntry.Entity as Category;
+
+				if (entityEntry.CurrentValues.GetValue<string>("CategoryName") == "")
+				{
+					var list = new List<System.Data.Entity.Validation.DbValidationError>();
+					list.Add(new System.Data.Entity.Validation.DbValidationError("CategoryName", "CategoryName is required"));
+
+					return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
+				}
+				if (category.ParentCategory == null)
+				{
+					var list = new List<System.Data.Entity.Validation.DbValidationError>();
+					list.Add(new System.Data.Entity.Validation.DbValidationError("ParentCategory", "ParentCategory is required"));
 
 					return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
 				}
