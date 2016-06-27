@@ -83,6 +83,7 @@
     <Compile Include="Repository\ArtifactRepository.cs" />
     <Compile Include="Repository\FileMappingInfoRepository.cs" />
     <Compile Include="Repository\ImageArtifactRepository.cs" />
+    <Compile Include="Repository\TagRepository.cs" />
     <Compile Include="Repository\ThumbnailRepository.cs" />
     <Compile Include="Repository\WorkspaceRepository.cs" />
     <Compile Include="ServiceModel.cs" />
