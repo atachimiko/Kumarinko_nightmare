@@ -41,6 +41,14 @@ namespace Mogami.Service
 		[OperationContract]
 		RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam);
+
 		[OperationContract(IsInitiating = true, IsTerminating = false)]
 		void Login();
 

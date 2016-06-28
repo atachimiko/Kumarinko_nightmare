@@ -37,6 +37,7 @@
       <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
       <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" />
       <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" />
+      <xsd:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMogamiApiService_FindArtifact_InputMessage">
@@ -56,6 +57,12 @@
   </wsdl:message>
   <wsdl:message name="IMogamiApiService_LoadThumbnail_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoadThumbnailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMogamiApiService_LoadCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadCategory" />
+  </wsdl:message>
+  <wsdl:message name="IMogamiApiService_LoadCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadCategoryResponse" />
   </wsdl:message>
   <wsdl:message name="IMogamiApiService_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
@@ -81,6 +88,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadThumbnail">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadThumbnail" message="tns:IMogamiApiService_LoadThumbnail_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadThumbnailResponse" message="tns:IMogamiApiService_LoadThumbnail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadCategory" message="tns:IMogamiApiService_LoadCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadCategoryResponse" message="tns:IMogamiApiService_LoadCategory_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/Login" message="tns:IMogamiApiService_Login_InputMessage" />
@@ -114,6 +125,15 @@
     </wsdl:operation>
     <wsdl:operation name="LoadThumbnail">
       <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/LoadThumbnail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadCategory">
+      <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/LoadCategory" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

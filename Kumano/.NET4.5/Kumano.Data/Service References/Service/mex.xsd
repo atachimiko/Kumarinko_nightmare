@@ -14,4 +14,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_LOADTHUMBNAIL" nillable="true" type="tns:REQUEST_LOADTHUMBNAIL" />
+  <xs:complexType name="REQUEST_LOADCATEGORY">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TargetCategortId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_LOADCATEGORY" nillable="true" type="tns:REQUEST_LOADCATEGORY" />
 </xs:schema>

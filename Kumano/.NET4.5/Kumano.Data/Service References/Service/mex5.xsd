@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" />
   <xs:complexType name="ArrayOfDataArtifact">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="DataArtifact" nillable="true" type="tns:DataArtifact" />
@@ -15,4 +16,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DataArtifact" nillable="true" type="tns:DataArtifact" />
+  <xs:complexType name="ArrayOfDataCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DataCategory" nillable="true" type="tns:DataCategory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDataCategory" nillable="true" type="tns:ArrayOfDataCategory" />
+  <xs:complexType name="DataCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" minOccurs="0" name="CategoryTypeCode" type="q1:CategoryType" />
+      <xs:element minOccurs="0" name="IsHasChild" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DataCategory" nillable="true" type="tns:DataCategory" />
 </xs:schema>

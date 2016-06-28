@@ -103,6 +103,35 @@ namespace Mogami.Service
 			return result;
 		}
 
+		public RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam)
+		{
+			var rsp = new RESPONSE_LOADCATGEORY();
+
+			// TODO: TestData
+			rsp.Categories.Add(new DataCategory
+			{
+				Id = 3L,
+				Name = "Category 01",
+				CategoryTypeCode = Core.Constructions.CategoryType.APPLICATION
+			});
+			rsp.Categories.Add(new DataCategory
+			{
+				Id = 4L,
+				Name = "Category 02",
+				CategoryTypeCode = Core.Constructions.CategoryType.APPLICATION,
+				IsHasChild = true
+			});
+			rsp.Categories.Add(new DataCategory
+			{
+				Id = 5L,
+				Name = "Category 03",
+				CategoryTypeCode = Core.Constructions.CategoryType.APPLICATION
+			});
+
+			rsp.Success = true;
+			return rsp;
+		}
+
 		public RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam)
 		{
 			var rsp = new RESPONSE_LOADTHUMBNAIL();

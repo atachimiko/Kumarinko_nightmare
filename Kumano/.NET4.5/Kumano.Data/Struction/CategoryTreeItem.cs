@@ -1,4 +1,6 @@
-﻿using Livet;
+﻿using Kumano.Data.Service;
+using Livet;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +18,6 @@ namespace Kumano.Data.Struction
 	/// </remarks>
 	public class CategoryTreeItem : Livet.NotificationObject
 	{
-
 		#region フィールド
 
 		/// <summary>
@@ -34,16 +35,17 @@ namespace Kumano.Data.Struction
 		private readonly ReadOnlyDispatcherCollection<CategoryTreeItem> _childrenro = null;
 
 		/// <summary>
+		/// カテゴリのID
+		/// </summary>
+		private long _Id;
+
+		/// <summary>
 		/// 子要素がサーバから取得済みか示すフラグ
 		/// </summary>
 		private bool _isLoadedChildren = false;
 
 		private string _Name;
-
-		/// <summary>
-		/// カテゴリのID
-		/// </summary>
-		private long _Id;
+		ILog LOG = LogManager.GetLogger(typeof(CategoryTreeItem));
 
 		#endregion フィールド
 
@@ -108,30 +110,41 @@ namespace Kumano.Data.Struction
 		{
 			// サーバからデータを取得してきた、というイメージ。
 			// サーバからは、現在のタグの小階層タグの一覧とその小階層が更に小階層を持つかどうかのフラグを取得するような実装とする。
-			/*
+			
 			if (rootLoad)
 			{
-				using (var proxy = new HalcyonApiServiceClient())
+				using (var proxy = new MogamiApiServiceClient())
 				{
-					var result = proxy.GetCategoryTree();
-					foreach (var prop in result.TreeChildren)
+					var param = new REQUEST_LOADCATEGORY();
+					var result = proxy.LoadCategory(param);
+					foreach (var prop in result.Categories)
 					{
-						_children.Add(prop);
+						_children.Add(new ServerCategoryTestData
+						{
+							Id = prop.Id,
+							IsChild = prop.IsHasChild,
+							Name = prop.Name
+						});
 					}
 				}
-			}
-			else
+			}else
 			{
-				using (var proxy = new HalcyonApiServiceClient())
+				using (var proxy = new MogamiApiServiceClient())
 				{
-					var result = proxy.GetCategoryChildTree(this._Id);
-					foreach (var prop in result.TreeChildren)
+					var param = new REQUEST_LOADCATEGORY();
+					param.TargetCategortId = this._Id;
+					var result = proxy.LoadCategory(param);
+					foreach (var prop in result.Categories)
 					{
-						_children.Add(prop);
+						_children.Add(new ServerCategoryTestData
+						{
+							Id = prop.Id,
+							IsChild = prop.IsHasChild,
+							Name = prop.Name
+						});
 					}
 				}
 			}
-			*/
 		}
 
 		#endregion メソッド
@@ -140,8 +153,13 @@ namespace Kumano.Data.Struction
 
 	class ServerCategoryTestData
 	{
+
+		#region プロパティ
+
 		public long Id { get; set; }
 		public bool? IsChild { get; set; }
 		public string Name { get; set; }
+
+		#endregion プロパティ
 	}
 }

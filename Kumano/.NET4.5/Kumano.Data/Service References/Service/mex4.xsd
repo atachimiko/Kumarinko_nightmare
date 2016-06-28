@@ -38,4 +38,14 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RESPONSE_LOADTHUMBNAIL" nillable="true" type="tns:RESPONSE_LOADTHUMBNAIL" />
+  <xs:complexType name="RESPONSE_LOADCATGEORY">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RESPONSEAPI_BASE">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Categories" nillable="true" type="q2:ArrayOfDataCategory" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RESPONSE_LOADCATGEORY" nillable="true" type="tns:RESPONSE_LOADCATGEORY" />
 </xs:schema>
