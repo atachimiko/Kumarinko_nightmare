@@ -31,4 +31,5 @@ namespace Kumano.View.Action
 				dialog.ShowDialog();
 			}
 		}
+	}
 }
