@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="Construction\MainWindowRibbonVisibilities.cs" />
     <Compile Include="Construction\ShowPropertyPaneItemType.cs" />
+    <Compile Include="Infrastructure\DialogMessage.cs" />
     <Compile Include="Infrastructure\DoArtifactNavigationListPaneMessage.cs" />
     <Compile Include="Infrastructure\DoImagePreviewPaneMessage.cs" />
     <Compile Include="Infrastructure\FindDocumentPaneMessage.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Struction\TagTreeItem.cs" />
     <Compile Include="ViewModel\ArtifactNavigationListDocumentViewModel.cs" />
     <Compile Include="ViewModel\CategoryTreeExplorerPaneViewModel.cs" />
+    <Compile Include="ViewModel\EditCategoryDialogViewModel.cs" />
     <Compile Include="ViewModel\ImagePreviewDocumentViewModel.cs" />
     <Compile Include="ViewModel\PropertyPaneViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ArtifactNavigationListPropertyViewModel.cs" />

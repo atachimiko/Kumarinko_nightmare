@@ -123,6 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Action\DialogMessageAction.cs" />
     <Compile Include="Action\DoArtifactNavigationListPaneMessageAction.cs" />
     <Compile Include="Action\DoImagePreviewPaneMessageAction.cs" />
     <Compile Include="Action\FindDocumentPaneMessageAction.cs" />
