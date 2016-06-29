@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" />
-  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" />
-  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" />
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
+  <xs:element name="AddCategory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q1:REQUEST_ADDCATEGORY" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCategoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="AddCategoryResult" nillable="true" type="q2:RESPONSE_ADDCATEGORY" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="FindArtifact">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q1:REQUEST_FINDARTIFACT" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q3:REQUEST_FINDARTIFACT" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="FindArtifactResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="FindArtifactResult" nillable="true" type="q2:RESPONSE_FINDARTIFACT" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="FindArtifactResult" nillable="true" type="q4:RESPONSE_FINDARTIFACT" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetServerVersion">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="versionType" type="q3:VERSION_SELECTOR" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="versionType" type="q5:VERSION_SELECTOR" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetServerVersionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="GetServerVersionResult" nillable="true" type="q4:RESPONSE_GETSERVERVERSION" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="LoadThumbnail">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q5:REQUEST_LOADTHUMBNAIL" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="LoadThumbnailResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadThumbnailResult" nillable="true" type="q6:RESPONSE_LOADTHUMBNAIL" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="GetServerVersionResult" nillable="true" type="q6:RESPONSE_GETSERVERVERSION" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -56,6 +56,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadCategoryResult" nillable="true" type="q8:RESPONSE_LOADCATGEORY" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadThumbnail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q9:REQUEST_LOADTHUMBNAIL" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadThumbnailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadThumbnailResult" nillable="true" type="q10:RESPONSE_LOADTHUMBNAIL" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -77,6 +91,20 @@
   <xs:element name="LogoutResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateCategory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q11:REQUEST_UPDATECATEGORY" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateCategoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="UpdateCategoryResult" nillable="true" type="q12:RESPONSE_UPDATECATEGORY" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>

@@ -152,6 +152,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialog\EditCategoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\EditTagDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialog\VersionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +200,12 @@
     </Compile>
     <Compile Include="Container\ImageListView.cs" />
     <Compile Include="Converter\BooleanToVisibilityConverterForAvalonDock.cs" />
+    <Compile Include="Dialog\EditCategoryDialog.xaml.cs">
+      <DependentUpon>EditCategoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\EditTagDialog.xaml.cs">
+      <DependentUpon>EditTagDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\VersionDialog.xaml.cs">
       <DependentUpon>VersionDialog.xaml</DependentUpon>
     </Compile>

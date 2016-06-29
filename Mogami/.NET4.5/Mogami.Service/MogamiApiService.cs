@@ -48,7 +48,19 @@ namespace Mogami.Service
 
 		#endregion コンストラクタ
 
+
 		#region メソッド
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		public RESPONSE_ADDCATEGORY AddCategory(REQUEST_ADDCATEGORY reqparam)
+		{
+			var rsp = new RESPONSE_ADDCATEGORY();
+			return rsp;
+		}
 
 		/// <summary>
 		/// 
@@ -159,6 +171,12 @@ namespace Mogami.Service
 		public void Logout()
 		{
 
+		}
+
+		public RESPONSE_UPDATECATEGORY UpdateCategory(REQUEST_UPDATECATEGORY reqparam)
+		{
+			var rsp = new RESPONSE_UPDATECATEGORY();
+			return rsp;
 		}
 
 		#endregion メソッド

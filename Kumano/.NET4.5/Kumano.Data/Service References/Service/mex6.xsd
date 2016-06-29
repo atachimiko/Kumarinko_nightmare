@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:simpleType name="CategoryType">
-    <xs:list>
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="SYSTEM">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="SYSTEM_RECYCLE">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="APPLICATION">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:list>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="FINDTARGET_SELECTOR">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CATEGORY" />
+    </xs:restriction>
   </xs:simpleType>
-  <xs:element name="CategoryType" nillable="true" type="tns:CategoryType" />
+  <xs:element name="FINDTARGET_SELECTOR" nillable="true" type="tns:FINDTARGET_SELECTOR" />
+  <xs:simpleType name="VERSION_SELECTOR">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SERVICE_VERSION" />
+      <xs:enumeration value="DATABASE_VERSION" />
+      <xs:enumeration value="API_VERSION" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="VERSION_SELECTOR" nillable="true" type="tns:VERSION_SELECTOR" />
 </xs:schema>

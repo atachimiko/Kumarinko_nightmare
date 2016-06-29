@@ -87,14 +87,18 @@
     <Compile Include="IMogamiApiService.cs" />
     <Compile Include="MogamiApiService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\REQUEST_ADDCATEGORY.cs" />
     <Compile Include="Request\REQUEST_FINDARTIFACT.cs" />
     <Compile Include="Request\REQUEST_LOADCATEGORY.cs" />
     <Compile Include="Request\REQUEST_LOADTHUMBNAIL.cs" />
+    <Compile Include="Request\REQUEST_UPDATECATEGORY.cs" />
     <Compile Include="Response\RESPONSEAPI_BASE.cs" />
+    <Compile Include="Response\RESPONSE_ADDCATEGORY.cs" />
     <Compile Include="Response\RESPONSE_FINDARTIFACT.cs" />
     <Compile Include="Response\RESPONSE_GETSERVERVERSION.cs" />
     <Compile Include="Response\RESPONSE_LOADCATGEORY.cs" />
     <Compile Include="Response\RESPONSE_LOADTHUMBNAIL.cs" />
+    <Compile Include="Response\RESPONSE_UPDATECATEGORY.cs" />
     <Compile Include="Serialized\DataArtifact.cs" />
     <Compile Include="Serialized\DataCategory.cs" />
   </ItemGroup>

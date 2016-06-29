@@ -18,6 +18,14 @@ namespace Mogami.Service
 		#region メソッド
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_ADDCATEGORY AddCategory(REQUEST_ADDCATEGORY reqparam);
+
+		/// <summary>
 		/// Artifactデータモデルの検索
 		/// </summary>
 		/// <param name="reqparam"></param>
@@ -39,7 +47,7 @@ namespace Mogami.Service
 		/// <param name="reqparam"></param>
 		/// <returns></returns>
 		[OperationContract]
-		RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam);
+		RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam);
 
 		/// <summary>
 		/// 
@@ -47,7 +55,7 @@ namespace Mogami.Service
 		/// <param name="reqparam"></param>
 		/// <returns></returns>
 		[OperationContract]
-		RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam);
+		RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam);
 
 		[OperationContract(IsInitiating = true, IsTerminating = false)]
 		void Login();
@@ -55,7 +63,14 @@ namespace Mogami.Service
 		[OperationContract(IsInitiating = false, IsTerminating = true)]
 		void Logout();
 
-		#endregion メソッド
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_UPDATECATEGORY UpdateCategory(REQUEST_UPDATECATEGORY reqparam);
 
+		#endregion メソッド
 	}
 }

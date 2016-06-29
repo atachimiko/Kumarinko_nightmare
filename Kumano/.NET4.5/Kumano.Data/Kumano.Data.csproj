@@ -158,6 +158,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_ADDCATEGORY.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_FINDARTIFACT.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -168,6 +171,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_UPDATECATEGORY.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Service\mex.xsd">
