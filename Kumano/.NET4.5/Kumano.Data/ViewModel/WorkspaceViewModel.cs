@@ -1,6 +1,7 @@
 ﻿using Akalib.Wpf.Dock;
 using Akalib.Wpf.Mvvm;
 using Kumano.Contrib.ViewModel;
+using Kumano.Core;
 using Kumano.Core.Infrastructures;
 using Kumano.Data.Construction;
 using Kumano.Data.Service;
@@ -12,11 +13,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Kumano.Data.ViewModel
 {
 	public class WorkspaceViewModel : AvalonDockWorkspaceViewModel, IWorkspaceViewModel
 	{
+
+
 		#region フィールド
 
 		static ILog LOG = LogManager.GetLogger(typeof(WorkspaceViewModel));
@@ -82,6 +86,7 @@ namespace Kumano.Data.ViewModel
 				}
 			}
 		}
+
 		public void Login()
 		{
 			LOG.Info("Login");
@@ -107,7 +112,23 @@ namespace Kumano.Data.ViewModel
 			*/
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		public void OnWindowSizeChanged(SizeChangedEventArgs e)
+		{
+			var s = e.OriginalSource as Window;
+			if (s.WindowState == System.Windows.WindowState.Normal)
+			{
+				double lastHeight = e.NewSize.Height;
+				double lastWidth = e.NewSize.Width;
 
+				//LOG.InfoFormat("ウィンドウのサイズが変更しました ({0},{1})", lastWidth, lastHeight);
+
+				ApplicationContext.ApplicationSetting.WindowSize = new Size(lastWidth, lastHeight);
+			}
+		}
 		public void SetPropertyPaneItem(IPropertyPaneItem itemViewModel)
 		{
 			this._PropertyPaneViewModel.ActiveContent = itemViewModel;
@@ -190,5 +211,6 @@ namespace Kumano.Data.ViewModel
 		}
 
 		#endregion メソッド
+
 	}
 }
