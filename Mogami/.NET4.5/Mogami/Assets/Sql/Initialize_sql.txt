@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS [alCategory]
 (
 	[Id] INTEGER PRIMARY KEY AUTOINCREMENT,
 	[Name] TEXT,
-	[CategortTypeCode] INTEGER NOT NULL,
+	[CategoryTypeCode] INTEGER NOT NULL,
 	[ParentCategory_Id] INTEGER
 );
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT	EXISTS [TS_Artifact2Tag]
 --
 -- Initialize Data
 --
-INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (1, "RootCategory", 1);
-INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (2, "SystemCategory", 1);
-INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (3, "ApplicationCategory", 3);
-INSERT OR REPLACE INTO alCategory (Id, Name, CategortTypeCode) VALUES (4, "RecycleCategory", 2);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (1, "RootCategory", 1);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (2, "SystemCategory", 1);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (3, "ApplicationCategory", 3);
+INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (4, "RecycleCategory", 2);
