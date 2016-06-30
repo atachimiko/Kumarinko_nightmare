@@ -9,7 +9,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="カテゴリ情報の登録"
         Width="450"
-        Height="200"
+        Height="300"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
     <i:Interaction.Triggers>
@@ -52,5 +52,36 @@
                 </i:Interaction.Triggers>
             </Button>
         </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="MenuList" Grid.Column="0">
+                <ListViewItem>基本情報</ListViewItem>
+                <ListViewItem>親カテゴリ</ListViewItem>
+            </ListView>
+            <Grid Grid.Column="1">
+                <TabControl SelectedIndex="{Binding SelectedIndex, ElementName=MenuList}">
+                    <TabItem Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock Text="カテゴリ名" />
+                            <TextBox Text="{Binding Category.Name}" />
+                            <TextBlock Text="カバー画像(TBD)" />
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Visibility="Collapsed">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="30*" />
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" />
+                            <TreeView Grid.Row="1" />
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
     </DockPanel>
 </Window>

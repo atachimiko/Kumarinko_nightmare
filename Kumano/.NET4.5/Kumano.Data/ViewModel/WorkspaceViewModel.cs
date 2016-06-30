@@ -4,6 +4,7 @@ using Kumano.Contrib.ViewModel;
 using Kumano.Core;
 using Kumano.Core.Infrastructures;
 using Kumano.Data.Construction;
+using Kumano.Data.Infrastructure;
 using Kumano.Data.Service;
 using Livet;
 using Livet.Messaging.IO;
@@ -142,21 +143,6 @@ namespace Kumano.Data.ViewModel
 			LOG.Debug("Execute ShowImageListDocument");
 
 			this.ShowDocument(new ArtifactNavigationListDocumentViewModel());
-			
-			/*
-			try
-			{
-				using (var proxy = new HalcyonService.AlcedinesApiServiceClient())
-				{
-					var r = proxy.RegisterArtifact(ARTIFACT_METAINFO.IMAGE, "aaa");
-				}
-			}
-			catch (Exception expr)
-			{
-				LOG.Error(expr.Message);
-			}
-			*/
-
 		}
 
 		/// <summary>
@@ -178,8 +164,6 @@ namespace Kumano.Data.ViewModel
 			*/
 		}
 
-		//ImagePreviewDocumentViewModel _pp = null;
-
 		public void ShowPropertyPane()
 		{
 			if (!this.AnchorContents.Contains(this._PropertyPaneViewModel))
@@ -188,6 +172,7 @@ namespace Kumano.Data.ViewModel
 			this._PropertyPaneViewModel.IsVisible = true;
 		}
 
+		//ImagePreviewDocumentViewModel _pp = null;
 		protected override void InitializePane()
 		{
 			if (this._PropertyPaneViewModel == null)
@@ -195,7 +180,7 @@ namespace Kumano.Data.ViewModel
 				this._PropertyPaneViewModel = new PropertyPaneViewModel();
 				this.AnchorContents.Add(this._PropertyPaneViewModel);
 			}
-			
+
 			if (this._CategoryTreeExplorerPaneViewModel == null)
 			{
 				this._CategoryTreeExplorerPaneViewModel = new CategoryTreeExplorerPaneViewModel();
@@ -210,7 +195,13 @@ namespace Kumano.Data.ViewModel
 			*/
 		}
 
-		#endregion メソッド
+		private void ShowDialog(IDialogViewModel viewmodel)
+		{
+			var message = new DialogMessage(viewmodel);
+			
+			this.Messenger.RaiseAsync(message);
+		}
 
+		#endregion メソッド
 	}
 }

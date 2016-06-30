@@ -6,6 +6,7 @@
              xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
              xmlns:lAction="clr-namespace:Kumano.View.Action"
              xmlns:local="clr-namespace:Kumano.View.Component"
+             xmlns:localAct="clr-namespace:Kumano.View.Action"
              xmlns:localBehavior="clr-namespace:Kumano.View.Behavior"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:tree="clr-namespace:Akalib.Wpf.Control.Tree;assembly=Akalib.Wpf"
@@ -21,14 +22,17 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
+        <l:InteractionMessageTrigger MessageKey="Dialog" Messenger="{Binding Messenger}">
+            <localAct:DialogMessageAction />
+        </l:InteractionMessageTrigger>
         <l:InteractionMessageTrigger MessageKey="ShowDocumentPane" Messenger="{Binding Messenger}">
-            <lAction:ShowDocumentPaneMessageAction />
+            <localAct:ShowDocumentPaneMessageAction />
         </l:InteractionMessageTrigger>
         <l:InteractionMessageTrigger MessageKey="FindDocumentPane" Messenger="{Binding Messenger}">
-            <lAction:FindDocumentPaneMessageAction />
+            <localAct:FindDocumentPaneMessageAction />
         </l:InteractionMessageTrigger>
         <l:InteractionMessageTrigger MessageKey="DoImageListPane" Messenger="{Binding Messenger}">
-            <lAction:DoArtifactNavigationListPaneMessageAction />
+            <localAct:DoArtifactNavigationListPaneMessageAction />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     <Grid>
@@ -39,6 +43,23 @@
                        ItemContainerStyle="{StaticResource TreeListItemNodeStyle}"
                        ItemTemplate="{StaticResource TagTreeItemTemplate}"
                        Model="{Binding CategoryTreeData}">
+            <tree:TreeList.ContextMenu>
+                <ContextMenu IsOpen="{Binding IsContextMenuOpened}">
+                    <MenuItem Header="カテゴリ情報の変更">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <l:LivetCallMethodAction MethodName="ShowEditCategoryDialog" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </MenuItem>
+                    <MenuItem Header="削除" />
+                    <Separator />
+                    <MenuItem Header="関連項目のリストアップ">
+                        <MenuItem Header="現在の一覧に追加" />
+                        <MenuItem Header="現在の一覧を置き換え" />
+                    </MenuItem>
+                </ContextMenu>
+            </tree:TreeList.ContextMenu>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <localBehavior:TreeListSetStateToSourceAction Source="{Binding SelectedTreeListNode}" Property="SelectedNode" />

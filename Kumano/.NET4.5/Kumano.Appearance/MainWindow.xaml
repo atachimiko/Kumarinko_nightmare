@@ -9,6 +9,7 @@
                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                      xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
                      xmlns:local="clr-namespace:Kumano.View"
+                     xmlns:localAct="clr-namespace:Kumano.View.Action"
                      xmlns:localComp="clr-namespace:Kumano.View.Component"
                      xmlns:localConverter="clr-namespace:Kumano.View.Converter"
                      xmlns:localVm="clr-namespace:Kumano.Data.ViewModel;assembly=Kumano.Data"
@@ -66,6 +67,9 @@
         </ResourceDictionary>
     </Fluent:RibbonWindow.Resources>
     <i:Interaction.Triggers>
+        <l:InteractionMessageTrigger MessageKey="Dialog" Messenger="{Binding Messenger}">
+            <localAct:DialogMessageAction />
+        </l:InteractionMessageTrigger>
         <i:EventTrigger EventName="Loaded">
             <l:LivetCallMethodAction MethodName="LoadLayout"
                                      MethodParameter="{Binding ElementName=dockManager}"
