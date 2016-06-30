@@ -143,6 +143,13 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Fluent:MenuItem>
+                            <Fluent:MenuItem Header="CategoryReload" SizeDefinition="Middle">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <l:LivetCallMethodAction MethodName="Reload" MethodTarget="{Binding CategoryTreeExplorerPaneViewModel}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Fluent:MenuItem>
                         </Fluent:DropDownButton>
                     </Fluent:RibbonGroupBox>
                 </Fluent:RibbonTabItem>

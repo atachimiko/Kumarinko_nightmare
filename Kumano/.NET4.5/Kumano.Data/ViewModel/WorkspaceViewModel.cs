@@ -38,6 +38,14 @@ namespace Kumano.Data.ViewModel
 		#region プロパティ
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public CategoryTreeExplorerPaneViewModel CategoryTreeExplorerPaneViewModel
+		{
+			get { return _CategoryTreeExplorerPaneViewModel; }
+		}
+
+		/// <summary>
 		/// 拡張メニューの表示・非表示フラグを取得する
 		/// </summary>
 		public MainWindowRibbonVisibilities MainWindowRibbonVisibilities
@@ -203,5 +211,6 @@ namespace Kumano.Data.ViewModel
 		}
 
 		#endregion メソッド
+
 	}
 }
