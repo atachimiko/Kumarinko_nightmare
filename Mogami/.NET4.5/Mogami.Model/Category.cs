@@ -13,12 +13,12 @@ namespace Mogami.Model
 	public class Category : ServiceModel
 	{
 
+
 		#region フィールド
 
 		private IList<T_Artifact2Category> _Artifacts;
-
 		private CategoryType _CategoryTypeCode;
-
+		private IList<Category> _ChildCategories;
 		private string _Name;
 
 		private Category _ParentCategory;
@@ -31,6 +31,7 @@ namespace Mogami.Model
 		public Category()
 		{
 			this.Artifacts = new ObservableSynchronizedCollection<T_Artifact2Category>();
+			this.ChildCategories = new ObservableSynchronizedCollection<Category>();
 		}
 
 		#endregion コンストラクタ
@@ -69,6 +70,17 @@ namespace Mogami.Model
 			}
 		}
 
+		public virtual IList<Category> ChildCategories
+		{
+			get
+			{ return _ChildCategories; }
+			set
+			{
+				if (_ChildCategories == value)
+					return;
+				_ChildCategories = value;
+			}
+		}
 		public string Name
 		{
 			get
@@ -94,5 +106,6 @@ namespace Mogami.Model
 		}
 
 		#endregion プロパティ
+
 	}
 }

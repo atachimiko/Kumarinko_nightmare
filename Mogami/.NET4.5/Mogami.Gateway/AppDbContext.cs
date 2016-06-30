@@ -88,10 +88,10 @@ namespace Mogami.Gateway
 			{
 				var category = entityEntry.Entity as Category;
 
-				if (entityEntry.CurrentValues.GetValue<string>("CategoryName") == "")
+				if (entityEntry.CurrentValues.GetValue<string>("Name") == "")
 				{
 					var list = new List<System.Data.Entity.Validation.DbValidationError>();
-					list.Add(new System.Data.Entity.Validation.DbValidationError("CategoryName", "CategoryName is required"));
+					list.Add(new System.Data.Entity.Validation.DbValidationError("Name", "Name is required"));
 
 					return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
 				}
