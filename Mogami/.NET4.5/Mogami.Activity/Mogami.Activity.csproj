@@ -85,6 +85,7 @@
     <Compile Include="Basic\ParameterStackAlias.cs" />
     <Compile Include="Basic\SwapKeyParameterStack.cs" />
     <Compile Include="Basic\UpdateOrCreateEntity.cs" />
+    <Compile Include="Feature\Category\MakeCategory.cs" />
     <Compile Include="Feature\Content\MakeArtifact.cs" />
     <Compile Include="Feature\Content\ReadArtifact.cs" />
     <Compile Include="Feature\Thumbnail\DeleteThumbnail.cs" />
