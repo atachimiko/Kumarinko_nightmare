@@ -147,14 +147,17 @@ namespace Kumano.Data.ViewModel
 			var message_2 = new FindDocumentPaneMessage(typeof(ArtifactNavigationListDocumentViewModel));
 			await Messenger.RaiseAsync(message_2);
 
+			var message_3 = new DoArtifactNavigationListPaneMessage();
+
+			var item = this.SelectedTreeListNode.Tag as CategoryTreeItem;
+			message_3.FindByCategoryId = item.CategoryId;
+
 			if (message_2.Response == null)
 			{
-				var message_3 = new DoArtifactNavigationListPaneMessage();
 				await Messenger.RaiseAsync(message_3);
 			}
 			else
 			{
-				var message_3 = new DoArtifactNavigationListPaneMessage();
 				await Messenger.RaiseAsync(message_3);
 			}
 		}

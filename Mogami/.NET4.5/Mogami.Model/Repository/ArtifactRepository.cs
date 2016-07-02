@@ -11,6 +11,7 @@ namespace Mogami.Model.Repository
 	public class ArtifactRepository : GenericRepository<Artifact>
 	{
 
+
 		#region コンストラクタ
 
 		public ArtifactRepository(DbContext context)
@@ -23,9 +24,14 @@ namespace Mogami.Model.Repository
 
 		#region メソッド
 
-		public Artifact LoadByFileMappingInfo(FileMappingInfo filemappinginfo)
+		/// <summary>
+		/// カテゴリをキーに、Artifactを検索する
+		/// </summary>
+		/// <param name="category"></param>
+		/// <returns></returns>
+		public IQueryable<Artifact> FindByCategory(Category category)
 		{
-			return _dbset.Where(prop => prop.FileMappingInfo.Id == filemappinginfo.Id).FirstOrDefault();
+			return _dbset.Where(prop => prop.Category.Category.Id == category.Id);
 		}
 
 		/// <summary>
@@ -36,6 +42,11 @@ namespace Mogami.Model.Repository
 		public Artifact Load(long id)
 		{
 			return _dbset.Where(x => x.Id == id).FirstOrDefault();
+		}
+
+		public Artifact LoadByFileMappingInfo(FileMappingInfo filemappinginfo)
+		{
+			return _dbset.Where(prop => prop.FileMappingInfo.Id == filemappinginfo.Id).FirstOrDefault();
 		}
 
 		#endregion メソッド

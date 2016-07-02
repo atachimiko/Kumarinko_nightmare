@@ -38,6 +38,7 @@ namespace Kumano.Data.ViewModel
 		/// </summary>
 		private bool _IsBusy;
 
+		private long _LoadCategoryId;
 		ListView _ScrollingListView;
 
 		/// <summary>
@@ -46,6 +47,7 @@ namespace Kumano.Data.ViewModel
 		Timer _ScrollingTimer;
 		private ImageListLazyItem _SelectedItem;
 
+		private bool IsInitializedContainer = false;
 		bool IsListLoaded = false;
 
 		#endregion フィールド
@@ -92,9 +94,23 @@ namespace Kumano.Data.ViewModel
 			}
 		}
 
-
 		public DispatcherCollection<ImageListLazyItem> Items { get { return _Images.Items; } }
 
+		public long LoadCategoryId
+		{
+			get
+			{
+				return _LoadCategoryId;
+			}
+			set
+			{
+				if (value == 0) return;
+
+				_LoadCategoryId = value;
+				IsInitializedContainer = true;
+				LoadServiceImageList();
+			}
+		}
 		public IPropertyPaneItem PropertyPaneItem
 		{
 			get { return null; }
@@ -137,10 +153,11 @@ namespace Kumano.Data.ViewModel
 		public void LoadComponentListView(ListView listView)
 		{
 			this._ScrollingListView = listView;
+			IsInitializedContainer = true;
 		}
 
 		// 画像リストの読み込みを、最初の一度だけ実行するようにする
-
+		
 		/// <summary>
 		/// サーバーから画像一覧を取得する(async)
 		/// </summary>
@@ -152,6 +169,20 @@ namespace Kumano.Data.ViewModel
 			LOG.InfoFormat("LoadServiceImageList IsListLoaded={0}", IsListLoaded);
 			if (IsListLoaded) return;
 			IsListLoaded = true;
+
+			if (!IsInitializedContainer) return;
+
+			long loadCategorId = 0L;
+
+			if (_LoadCategoryId != 0L)
+			{
+				loadCategorId = _LoadCategoryId;
+				_LoadCategoryId = 0L;
+			}else
+			{
+				return;
+			}
+
 			this.IsBusy = true;
 
 			this._Images.Items.Clear();
@@ -159,9 +190,11 @@ namespace Kumano.Data.ViewModel
 			using (var proxy = new MogamiApiServiceClient())
 			{
 				proxy.Login();
-				// TODO: とりあえず、カテゴリ固定(ID:1)でアーティファクトを検索する
+				
 				var param = new REQUEST_FINDARTIFACT();
-				//param.Limit = 100;
+				param.TargetType = FINDTARGET_SELECTOR.CATEGORY;
+				param.TargetId = loadCategorId;
+
 				RESPONSE_FINDARTIFACT result = await proxy.FindArtifactAsync(param);
 				foreach (var prop in result.Artifacts)
 				{
@@ -176,6 +209,7 @@ namespace Kumano.Data.ViewModel
 			}
 
 			this.IsBusy = false;
+			this.IsListLoaded = false;
 		}
 
 		public void OutputLog(string message)
@@ -205,28 +239,32 @@ namespace Kumano.Data.ViewModel
 		public async void ShowSelectedImagePreview()
 		{
 			LOG.Info("ShowSelectedImagePreview");
-			/*
+			
 			if (this.SelectedItem == null)
 			{
 				LOG.Info("選択している画像がありません。");
 				return;
 			}
 
-			RSP_READ_ARTIFACTDETAIL readArtifactDetail;
-			using (var proxy = new MogamiApiServiceClient())
-			{
-				readArtifactDetail = await proxy.ReadArtifactDetailAsync(this.SelectedItem.ArtifactId);
-				LOG.InfoFormat("読み込みパス={0}", readArtifactDetail.ImageFilePath);
-			}
-
 			var message = new DoImagePreviewPaneMessage();
 			message.IsWithActive = true;
-			message.LoadImageInfo = new LoadImageInfo
+
+			using (var proxy = new MogamiApiServiceClient())
 			{
-				BitmapFilePath = readArtifactDetail.ImageFilePath
-			};
-			await Messenger.RaiseAsync(message);
-			*/
+				var request = new REQUEST_LOADARTIFACT();
+				request.TargetArtifactId = SelectedItem.ArtifactId;
+
+				var rsp = await proxy.LoadArtifactAsync(request);
+	
+				message.LoadImageInfo = new LoadImageInfo
+				{
+					BitmapFilePath = rsp.FilePath
+				};
+
+				await Messenger.RaiseAsync(message);
+			}
+
+			
 		}
 
 		/// <summary>

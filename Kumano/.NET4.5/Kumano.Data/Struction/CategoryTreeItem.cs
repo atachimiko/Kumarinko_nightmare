@@ -39,7 +39,7 @@ namespace Kumano.Data.Struction
 		/// <summary>
 		/// カテゴリのID
 		/// </summary>
-		private long _Id;
+		private long _CategoryId;
 
 		/// <summary>
 		/// 子要素がサーバから取得済みか示すフラグ
@@ -60,7 +60,7 @@ namespace Kumano.Data.Struction
 				_children,
 				prop => new CategoryTreeItem
 				{
-					_Id = prop.Id,
+					_CategoryId = prop.Id,
 					Name = prop.Name,
 					HasChildServer = prop.IsChild.HasValue ? prop.IsChild.Value : false
 				},
@@ -70,6 +70,11 @@ namespace Kumano.Data.Struction
 		#endregion コンストラクタ
 
 		#region プロパティ
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public long CategoryId { get { return _CategoryId; } }
 
 		/// <summary>
 		/// TagTreeで表示する小階層の要素を取得します
@@ -112,7 +117,7 @@ namespace Kumano.Data.Struction
 		{
 			var immobj = new DataCategory()
 			{
-				Id = _Id,
+				Id = _CategoryId,
 				Name = _Name
 			};
 			return immobj;
@@ -128,6 +133,8 @@ namespace Kumano.Data.Struction
 				{
 					using (var proxy = new MogamiApiServiceClient())
 					{
+						proxy.Login();
+
 						var param = new REQUEST_LOADCATEGORY();
 						var result = proxy.LoadCategory(param);
 						foreach (var prop in result.Categories)
@@ -146,7 +153,7 @@ namespace Kumano.Data.Struction
 					using (var proxy = new MogamiApiServiceClient())
 					{
 						var param = new REQUEST_LOADCATEGORY();
-						param.TargetCategortId = this._Id;
+						param.TargetCategortId = this._CategoryId;
 						var result = proxy.LoadCategory(param);
 						foreach (var prop in result.Categories)
 						{
@@ -166,6 +173,7 @@ namespace Kumano.Data.Struction
 		}
 
 		#endregion メソッド
+
 	}
 
 	class ServerCategoryTestData

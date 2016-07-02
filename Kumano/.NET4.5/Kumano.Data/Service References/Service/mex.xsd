@@ -16,6 +16,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_FINDARTIFACT" nillable="true" type="tns:REQUEST_FINDARTIFACT" />
+  <xs:complexType name="REQUEST_LOADARTIFACT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TargetArtifactId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_LOADARTIFACT" nillable="true" type="tns:REQUEST_LOADARTIFACT" />
   <xs:complexType name="REQUEST_LOADCATEGORY">
     <xs:sequence>
       <xs:element minOccurs="0" name="TargetCategortId" type="xs:long" />

@@ -36,6 +36,10 @@ namespace Mogami.Activity.Feature.Content
 			ParameterStack pstack = context.GetValue<ParameterStack>(this.Parameter);
 
 			var target = pstack.GetValue<FileMappingInfo>(ActivityParameterStack.TARGET);
+			Mogami.Model.Category category = null;
+			if (pstack.ContainsKey(ActivityParameterStack.CATEGORY))
+				category = pstack.GetValue<Mogami.Model.Category>(ActivityParameterStack.CATEGORY);
+
 			var outputname = context.GetValue<string>(OutputName);
 
 			// Guard
@@ -50,22 +54,16 @@ namespace Mogami.Activity.Feature.Content
 				if (a != null) throw new ApplicationException("すでに作成済みのFileMappingInfoです。");
 			}
 
-			var catrepo = new CategoryRepository(workflowContext.DbContext);
-			var appcat = catrepo.Load(3L);
-			if (appcat == null) throw new ApplicationException();
+			if (category == null)
+			{
+				var catrepo = new CategoryRepository(workflowContext.DbContext);
+				var appcat = catrepo.Load(3L);
+				if (appcat == null) throw new ApplicationException();
+			}
 
-			Category targetCategory = appcat;
 			var tokens = target.MappingFilePath.Split(new string[] { @"\" }, StringSplitOptions.None);
 			var sttokens = new Stack<string>(tokens);
 			var title = sttokens.Pop();
-			var qutokens = new Queue<string>(sttokens.Reverse<string>());
-			while (qutokens.Count > 0)
-			{
-				var oneText = qutokens.Dequeue();
-				targetCategory = CreateOrSelectCategory(targetCategory, oneText, catrepo);
-			}
-
-			workflowContext.DbContext.SaveChanges();
 
 			// 現Verでは画像のみ、メタ情報を生成できる。
 			// (それ以外のファイルは、例外を投げる)
@@ -81,11 +79,11 @@ namespace Mogami.Activity.Feature.Content
 					ImageWidth = -1, // 未実装
 				};
 
-				if (targetCategory != null)
+				if (category != null)
 					entity.Category = new T_Artifact2Category()
 					{
 						Artifact = entity,
-						Category = targetCategory,
+						Category = category,
 						OrderNo = 1
 					};
 
@@ -99,32 +97,7 @@ namespace Mogami.Activity.Feature.Content
 			}
 		}
 
-		private Category CreateOrSelectCategory(Category parentCategory, string categoryName, CategoryRepository repo)
-		{
-			Category category = null;
-			foreach (var child in parentCategory.ChildCategories)
-			{
-				if(child.Name == categoryName)
-				{
-					category = child;
-					break;
-				}
-			}
-
-			// Create
-			if (category == null)
-			{
-				category = new Category()
-				{
-					Name = categoryName,
-					CategoryTypeCode = Core.Constructions.CategoryType.APPLICATION,
-					ParentCategory = parentCategory
-				};
-				repo.Add(category);
-			}
-
-			return category;
-		}
+		
 		#endregion メソッド
 	}
 }

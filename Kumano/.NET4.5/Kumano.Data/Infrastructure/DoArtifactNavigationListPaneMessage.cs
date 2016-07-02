@@ -1,9 +1,11 @@
-﻿using Livet.Messaging;
+﻿using Kumano.Data.ViewModel;
+using Livet.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Kumano.Data.Infrastructure
 {
@@ -12,6 +14,19 @@ namespace Kumano.Data.Infrastructure
 	/// </summary>
 	public class DoArtifactNavigationListPaneMessage : InteractionMessage
 	{
+
+
+		#region フィールド
+
+		public static readonly DependencyProperty FindByCategoryIdProperty = DependencyProperty.Register(
+			"FindByCategoryId", // プロパティ名を指定
+			typeof(long), // プロパティの型を指定
+			typeof(DoArtifactNavigationListPaneMessage), // プロパティを所有する型を指定
+			new PropertyMetadata(0L));
+
+		#endregion フィールド
+
+
 		#region コンストラクタ
 
 		public DoArtifactNavigationListPaneMessage()
@@ -20,6 +35,16 @@ namespace Kumano.Data.Infrastructure
 		}
 
 		#endregion コンストラクタ
+
+		#region プロパティ
+
+		public long FindByCategoryId
+		{
+			get { return (long)GetValue(FindByCategoryIdProperty); }
+			set { SetValue(FindByCategoryIdProperty, value); }
+		}
+
+		#endregion プロパティ
 
 		#region メソッド
 
@@ -36,5 +61,6 @@ namespace Kumano.Data.Infrastructure
 		}
 
 		#endregion メソッド
+
 	}
 }

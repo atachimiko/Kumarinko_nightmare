@@ -2,6 +2,7 @@
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mab="clr-namespace:Mogami.Activity.Basic;assembly=Mogami.Activity"
  xmlns:mafc="clr-namespace:Mogami.Activity.Feature.Content;assembly=Mogami.Activity"
+ xmlns:mafc1="clr-namespace:Mogami.Activity.Feature.Category;assembly=Mogami.Activity"
  xmlns:maft="clr-namespace:Mogami.Activity.Feature.Thumbnail;assembly=Mogami.Activity"
  xmlns:mafv="clr-namespace:Mogami.Activity.Feature.VFS;assembly=Mogami.Activity"
  xmlns:mam="clr-namespace:Mogami.Activity.Model;assembly=Mogami.Activity"
@@ -39,6 +40,8 @@
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>EnsureThat</AssemblyReference>
+      <AssemblyReference>EntityFramework</AssemblyReference>
+      <AssemblyReference>EntityFramework.SqlServer</AssemblyReference>
       <AssemblyReference>Livet</AssemblyReference>
       <AssemblyReference>log4net</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
@@ -47,6 +50,7 @@
       <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
@@ -317,6 +321,13 @@
                   </InArgument>
                 </mafv:MovePhysicalFileFromVirtual.Parameter>
               </mafv:MovePhysicalFileFromVirtual>
+              <mafc1:MakeCategory AlreadyCategoryFlag="{x:Null}" sap2010:WorkflowViewState.IdRef="MakeCategory_1">
+                <mafc1:MakeCategory.Parameter>
+                  <InArgument x:TypeArguments="mca:ParameterStack">
+                    <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
+                  </InArgument>
+                </mafc1:MakeCategory.Parameter>
+              </mafc1:MakeCategory>
               <mafc:MakeArtifact sap2010:WorkflowViewState.IdRef="MakeArtifact_1" OutputName="TARGET">
                 <mafc:MakeArtifact.Parameter>
                   <InArgument x:TypeArguments="mca:ParameterStack">
@@ -452,7 +463,7 @@
         <Sequence.Variables>
           <Variable x:TypeArguments="x:Boolean" Default="False" Name="bAcl" />
         </Sequence.Variables>
-        <mafv:IsACLFile>
+        <mafv:IsACLFile sap2010:WorkflowViewState.IdRef="IsACLFile_3">
           <mafv:IsACLFile.Parameter>
             <InArgument x:TypeArguments="mca:ParameterStack">
               <mca1:CSharpValue x:TypeArguments="mca:ParameterStack">ParameterStack</mca1:CSharpValue>
@@ -463,16 +474,15 @@
               <mca1:CSharpReference x:TypeArguments="x:Boolean">bAcl</mca1:CSharpReference>
             </OutArgument>
           </mafv:IsACLFile.Result>
-          <sap2010:WorkflowViewState.IdRef>IsACLFile_3</sap2010:WorkflowViewState.IdRef>
         </mafv:IsACLFile>
-        <If>
+        <If sap2010:WorkflowViewState.IdRef="If_7">
           <If.Condition>
             <InArgument x:TypeArguments="x:Boolean">
               <mca1:CSharpValue x:TypeArguments="x:Boolean">bAcl == true</mca1:CSharpValue>
             </InArgument>
           </If.Condition>
           <If.Then>
-            <Sequence>
+            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_12">
               <mam:LoadFileMappingInfoEntity sap2010:WorkflowViewState.IdRef="LoadFileMappingInfoEntity_3" KeyType="MappingFilePath">
                 <mam:LoadFileMappingInfoEntity.KeyValue>
                   <InArgument x:TypeArguments="x:String">
@@ -520,14 +530,12 @@
                   </Sequence>
                 </If.Then>
               </If>
-              <sap2010:WorkflowViewState.IdRef>Sequence_12</sap2010:WorkflowViewState.IdRef>
             </Sequence>
           </If.Then>
-          <sap2010:WorkflowViewState.IdRef>If_7</sap2010:WorkflowViewState.IdRef>
         </If>
       </Sequence>
     </Switch>
-    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sfEgDkwQOAgEBSQWRBA4CAQJMC0zHAQIBA08H0QISAwGFAdICB8IDEgIBLsMDB5AEEgIBBVE5UUADAYYBUwleGgMBwgJfCdACDgMBhwHUAjnUAkACAS/XAgniAhoCAXzjAgnBAw4CATDFAznFA0ACAQbHAwnTAxoCASfUAwmPBA4CAQdWD1ZnAwHGAlsPW1wDAcMCYg9iXAMBiAFmDd4BGAMB3AHhAQ3OAhgDAYsB2gIP2gJnAwGBAd8CD98CXAIBfeYCD+YCXAIBMeoCDb8DGAIBNcoDD8oDZwIBK88DD88DXAIBKNcDD9cDXAIBCNsDDYwEGAIBC2sPdiIDAbcCdw/dARQDAd0B5QEP6wEmAwHXAewBD/wBKgMBygH9AQ+NAjADAb0BjgIPlAIyAwG4AZUCD6ACKgMBrwGhAg+nAiQDAaoBqAIPuAIwAwGdAbkCD78CMgMBmAHAAg/GAiMDAZIBxwIPzQIoAwGMAesCD/YCIgIBc/cCD74DFAIBNtwDD+wDLwIBHO0DD4oEFAIBDG4Vbm0DAb0CcxVzcAMBuAJ6FXplAwHeAX4T2wEeAwHjAegBFegBZAMB2AH5ARX5AW0DAdMB9AEV9AGLAQMBzwHvARXvAVwDAcsBigIVigJaAwHGAYUCFYUCbQMBwgGAAhWAAqwBAwG+AZECFZECbQMBuQGdAhWdAosBAwG0AZgCFZgCbQMBsAGkAhWkAm0DAasBtQIVtQJZAwGmAbACFbACbQMBogGrAhWrAqwBAwGeAbwCFbwCbQMBmQHDAhXDAm0DAZQBwAJewAJmAwGTAccCZccCbwMBkQHKAhXKAm0DAY0B7gIV7gJtAgF48wIV8wJwAgF0+gIV+gJlAgE3/gITvAMeAgE75AMV5ANtAgEk3wMV3wOfAQIBIdwDdNwDhQECASDpAxXpA3ICAR3wAxXwA5kBAgEN9AMTiAQeAgEQfxWUATUDAaEClQEV2gEaAwHkAYIDFZcDNQIBXZgDFagDNgIBTakDFbQDHgIBQrUDFbsDLQIBPPUDFfsDLwIBGPwDFYcENwIBEYcBG4cBcwMBsgKCARuCAXoDAa0CkQEbkQGCAQMBqAJ/en+DAQMBpwKMARuMAZEBAwGiApgBG5gBdwMB5QGcARnPASQDAfAB0gEZ2AEuAwHqAYoDG4oDcwIBboUDG4UDegIBaZQDG5QDggECAWSCA3qCA4MBAgFjjwMbjwORAQIBXqUDG6UDgAECAVigAxugA3MCAVObAxubA4sBAgFOsQMbsQPrAgIBSKwDG6wDiAECAUO4Axu4A3MCAT34Axv4A3MCARn/Axv/A3MCARWEBBuEBHgCARKdARutATwDAZECrgEbuQEkAwGGAroBG8ABMwMBgALBARvHAS8DAfgByAEbzgE0AwHxAdUBH9UBdwMB6wGqASGqAYYBAwGcAqUBIaUBeQMBlwKgASGgAZEBAwGSArYBIbYB7wIDAYwCsQEhsQGOAQMBhwK9ASG9AXkDAYECwQF7wQGMAQMB/wHEASHEAXkDAfoBwQFqwQFyAwH5AcgBccgBewMB9wHLASHLAXkDAfIB</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dEOlxSZXBvc2l0b3J5XEdpdGh1YkBhdGFjaGltaWtvXEt1bWFyaW5rb1xNb2dhbWlcLk5FVDQuNVxNb2dhbWkuV29ya2Zsb3dcVXBkYXRlVmlydHVhbFNwYWNlQXBwRmxvdy54YW1sfkwDmwQOAgEBTQWZBA4CAQJQC1DHAQIBA1MH3AISAwGFAd0CB80DEgIBLs4DB5gEEgIBBVU5VUADAYYBVwliGgMBxwJjCdsCDgMBhwHfAjnfAkACAS/iAgntAhoCAXzuAgnMAw4CATDQAznQA0ACAQbSAwndAxoCASfeAwmXBA4CAQdaD1pnAwHLAl8PX1wDAcgCZg9mXAMBiAFqDeIBGAMB4QHlAQ3ZAhgDAYsB5QIP5QJnAwGBAeoCD+oCXAIBffECD/ECXAIBMfUCDcoDGAIBNdUDD9UDZwIBK9oDD9oDXAIBKOEDD+EDXAIBCOUDDZUEGAIBC28PeiIDAbwCew/hARQDAeIB6QEP7wEmAwHcAfABD4ACKgMBzwGBAg+RAjADAcIBkgIPmAIyAwG9AZkCD6QCKgMBtAGlAg+rAiQDAa8BrAIPvAIwAwGiAb0CD8MCMgMBnQHEAg/KAiQDAZgBywIP0QIjAwGSAdICD9gCKAMBjAH2Ag+BAyICAXOCAw/JAxQCATbmAw/2Ay8CARz3Aw+UBBQCAQxyFXJtAwHCAncVd3ADAb0CfhV+ZQMB4wGCARPfAR4DAegB7AEV7AFkAwHdAf0BFf0BbQMB2AH4ARX4AYsBAwHUAfMBFfMBXAMB0AGOAhWOAloDAcsBiQIViQJtAwHHAYQCFYQCrAEDAcMBlQIVlQJtAwG+AaECFaECiwEDAbkBnAIVnAJtAwG1AagCFagCbQMBsAG5AhW5AlkDAasBtAIVtAJtAwGnAa8CFa8CrAEDAaMBwAIVwAJtAwGeAccCFccCbQMBmQHOAhXOAm0DAZQBywJeywJmAwGTAdICZdICbwMBkQHVAhXVAm0DAY0B+QIV+QJtAgF4/gIV/gJwAgF0hQMVhQNlAgE3iQMTxwMeAgE77gMV7gNtAgEk6QMV6QOfAQIBIeYDdOYDhQECASDzAxXzA3ICAR36AxX6A5kBAgEN/gMTkgQeAgEQgwEVmAE1AwGmApkBFd4BGgMB6QGNAxWiAzUCAV2jAxWzAzYCAU20AxW/Ax4CAULAAxXGAy0CATz/AxWFBC8CARiGBBWRBDcCARGLARuLAXMDAbcChgEbhgF6AwGyApUBG5UBggEDAa0CgwF6gwGDAQMBrAKQARuQAZEBAwGnApwBG5wBdwMB6gGgARnTASQDAfUB1gEZ3AEuAwHvAZUDG5UDcwIBbpADG5ADegIBaZ8DG58DggECAWSNA3qNA4MBAgFjmgMbmgORAQIBXrADG7ADgAECAVirAxurA3MCAVOmAxumA4sBAgFOvAMbvAPrAgIBSLcDG7cDiAECAUPDAxvDA3MCAT2CBBuCBHMCARmJBBuJBHMCARWOBBuOBHgCARKhARuxATwDAZYCsgEbvQEkAwGLAr4BG8QBMwMBhQLFARvLAS8DAf0BzAEb0gE0AwH2AdkBH9kBdwMB8AGuASGuAYYBAwGhAqkBIakBeQMBnAKkASGkAZEBAwGXAroBIboB7wIDAZECtQEhtQGOAQMBjALBASHBAXkDAYYCxQF7xQGMAQMBhALIASHIAXkDAf8BxQFqxQFyAwH+AcwBccwBewMB/AHPASHPAXkDAfcB</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -571,9 +579,10 @@
       <sap2010:ViewStateData Id="CreateACLFile_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="AssaignParameterStackValue_2" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MovePhysicalFileFromVirtual_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="MakeCategory_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="MakeArtifact_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="GenerateThumbnail_2" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,704">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,766">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -637,22 +646,22 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="If_7" sap:VirtualizedContainerService.HintSize="691,710" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="713,896">
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="713,852">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="733,1143" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="755,1267">
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="1029,1715" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="1051,1839">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="795,1347" />
+      <sap2010:ViewStateData Id="Mogami.Workflow.UpdateVirtualSpaceAppFlow_1" sap:VirtualizedContainerService.HintSize="1091,1919" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

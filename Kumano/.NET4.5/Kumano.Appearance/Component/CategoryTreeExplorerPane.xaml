@@ -31,7 +31,7 @@
         <l:InteractionMessageTrigger MessageKey="FindDocumentPane" Messenger="{Binding Messenger}">
             <localAct:FindDocumentPaneMessageAction />
         </l:InteractionMessageTrigger>
-        <l:InteractionMessageTrigger MessageKey="DoImageListPane" Messenger="{Binding Messenger}">
+        <l:InteractionMessageTrigger MessageKey="DoArtifactNavigationListPane" Messenger="{Binding Messenger}">
             <localAct:DoArtifactNavigationListPaneMessageAction />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>

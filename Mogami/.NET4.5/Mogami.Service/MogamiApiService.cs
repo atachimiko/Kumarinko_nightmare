@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Mogami.Service.Request;
 using Mogami.Gateway;
 using Mogami.Model.Repository;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace Mogami.Service
 {
@@ -48,7 +50,6 @@ namespace Mogami.Service
 
 		#endregion コンストラクタ
 
-
 		#region メソッド
 
 		/// <summary>
@@ -70,18 +71,37 @@ namespace Mogami.Service
 		public RESPONSE_FINDARTIFACT FindArtifact(REQUEST_FINDARTIFACT reqparam)
 		{
 			var rsp = new RESPONSE_FINDARTIFACT();
-			
+			IList<Artifact> artifact = null;
 			using(var dbc = new AppDbContext())
 			{
 				var repo = new ArtifactRepository(dbc);
-				foreach(var prop in repo.GetAll())
+
+				switch (reqparam.TargetType)
+				{
+					case FINDTARGET_SELECTOR.CATEGORY:
+						artifact = new List<Artifact>(
+							repo.FindByCategory(new Category { Id = reqparam.TargetId }).ToArray()
+							);
+						rsp.Success = true;
+						break;
+					default:
+						rsp.Success = false;
+						rsp.Message = "不明な取得条件です";
+						break;
+						
+				}
+			}
+
+
+			if (artifact != null)
+			{
+				foreach (var prop in artifact)
 				{
 					var mapped = Mapper.Map<DataArtifact>(prop);
 					rsp.Artifacts.Add(mapped);
 				}
 			}
-			
-			rsp.Success = true;
+
 			return rsp;
 		}
 
@@ -115,6 +135,24 @@ namespace Mogami.Service
 			return result;
 		}
 
+		public RESPONSE_LOADARTIFACT LoadArtifact(REQUEST_LOADARTIFACT reqparam)
+		{
+			var rsp = new RESPONSE_LOADARTIFACT();
+			using (var dbc = new AppDbContext())
+			{
+				var repo = new ArtifactRepository(dbc);
+				var artifact = repo.Load(reqparam.TargetArtifactId);
+
+				var mapped = Mapper.Map<DataArtifact>(artifact);
+				rsp.Artifact = mapped;
+
+				var filePath = Path.Combine(artifact.FileMappingInfo.Workspace.PhysicalPath, artifact.FileMappingInfo.MappingFilePath);
+				rsp.FilePath = filePath;
+			}
+
+			return rsp;
+		}
+
 		public RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam)
 		{
 			var rsp = new RESPONSE_LOADCATGEORY();
@@ -122,7 +160,10 @@ namespace Mogami.Service
 			using(var dbc = new AppDbContext())
 			{
 				var repo = new CategoryRepository(dbc);
-				var appliction = repo.Load(3L);
+				long loadCategoryId = 3;
+				if (reqparam.TargetCategortId != 0) loadCategoryId = reqparam.TargetCategortId;
+
+				var appliction = repo.Load(loadCategoryId);
 				foreach(var child in appliction.ChildCategories)
 				{
 					rsp.Categories.Add(new DataCategory
@@ -130,7 +171,7 @@ namespace Mogami.Service
 						Id = child.Id,
 						Name = child.Name,
 						CategoryTypeCode = child.CategoryTypeCode,
-						IsHasChild = false
+						IsHasChild = child.ChildCategories.Count > 0 ? true : false
 					});
 				}
 			}

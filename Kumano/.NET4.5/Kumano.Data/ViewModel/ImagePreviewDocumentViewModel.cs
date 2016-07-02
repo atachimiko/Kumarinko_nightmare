@@ -17,6 +17,7 @@ using System.IO;
 using Kumano.Data.Infrastructure;
 using Kumano.Data.Construction;
 using Kumano.Core;
+using Kumano.Data.Service;
 
 namespace Kumano.Data.ViewModel
 {
@@ -110,6 +111,7 @@ namespace Kumano.Data.ViewModel
 		{
 			get { return "ImageDocument"; }
 		}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -262,7 +264,7 @@ namespace Kumano.Data.ViewModel
 				if (_LoadImageInfo == value)
 					return;
 				_LoadImageInfo = value;
-				
+
 				OnLoadedImageInfo();
 
 				RaisePropertyChanged();
@@ -276,43 +278,12 @@ namespace Kumano.Data.ViewModel
 
 		#endregion プロパティ
 
-		/// <summary>
-		/// プロパティペインに表示している、画像詳細情報を更新します。
-		/// </summary>
-		public void UpdatePropertyPane(bool isClear = false)
-		{
-			if (!isClear)
-			{
-				// PropertyPaneに表示しているViewModelを取得します。
-				var message = new ShowPropertyPaneMessage()
-				{
-					ShowPropertyPaneItemType = ShowPropertyPaneItemType.ImageDetailProperty
-				};
-				Messenger.Raise(message);
-
-				var vm = message.Response as ImagePreviewPropertyViewModel;
-				if (vm != null)
-				{
-					// TODO: プロパティ用のViewModelに画像詳細情報を書き込む
-					// 表示するデータは未決定。
-					vm.SampleText = "山田哲人";
-				}
-			}
-			else
-			{
-				var message = new ShowPropertyPaneMessage()
-				{
-					ShowPropertyPaneItemType = ShowPropertyPaneItemType.Clear
-				};
-				Messenger.Raise(message);
-			}
-		}
 
 		#region メソッド
 
 		public void ActiveChanged()
 		{
-			LOG.DebugFormat("Active ImagePreviewDocumentViewModel IsActive={0}",this.IsActive);
+			LOG.DebugFormat("Active ImagePreviewDocumentViewModel IsActive={0}", this.IsActive);
 
 			// プロパティペインへの表示を行います
 			if (this.IsActive)
@@ -389,6 +360,10 @@ namespace Kumano.Data.ViewModel
 			UpdateImageTransform();
 		}
 
+		public void InitializeComponent()
+		{
+		
+		}
 		/// <summary>
 		/// 
 		/// </summary>
@@ -596,6 +571,37 @@ namespace Kumano.Data.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// プロパティペインに表示している、画像詳細情報を更新します。
+		/// </summary>
+		public void UpdatePropertyPane(bool isClear = false)
+		{
+			if (!isClear)
+			{
+				// PropertyPaneに表示しているViewModelを取得します。
+				var message = new ShowPropertyPaneMessage()
+				{
+					ShowPropertyPaneItemType = ShowPropertyPaneItemType.ImageDetailProperty
+				};
+				Messenger.Raise(message);
+
+				var vm = message.Response as ImagePreviewPropertyViewModel;
+				if (vm != null)
+				{
+					// TODO: プロパティ用のViewModelに画像詳細情報を書き込む
+					// 表示するデータは未決定。
+					vm.SampleText = "山田哲人";
+				}
+			}
+			else
+			{
+				var message = new ShowPropertyPaneMessage()
+				{
+					ShowPropertyPaneItemType = ShowPropertyPaneItemType.Clear
+				};
+				Messenger.Raise(message);
+			}
+		}
 		/// <summary>
 		/// 指定した領域内に画像が表示されるように画像の縮小スケールを設定します
 		/// </summary>

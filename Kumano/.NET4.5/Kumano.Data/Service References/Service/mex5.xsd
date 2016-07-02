@@ -36,11 +36,18 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RESPONSE_GETSERVERVERSION" nillable="true" type="tns:RESPONSE_GETSERVERVERSION" />
+  <xs:complexType name="RESPONSE_LOADARTIFACT">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Artifact" nillable="true" type="q2:DataArtifact" />
+      <xs:element minOccurs="0" name="FilePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RESPONSE_LOADARTIFACT" nillable="true" type="tns:RESPONSE_LOADARTIFACT" />
   <xs:complexType name="RESPONSE_LOADCATGEORY">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:RESPONSEAPI_BASE">
         <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Categories" nillable="true" type="q2:ArrayOfDataCategory" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Categories" nillable="true" type="q3:ArrayOfDataCategory" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

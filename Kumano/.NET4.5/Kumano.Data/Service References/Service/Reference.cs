@@ -533,6 +533,112 @@ namespace Kumano.Data.Service {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="REQUEST_LOADARTIFACT", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request")]
+    [System.SerializableAttribute()]
+    public partial class REQUEST_LOADARTIFACT : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long TargetArtifactIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long TargetArtifactId {
+            get {
+                return this.TargetArtifactIdField;
+            }
+            set {
+                if ((this.TargetArtifactIdField.Equals(value) != true)) {
+                    this.TargetArtifactIdField = value;
+                    this.RaisePropertyChanged("TargetArtifactId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSE_LOADARTIFACT", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
+    [System.SerializableAttribute()]
+    public partial class RESPONSE_LOADARTIFACT : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Kumano.Data.Service.DataArtifact ArtifactField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FilePathField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Kumano.Data.Service.DataArtifact Artifact {
+            get {
+                return this.ArtifactField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ArtifactField, value) != true)) {
+                    this.ArtifactField = value;
+                    this.RaisePropertyChanged("Artifact");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FilePath {
+            get {
+                return this.FilePathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FilePathField, value) != true)) {
+                    this.FilePathField = value;
+                    this.RaisePropertyChanged("FilePath");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="REQUEST_LOADCATEGORY", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request")]
     [System.SerializableAttribute()]
     public partial class REQUEST_LOADCATEGORY : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -672,6 +778,12 @@ namespace Kumano.Data.Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/GetServerVersion", ReplyAction="http://tempuri.org/IMogamiApiService/GetServerVersionResponse")]
         System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_GETSERVERVERSION> GetServerVersionAsync(Kumano.Data.Service.VERSION_SELECTOR versionType);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadArtifact", ReplyAction="http://tempuri.org/IMogamiApiService/LoadArtifactResponse")]
+        Kumano.Data.Service.RESPONSE_LOADARTIFACT LoadArtifact(Kumano.Data.Service.REQUEST_LOADARTIFACT reqparam);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadArtifact", ReplyAction="http://tempuri.org/IMogamiApiService/LoadArtifactResponse")]
+        System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADARTIFACT> LoadArtifactAsync(Kumano.Data.Service.REQUEST_LOADARTIFACT reqparam);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadCategory", ReplyAction="http://tempuri.org/IMogamiApiService/LoadCategoryResponse")]
         Kumano.Data.Service.RESPONSE_LOADCATGEORY LoadCategory(Kumano.Data.Service.REQUEST_LOADCATEGORY reqparam);
         
@@ -752,6 +864,14 @@ namespace Kumano.Data.Service {
         
         public System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_GETSERVERVERSION> GetServerVersionAsync(Kumano.Data.Service.VERSION_SELECTOR versionType) {
             return base.Channel.GetServerVersionAsync(versionType);
+        }
+        
+        public Kumano.Data.Service.RESPONSE_LOADARTIFACT LoadArtifact(Kumano.Data.Service.REQUEST_LOADARTIFACT reqparam) {
+            return base.Channel.LoadArtifact(reqparam);
+        }
+        
+        public System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADARTIFACT> LoadArtifactAsync(Kumano.Data.Service.REQUEST_LOADARTIFACT reqparam) {
+            return base.Channel.LoadArtifactAsync(reqparam);
         }
         
         public Kumano.Data.Service.RESPONSE_LOADCATGEORY LoadCategory(Kumano.Data.Service.REQUEST_LOADCATEGORY reqparam) {

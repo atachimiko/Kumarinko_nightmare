@@ -1,12 +1,235 @@
 ﻿<UserControl x:Class="Kumano.View.Component.ImagePreviewDocument"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:aka="http://schemas.akalib.net/wpf"
+             xmlns:akaBehavior="clr-namespace:Akalib.Wpf.Behaviour;assembly=Akalib.Wpf"
+             xmlns:akaWpfBehavior="clr-namespace:Akalib.Wpf.Mvvm.Behavior;assembly=Akalib.Wpf.Mvvm"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
              xmlns:local="clr-namespace:Kumano.View.Component"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             xmlns:localContainer="clr-namespace:Kumano.View.Container"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <s:Boolean x:Key="True">True</s:Boolean>
+        <s:Boolean x:Key="False">False</s:Boolean>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodName="InitializeComponent" MethodTarget="{Binding}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodName="UpdatePropertyPane"
+                                     MethodParameter="{StaticResource False}"
+                                     MethodTarget="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="ImageGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="360*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <akaWpfBehavior:ParameterCallMethodAction MethodName="OnGridLoaded" MethodTarget="{Binding}" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="SizeChanged">
+                    <akaWpfBehavior:ParameterCallMethodAction MethodName="OnGridSizeChanged" MethodTarget="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ScrollViewer x:Name="ScrollViewerElement"
+                          aka:ScrollViewerUtilities.VerticalOffset="{Binding ImageScrollViwerVerticalOffset,
+                                                                             Mode=TwoWay}"
+                          CanContentScroll="False"
+                          HorizontalScrollBarVisibility="Hidden"
+                          ScrollChanged="ScrollViewer_ScrollChanged"
+                          VerticalScrollBarVisibility="Hidden">
+                <i:Interaction.Behaviors>
+                    <akaBehavior:ScrollViewerBehavior HorizontalOffset="{Binding ImageOffsetX}" VerticalOffset="{Binding ImageOffsetY}" />
+                </i:Interaction.Behaviors>
+                <Grid>
+                    <Border Width="{Binding ActualWidth,
+                                            ElementName=SourceImage}"
+                            Height="{Binding ActualHeight,
+                                             ElementName=SourceImage}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Background="White"
+                            LayoutTransform="{Binding ImageTransform}">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="6"
+                                              Opacity="70"
+                                              ShadowDepth="3"
+                                              Color="#FFCBCBCB" />
+                        </Border.Effect>
+                    </Border>
+                    <Image x:Name="SourceImage"
+                           LayoutTransform="{Binding ImageTransform}"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Source="{Binding ImageBitmap}"
+                           Stretch="{Binding ImageStretch}"
+                           StretchDirection="DownOnly">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <akaWpfBehavior:ParameterCallMethodAction MethodName="OnCanvasLoaded" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="SizeChanged">
+                                <akaWpfBehavior:ParameterCallMethodAction MethodName="OnCanvasSizeChanged" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <akaWpfBehavior:ParameterCallMethodAction MethodName="OnCanvasMouseLeftButtonDown" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <akaWpfBehavior:ParameterCallMethodAction MethodName="OnCanvasMouseLeftButtonUp" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseMove">
+                                <akaWpfBehavior:ParameterCallMethodAction MethodName="OnCanvasMouseMove" MethodTarget="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                </Grid>
+            </ScrollViewer>
+            <Grid Margin="0,10,10,0"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top">
+                <Grid Width="{Binding ActualWidth,
+                                      ElementName=ThumbnailImage}"
+                      Height="{Binding ActualHeight,
+                                       ElementName=ThumbnailImage}"
+                      MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+
+                    <Image x:Name="ThumbnailImage"
+                           Width="100"
+                           Height="150"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Source="{Binding ImageBitmap}" />
+                    <Canvas>
+                        <Border x:Name="TargetBorder"
+                                Background="#6088AA55"
+                                BorderBrush="AntiqueWhite"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="true" />
+                    </Canvas>
+                    <Border BorderBrush="Black"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="true" />
+                </Grid>
+            </Grid>
+            <Grid Width="50"
+                  Height="50"
+                  Margin="0,0,10,70"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom"
+                  ToolTip="マウスホイールで次の画像を表示します。">
+                <Border Name="fileControlArea"
+                        Background="#60FFFFFF"
+                        BorderThickness="1">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseWheel">
+                            <akaWpfBehavior:ParameterCallMethodAction MethodName="OnFileControlMouseWheel" MethodTarget="{Binding}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Border.Style>
+                        <Style>
+                            <Setter Property="Border.BorderBrush" Value="Transparent" />
+                            <Style.Triggers>
+                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                    <Setter Property="Border.BorderBrush" Value="#80000000" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+
+                <Viewbox HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         RenderTransformOrigin="0.5,0.5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseWheel">
+                            <akaWpfBehavior:ParameterCallMethodAction MethodName="OnFileControlMouseWheel" MethodTarget="{Binding}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <Viewbox.Resources>
+                        <Geometry x:Key="pathData">F1 M 328.101,80.0001L 80,328.101L 328.101,576.203</Geometry>
+                    </Viewbox.Resources>
+                    <Viewbox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                            <SkewTransform />
+                            <RotateTransform Angle="180" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </Viewbox.RenderTransform>
+                    <Path Data="{StaticResource pathData}"
+                          Stroke="#FF333333"
+                          StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeThickness="90" />
+                </Viewbox>
+            </Grid>
+            <Grid Width="50"
+                  Height="50"
+                  Margin="0,0,10,10"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom"
+                  ToolTip="マウスホイールで画像の拡大縮小を行います。">
+
+
+                <Border Name="zoomControlArea"
+                        Background="#60FFFFFF"
+                        BorderThickness="1">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseWheel">
+                            <akaWpfBehavior:ParameterCallMethodAction MethodName="OnZoomControlMouseWheel" MethodTarget="{Binding}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Border.Style>
+                        <Style>
+                            <Setter Property="Border.BorderBrush" Value="Transparent" />
+                            <Style.Triggers>
+                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                    <Setter Property="Border.BorderBrush" Value="#80000000" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+
+                <Viewbox HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         RenderTransformOrigin="0.5,0.5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseWheel">
+                            <akaWpfBehavior:ParameterCallMethodAction MethodName="OnZoomControlMouseWheel" MethodTarget="{Binding}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <Viewbox.Resources>
+                        <Geometry x:Key="pathData">F1 M 17.516,14.004C 16.3747,16.46 13.8947,18.18 11.016,18.18C 8.13733,18.18 5.664,16.46 4.52667,14.004L 4.50667,14.004C 4.088,13.0933 3.852,12.0814 3.852,11.016C 3.852,7.06799 7.068,3.85199 11.016,3.85199C 14.964,3.85199 18.1933,7.06799 18.1933,11.016C 18.1933,12.0814 17.9573,13.0933 17.536,14.004M 26.796,21.252L 21.072,15.504C 21.2867,15.024 21.4573,14.5187 21.6053,14.004L 21.62,14.004C 21.892,13.056 22.044,12.056 22.044,11.016C 22.044,4.93066 17.0893,0 11.016,0C 4.944,0 0,4.93066 0,11.016C 0,12.0507 0.145333,13.0533 0.413333,14.004L 0.424,14.004C 1.73067,18.628 5.98133,22.032 11.016,22.032C 12.612,22.032 14.1373,21.684 15.516,21.06L 21.2533,26.796C 22.02,27.564 23.0293,27.948 24.0253,27.948C 25.0333,27.948 26.0413,27.576 26.796,26.808C 27.576,26.0387 27.948,25.032 27.948,24.024C 27.948,23.016 27.576,22.02 26.796,21.252 Z</Geometry>
+                    </Viewbox.Resources>
+                    <Viewbox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </Viewbox.RenderTransform>
+
+                    <Path Data="{StaticResource pathData}"
+                          Stroke="#FF333333"
+                          StrokeLineJoin="Round"
+                          StrokeThickness="2" />
+                </Viewbox>
+            </Grid>
+
+        </Grid>
     </Grid>
 </UserControl>

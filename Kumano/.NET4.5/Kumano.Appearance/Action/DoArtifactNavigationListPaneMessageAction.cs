@@ -26,8 +26,8 @@ namespace Kumano.View.Action
 			workspace.ShowImageListDocument();
 
 			var vm = workspace.FindDocumentPane(typeof(ArtifactNavigationListDocumentViewModel)).FirstOrDefault() as ArtifactNavigationListDocumentViewModel;
-
-			vm.LoadServiceImageList();
+			vm.LoadCategoryId = confirmMessage.FindByCategoryId;
+			
 		}
 	}
 }

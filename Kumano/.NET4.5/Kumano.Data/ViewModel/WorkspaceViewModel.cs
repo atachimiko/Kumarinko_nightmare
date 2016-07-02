@@ -159,17 +159,8 @@ namespace Kumano.Data.ViewModel
 		public void ShowImagePreviewDocument()
 		{
 			LOG.Debug("Execute ShowImageDocument");
-			/*
-			if (_pp == null)
-			{
-				_pp = new ImagePreviewDocumentViewModel();
-				this.ShowDocument(_pp);
-			}
-			else
-			{
-				_pp.ActiveChanged();
-			}
-			*/
+
+			this.ShowDocument(new ImagePreviewDocumentViewModel());
 		}
 
 		public void ShowPropertyPane()

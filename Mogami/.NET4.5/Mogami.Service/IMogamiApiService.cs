@@ -14,7 +14,6 @@ namespace Mogami.Service
 	[ServiceContract(SessionMode = SessionMode.Required)]
 	public interface IMogamiApiService
 	{
-
 		#region メソッド
 
 		/// <summary>
@@ -47,6 +46,13 @@ namespace Mogami.Service
 		/// <param name="reqparam"></param>
 		/// <returns></returns>
 		[OperationContract]
+		RESPONSE_LOADARTIFACT LoadArtifact(REQUEST_LOADARTIFACT reqparam);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
 		RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam);
 
 		/// <summary>
@@ -72,5 +78,6 @@ namespace Mogami.Service
 		RESPONSE_UPDATECATEGORY UpdateCategory(REQUEST_UPDATECATEGORY reqparam);
 
 		#endregion メソッド
+
 	}
 }
