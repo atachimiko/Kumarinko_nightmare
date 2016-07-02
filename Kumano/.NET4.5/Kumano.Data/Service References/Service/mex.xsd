@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" />
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" />
+  <xs:complexType name="REQUEST_ADDCATEGORY">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Catgeory" nillable="true" type="q1:DataCategory" />
+      <xs:element minOccurs="0" name="ParentCategoryId" nillable="true" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_ADDCATEGORY" nillable="true" type="tns:REQUEST_ADDCATEGORY" />
   <xs:complexType name="REQUEST_FINDARTIFACT">
     <xs:sequence>
       <xs:element minOccurs="0" name="TargetId" type="xs:long" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="TargetType" type="q1:FINDTARGET_SELECTOR" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="TargetType" type="q2:FINDTARGET_SELECTOR" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_FINDARTIFACT" nillable="true" type="tns:REQUEST_FINDARTIFACT" />
+  <xs:complexType name="REQUEST_LOADARTIFACT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TargetArtifactId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_LOADARTIFACT" nillable="true" type="tns:REQUEST_LOADARTIFACT" />
+  <xs:complexType name="REQUEST_LOADCATEGORY">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TargetCategortId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_LOADCATEGORY" nillable="true" type="tns:REQUEST_LOADCATEGORY" />
   <xs:complexType name="REQUEST_LOADTHUMBNAIL">
     <xs:sequence>
       <xs:element minOccurs="0" name="ThumbnailKey" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_LOADTHUMBNAIL" nillable="true" type="tns:REQUEST_LOADTHUMBNAIL" />
+  <xs:complexType name="REQUEST_UPDATECATEGORY">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="REQUEST_UPDATECATEGORY" nillable="true" type="tns:REQUEST_UPDATECATEGORY" />
 </xs:schema>

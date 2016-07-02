@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="Construction\MainWindowRibbonVisibilities.cs" />
     <Compile Include="Construction\ShowPropertyPaneItemType.cs" />
+    <Compile Include="Infrastructure\DialogMessage.cs" />
     <Compile Include="Infrastructure\DoArtifactNavigationListPaneMessage.cs" />
     <Compile Include="Infrastructure\DoImagePreviewPaneMessage.cs" />
     <Compile Include="Infrastructure\FindDocumentPaneMessage.cs" />
@@ -120,11 +121,13 @@
     <Compile Include="Struction\TagTreeItem.cs" />
     <Compile Include="ViewModel\ArtifactNavigationListDocumentViewModel.cs" />
     <Compile Include="ViewModel\CategoryTreeExplorerPaneViewModel.cs" />
+    <Compile Include="ViewModel\EditCategoryDialogViewModel.cs" />
     <Compile Include="ViewModel\ImagePreviewDocumentViewModel.cs" />
     <Compile Include="ViewModel\PropertyPaneViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ArtifactNavigationListPropertyViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ImagePreviewPropertyViewModel.cs" />
     <Compile Include="ViewModel\TagTreeExplorerPaneViewModel.cs" />
+    <Compile Include="ViewModel\VersionDialogViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -158,13 +161,25 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_ADDCATEGORY.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_FINDARTIFACT.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_GETSERVERVERSION.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADARTIFACT.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADCATGEORY.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_UPDATECATEGORY.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Service\mex.xsd">
@@ -183,6 +198,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Service\mex5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service\mex6.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Service\MogamiApiService.wsdl" />

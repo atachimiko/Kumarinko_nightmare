@@ -16,6 +16,8 @@ namespace Kumano.Data.ViewModel
 	/// </summary>
 	public class CategoryTreeExplorerPaneViewModel : PaneViewModelBase
 	{
+
+
 		#region フィールド
 
 		static ILog LOG = LogManager.GetLogger(typeof(CategoryTreeExplorerPaneViewModel));
@@ -112,6 +114,30 @@ namespace Kumano.Data.ViewModel
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public async void ShowEditCategoryDialog()
+		{
+			if (this.SelectedTreeListNode != null)
+			{
+
+				var item = this.SelectedTreeListNode.Tag as CategoryTreeItem;
+				LOG.InfoFormat("NodeName:{0}", item.Name);
+
+				var vm = new EditCategoryDialogViewModel();
+				vm.Import(item);
+				await ShowDialogAsync(vm);
+				if (vm.IsCanceled)
+					LOG.Info("ダイアログはキャンセルされました");
+			}
+			else
+			{
+				LOG.Info("選択中のノードアイテムがありません");
+			}
+		}
+
 		/// <summary>
 		/// 画像一覧ペインの表示
 		/// </summary>
@@ -121,16 +147,26 @@ namespace Kumano.Data.ViewModel
 			var message_2 = new FindDocumentPaneMessage(typeof(ArtifactNavigationListDocumentViewModel));
 			await Messenger.RaiseAsync(message_2);
 
+			var message_3 = new DoArtifactNavigationListPaneMessage();
+
+			var item = this.SelectedTreeListNode.Tag as CategoryTreeItem;
+			message_3.FindByCategoryId = item.CategoryId;
+
 			if (message_2.Response == null)
 			{
-				var message_3 = new DoArtifactNavigationListPaneMessage();
 				await Messenger.RaiseAsync(message_3);
 			}
 			else
 			{
-				var message_3 = new DoArtifactNavigationListPaneMessage();
 				await Messenger.RaiseAsync(message_3);
 			}
+		}
+
+		private async Task ShowDialogAsync(IDialogViewModel viewmodel)
+		{
+			var message = new DialogMessage(viewmodel);
+
+			await this.Messenger.RaiseAsync(message);
 		}
 
 		#endregion メソッド

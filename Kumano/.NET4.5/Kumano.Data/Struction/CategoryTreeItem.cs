@@ -1,4 +1,7 @@
-﻿using Livet;
+﻿using Kumano.Contrib.Infrastructures;
+using Kumano.Data.Service;
+using Livet;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +17,7 @@ namespace Kumano.Data.Struction
 	/// <remarks>
 	/// アプリケーション用のデータ構造です。
 	/// </remarks>
-	public class CategoryTreeItem : Livet.NotificationObject
+	public class CategoryTreeItem : Livet.NotificationObject,IDataExport<DataCategory>
 	{
 
 		#region フィールド
@@ -34,16 +37,17 @@ namespace Kumano.Data.Struction
 		private readonly ReadOnlyDispatcherCollection<CategoryTreeItem> _childrenro = null;
 
 		/// <summary>
+		/// カテゴリのID
+		/// </summary>
+		private long _CategoryId;
+
+		/// <summary>
 		/// 子要素がサーバから取得済みか示すフラグ
 		/// </summary>
 		private bool _isLoadedChildren = false;
 
 		private string _Name;
-
-		/// <summary>
-		/// カテゴリのID
-		/// </summary>
-		private long _Id;
+		ILog LOG = LogManager.GetLogger(typeof(CategoryTreeItem));
 
 		#endregion フィールド
 
@@ -56,7 +60,7 @@ namespace Kumano.Data.Struction
 				_children,
 				prop => new CategoryTreeItem
 				{
-					_Id = prop.Id,
+					_CategoryId = prop.Id,
 					Name = prop.Name,
 					HasChildServer = prop.IsChild.HasValue ? prop.IsChild.Value : false
 				},
@@ -66,6 +70,11 @@ namespace Kumano.Data.Struction
 		#endregion コンストラクタ
 
 		#region プロパティ
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public long CategoryId { get { return _CategoryId; } }
 
 		/// <summary>
 		/// TagTreeで表示する小階層の要素を取得します
@@ -104,34 +113,63 @@ namespace Kumano.Data.Struction
 
 		#region メソッド
 
+		public DataCategory Export()
+		{
+			var immobj = new DataCategory()
+			{
+				Id = _CategoryId,
+				Name = _Name
+			};
+			return immobj;
+		}
+
 		public void Load(bool rootLoad = false)
 		{
 			// サーバからデータを取得してきた、というイメージ。
 			// サーバからは、現在のタグの小階層タグの一覧とその小階層が更に小階層を持つかどうかのフラグを取得するような実装とする。
-			/*
-			if (rootLoad)
+			try
 			{
-				using (var proxy = new HalcyonApiServiceClient())
+				if (rootLoad)
 				{
-					var result = proxy.GetCategoryTree();
-					foreach (var prop in result.TreeChildren)
+					using (var proxy = new MogamiApiServiceClient())
 					{
-						_children.Add(prop);
+						proxy.Login();
+
+						var param = new REQUEST_LOADCATEGORY();
+						var result = proxy.LoadCategory(param);
+						foreach (var prop in result.Categories)
+						{
+							_children.Add(new ServerCategoryTestData
+							{
+								Id = prop.Id,
+								IsChild = prop.IsHasChild,
+								Name = prop.Name
+							});
+						}
 					}
 				}
-			}
-			else
-			{
-				using (var proxy = new HalcyonApiServiceClient())
+				else
 				{
-					var result = proxy.GetCategoryChildTree(this._Id);
-					foreach (var prop in result.TreeChildren)
+					using (var proxy = new MogamiApiServiceClient())
 					{
-						_children.Add(prop);
+						var param = new REQUEST_LOADCATEGORY();
+						param.TargetCategortId = this._CategoryId;
+						var result = proxy.LoadCategory(param);
+						foreach (var prop in result.Categories)
+						{
+							_children.Add(new ServerCategoryTestData
+							{
+								Id = prop.Id,
+								IsChild = prop.IsHasChild,
+								Name = prop.Name
+							});
+						}
 					}
 				}
+			}catch(Exception expr)
+			{
+				LOG.Warn(expr.Message);
 			}
-			*/
 		}
 
 		#endregion メソッド
@@ -140,8 +178,15 @@ namespace Kumano.Data.Struction
 
 	class ServerCategoryTestData
 	{
+
+
+		#region プロパティ
+
 		public long Id { get; set; }
 		public bool? IsChild { get; set; }
 		public string Name { get; set; }
+
+		#endregion プロパティ
+
 	}
 }

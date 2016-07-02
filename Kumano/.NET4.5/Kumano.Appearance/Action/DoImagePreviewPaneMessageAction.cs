@@ -31,26 +31,26 @@ namespace Kumano.View.Action
 			if (confirmMessage == null) return;
 
 			var workspace = ApplicationContext.Workspace as WorkspaceViewModel;
-			workspace.ShowImagePreviewDocument();
+			
 
 			var vm = workspace.FindDocumentPane(typeof(ImagePreviewDocumentViewModel)).FirstOrDefault() as ImagePreviewDocumentViewModel;
 			if (vm == null)
 			{
-				LOG.Error("ImagePreviewを表示できませんでした");
-				return;
+				workspace.ShowImagePreviewDocument();
+				vm = workspace.FindDocumentPane(typeof(ImagePreviewDocumentViewModel)).FirstOrDefault() as ImagePreviewDocumentViewModel;
 			}
 
 			vm.PreviewImageInfo = null;
 
+			LOG.InfoFormat("Message Parameter [LoadImageInfo.BitmapFile]{0}", confirmMessage.LoadImageInfo.BitmapFilePath);
+			
+			vm.PreviewImageInfo = (confirmMessage.LoadImageInfo);
+
 			if (confirmMessage.IsWithActive)
 			{
 				workspace.ShowDocument(vm);
+				workspace.ActivePane = vm;
 			}
-
-			LOG.InfoFormat("Message Parameter [LoadImageInfo.BitmapFile]{0}", confirmMessage.LoadImageInfo.BitmapFilePath);
-
-			// NOTE: 画像の表示
-			vm.PreviewImageInfo = (confirmMessage.LoadImageInfo);
 		}
 
 		#endregion メソッド

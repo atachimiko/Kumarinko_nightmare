@@ -14,8 +14,15 @@ namespace Mogami.Service
 	[ServiceContract(SessionMode = SessionMode.Required)]
 	public interface IMogamiApiService
 	{
-
 		#region メソッド
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_ADDCATEGORY AddCategory(REQUEST_ADDCATEGORY reqparam);
 
 		/// <summary>
 		/// Artifactデータモデルの検索
@@ -39,6 +46,21 @@ namespace Mogami.Service
 		/// <param name="reqparam"></param>
 		/// <returns></returns>
 		[OperationContract]
+		RESPONSE_LOADARTIFACT LoadArtifact(REQUEST_LOADARTIFACT reqparam);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
 		RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam);
 
 		[OperationContract(IsInitiating = true, IsTerminating = false)]
@@ -46,6 +68,14 @@ namespace Mogami.Service
 
 		[OperationContract(IsInitiating = false, IsTerminating = true)]
 		void Logout();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_UPDATECATEGORY UpdateCategory(REQUEST_UPDATECATEGORY reqparam);
 
 		#endregion メソッド
 

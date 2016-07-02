@@ -36,6 +36,10 @@ namespace Mogami.Activity.Feature.Content
 			ParameterStack pstack = context.GetValue<ParameterStack>(this.Parameter);
 
 			var target = pstack.GetValue<FileMappingInfo>(ActivityParameterStack.TARGET);
+			Mogami.Model.Category category = null;
+			if (pstack.ContainsKey(ActivityParameterStack.CATEGORY))
+				category = pstack.GetValue<Mogami.Model.Category>(ActivityParameterStack.CATEGORY);
+
 			var outputname = context.GetValue<string>(OutputName);
 
 			// Guard
@@ -50,6 +54,17 @@ namespace Mogami.Activity.Feature.Content
 				if (a != null) throw new ApplicationException("すでに作成済みのFileMappingInfoです。");
 			}
 
+			if (category == null)
+			{
+				var catrepo = new CategoryRepository(workflowContext.DbContext);
+				var appcat = catrepo.Load(3L);
+				if (appcat == null) throw new ApplicationException();
+			}
+
+			var tokens = target.MappingFilePath.Split(new string[] { @"\" }, StringSplitOptions.None);
+			var sttokens = new Stack<string>(tokens);
+			var title = sttokens.Pop();
+
 			// 現Verでは画像のみ、メタ情報を生成できる。
 			// (それ以外のファイルは、例外を投げる)
 			if (target.Mimetype == "image/png")
@@ -57,12 +72,21 @@ namespace Mogami.Activity.Feature.Content
 				var repo = new ImageArtifactRepository(workflowContext.DbContext);
 				var entity = new ImageArtifact
 				{
-					Title = target.MappingFilePath,
+					Title = title,
 					IdentifyKey = RandomAlphameric.RandomAlphanumeric(10),
 					FileMappingInfo = target,
 					ImageHeight = -1, // 未実装
 					ImageWidth = -1, // 未実装
 				};
+
+				if (category != null)
+					entity.Category = new T_Artifact2Category()
+					{
+						Artifact = entity,
+						Category = category,
+						OrderNo = 1
+					};
+
 				repo.Add(entity);
 
 				pstack.SetValue(outputname, entity);
@@ -73,6 +97,7 @@ namespace Mogami.Activity.Feature.Content
 			}
 		}
 
+		
 		#endregion メソッド
 	}
 }

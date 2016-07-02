@@ -101,6 +101,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructures\IDataExport.cs" />
+    <Compile Include="Infrastructures\IDataImport.cs" />
     <Compile Include="Infrastructures\IDataSource.cs" />
     <Compile Include="Infrastructures\ILazyLoadingItem.cs" />
     <Compile Include="Infrastructures\ItemDataBase.cs" />

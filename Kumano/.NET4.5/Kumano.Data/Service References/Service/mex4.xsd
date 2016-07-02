@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" />
-  <xs:complexType name="RESPONSE_FINDARTIFACT">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:RESPONSEAPI_BASE">
-        <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Artifacts" nillable="true" type="q1:ArrayOfDataArtifact" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="RESPONSE_FINDARTIFACT" nillable="true" type="tns:RESPONSE_FINDARTIFACT" />
-  <xs:complexType name="RESPONSEAPI_BASE">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="RESPONSEAPI_BASE" nillable="true" type="tns:RESPONSEAPI_BASE" />
-  <xs:complexType name="RESPONSE_GETSERVERVERSION">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:RESPONSEAPI_BASE">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="VersionText" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="RESPONSE_GETSERVERVERSION" nillable="true" type="tns:RESPONSE_GETSERVERVERSION" />
-  <xs:complexType name="RESPONSE_LOADTHUMBNAIL">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:RESPONSEAPI_BASE">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ThumbnailBytes" nillable="true" type="xs:base64Binary" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="RESPONSE_LOADTHUMBNAIL" nillable="true" type="tns:RESPONSE_LOADTHUMBNAIL" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Core.Constructions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8000/Kumarinko.Server/Mogami/mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="CategoryType">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SYSTEM">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SYSTEM_RECYCLE">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="APPLICATION">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="CategoryType" nillable="true" type="tns:CategoryType" />
 </xs:schema>
