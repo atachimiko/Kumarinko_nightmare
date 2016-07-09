@@ -31,4 +31,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfDataCategory" nillable="true" type="tns:ArrayOfDataCategory" />
+  <xs:complexType name="ArrayOfDataTag">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DataTag" nillable="true" type="tns:DataTag" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDataTag" nillable="true" type="tns:ArrayOfDataTag" />
+  <xs:complexType name="DataTag">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsHasChild" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DataTag" nillable="true" type="tns:DataTag" />
 </xs:schema>

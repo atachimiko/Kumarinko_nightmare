@@ -1,5 +1,6 @@
 ﻿using Akalib.Wpf.Control.Tree;
 using Akalib.Wpf.Mvvm;
+using Kumano.Data.Infrastructure;
 using Kumano.Data.Struction;
 using log4net;
 using System;
@@ -12,6 +13,8 @@ namespace Kumano.Data.ViewModel
 {
 	public class TagTreeExplorerPaneViewModel : PaneViewModelBase
 	{
+
+
 		#region フィールド
 
 		static ILog LOG = LogManager.GetLogger(typeof(TagTreeExplorerPaneViewModel));
@@ -120,8 +123,31 @@ namespace Kumano.Data.ViewModel
 
 		#endregion プロパティ
 
-
 		#region メソッド
+
+		/// <summary>
+		/// 画像一覧ペインの表示
+		/// </summary>
+		public async void ShowImageListDocument()
+		{
+			// すでに画像一覧ペインが表示済みかチェックする
+			var message_2 = new FindDocumentPaneMessage(typeof(ArtifactNavigationListDocumentViewModel));
+			await Messenger.RaiseAsync(message_2);
+
+			var message_3 = new DoArtifactNavigationListPaneMessage();
+
+			var item = this.SelectedTreeListNode.Tag as TagTreeItem;
+			message_3.FindByTagId = item.TagId;
+
+			if (message_2.Response == null)
+			{
+				await Messenger.RaiseAsync(message_3);
+			}
+			else
+			{
+				await Messenger.RaiseAsync(message_3);
+			}
+		}
 
 		public void UpdateContextMenuStatus()
 		{
@@ -150,6 +176,7 @@ namespace Kumano.Data.ViewModel
 		public class TagTreeExplorerPaneContextMenuViewModel : Livet.NotificationObject
 		{
 			// TOOD: XAMLへのバインディングを実装する
+
 
 			#region フィールド
 
@@ -239,7 +266,7 @@ namespace Kumano.Data.ViewModel
 				get
 				{ return _IsEnableMenu_ReplaceList; }
 				set
-				{ 
+				{
 					if (_IsEnableMenu_ReplaceList == value)
 						return;
 					_IsEnableMenu_ReplaceList = value;
@@ -248,6 +275,7 @@ namespace Kumano.Data.ViewModel
 			}
 
 			#endregion プロパティ
+
 		}
 		/// <summary>
 		/// TagデータをTagTreeで表示するためのデータラッピングクラス

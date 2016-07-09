@@ -21,6 +21,18 @@ namespace Mogami.Service.Request
 		public bool EnableThumbnailBytes { get; set; }
 
 		/// <summary>
+		/// ソート対象
+		/// </summary>
+		[DataMember]
+		public SORTTARGET_SELECTOR SortTargetType { get; set; }
+
+		/// <summary>
+		/// 並び替え
+		/// </summary>
+		[DataMember]
+		public SORTTYPE_SELECTOR SortType { get; set; }
+
+		/// <summary>
 		/// 検索キー(Category)
 		/// </summary>
 		[DataMember]
@@ -33,5 +45,6 @@ namespace Mogami.Service.Request
 		public FINDTARGET_SELECTOR TargetType { get; set; }
 
 		#endregion プロパティ
+
 	}
 }

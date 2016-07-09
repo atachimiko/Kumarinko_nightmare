@@ -1,4 +1,5 @@
-﻿using Livet;
+﻿using Kumano.Data.Service;
+using Livet;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,6 +34,12 @@ namespace Kumano.Data.Struction
 		/// この階層構造は、アプリケーションがツリーなどでタグ表示するための階層構造を構築します。
 		/// </remarks>
 		private readonly ReadOnlyDispatcherCollection<TagTreeItem> _childrenro = null;
+
+		/// <summary>
+		/// タグのID
+		/// </summary>
+		private long _TagId;
+
 		/// <summary>
 		/// 子要素がサーバから取得済みか示すフラグ
 		/// </summary>
@@ -52,7 +59,12 @@ namespace Kumano.Data.Struction
 		{
 			this._childrenro = ViewModelHelper.CreateReadOnlyDispatcherCollection<ServerTagTestData, TagTreeItem>(
 				_children,
-				prop => new TagTreeItem { Name = prop.Name, HasChildServer = prop.IsChild },
+				prop => new TagTreeItem
+				{
+					Name = prop.Name,
+					HasChildServer = prop.IsChild,
+					_TagId = prop.Id
+				},
 				DispatcherHelper.UIDispatcher);
 		}
 
@@ -77,6 +89,11 @@ namespace Kumano.Data.Struction
 				return _childrenro;
 			}
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public long TagId { get { return _TagId; } }
 
 		/// <summary>
 		/// 子要素があることをサーバから受けている場合、Trueを返す。
@@ -111,26 +128,42 @@ namespace Kumano.Data.Struction
 
 			if (rootLoad)
 			{
-				for (int i = 0; i < 10; i++)
+				using(var proxy = new MogamiApiServiceClient())
 				{
-					var serverdata = new ServerTagTestData();
-					serverdata.Name = "Tag" + i;
-					serverdata.IsChild = false;
+					proxy.Login();
 
-					if (i == 2) serverdata.IsChild = true;
-
-					_children.Add(serverdata);
+					var param = new REQUEST_LOADTAG();
+					param.TargetTagId = 1L;
+					var result = proxy.LoadTag(param);
+					foreach(var prop in result.Tags)
+					{
+						_children.Add(new ServerTagTestData
+						{
+							Id = prop.Id,
+							IsChild = prop.IsHasChild,
+							Name = prop.Name
+						});
+					}
 				}
 			}
 			else
 			{
-				for (int i = 0; i < 10; i++)
+				using (var proxy = new MogamiApiServiceClient())
 				{
-					var serverdata = new ServerTagTestData();
-					serverdata.Name = "SubTag" + i;
-					serverdata.IsChild = false;
+					proxy.Login();
 
-					_children.Add(serverdata);
+					var param = new REQUEST_LOADTAG();
+					param.TargetTagId = this._TagId;
+					var result = proxy.LoadTag(param);
+					foreach (var prop in result.Tags)
+					{
+						_children.Add(new ServerTagTestData
+						{
+							Id = prop.Id,
+							IsChild = prop.IsHasChild,
+							Name = prop.Name
+						});
+					}
 				}
 			}
 
@@ -147,6 +180,7 @@ namespace Kumano.Data.Struction
 
 		#region プロパティ
 
+		public long Id { get; set; }
 		public bool IsChild { get; set; }
 		public string Name { get; set; }
 

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="SORTTARGET_SELECTOR">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TITLE" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SORTTARGET_SELECTOR" nillable="true" type="tns:SORTTARGET_SELECTOR" />
+  <xs:simpleType name="SORTTYPE_SELECTOR">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ASC" />
+      <xs:enumeration value="DESC" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SORTTYPE_SELECTOR" nillable="true" type="tns:SORTTYPE_SELECTOR" />
   <xs:simpleType name="FINDTARGET_SELECTOR">
     <xs:restriction base="xs:string">
       <xs:enumeration value="CATEGORY" />
+      <xs:enumeration value="TAG" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="FINDTARGET_SELECTOR" nillable="true" type="tns:FINDTARGET_SELECTOR" />

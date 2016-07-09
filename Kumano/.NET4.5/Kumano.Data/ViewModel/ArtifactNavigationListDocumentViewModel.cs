@@ -22,7 +22,20 @@ namespace Kumano.Data.ViewModel
 {
 	public class ArtifactNavigationListDocumentViewModel : DocumentViewModelBase, IDocumentPaneViewModel
 	{
-
+		double _ListViewSampleContainerVertialOffset;
+		public double ListViewSampleContainerVertialOffset
+		{
+			get
+			{ return _ListViewSampleContainerVertialOffset; }
+			set
+			{
+				LOG.InfoFormat("ListViewSampleContainerVertialOffset.Value = {0}", value);
+				if (_ListViewSampleContainerVertialOffset == value)
+					return;
+				_ListViewSampleContainerVertialOffset = value;
+				RaisePropertyChanged();
+			}
+		}
 
 		#region フィールド
 
@@ -38,7 +51,10 @@ namespace Kumano.Data.ViewModel
 		/// </summary>
 		private bool _IsBusy;
 
-		private long _LoadCategoryId;
+		long _LoadCategoryId;
+
+		long _LoadTagId;
+
 		ListView _ScrollingListView;
 
 		/// <summary>
@@ -48,6 +64,7 @@ namespace Kumano.Data.ViewModel
 		private ImageListLazyItem _SelectedItem;
 
 		private bool IsInitializedContainer = false;
+
 		bool IsListLoaded = false;
 
 		#endregion フィールド
@@ -63,12 +80,6 @@ namespace Kumano.Data.ViewModel
 			this._ScrollingTimer.Interval = 1000;
 			this._ScrollingTimer.Elapsed += OnScrollingTimer_Elapsed;
 			this._ScrollingTimer.AutoReset = false;
-
-			// 初期データ
-			for (int i = 0; i < 10; i++)
-			{
-				this._Images.AddItem(new ImageListLazyItem { IdText = "Id=" + i, Label = "0001.jpg" });
-			}
 		}
 
 		#endregion コンストラクタ
@@ -111,6 +122,23 @@ namespace Kumano.Data.ViewModel
 				LoadServiceImageList();
 			}
 		}
+
+		public long LoadTagId
+		{
+			get
+			{
+				return _LoadTagId;
+			}
+			set
+			{
+				if (value == 0) return;
+
+				_LoadTagId = value;
+				IsInitializedContainer = true;
+				LoadServiceImageList();
+			}
+		}
+
 		public IPropertyPaneItem PropertyPaneItem
 		{
 			get { return null; }
@@ -168,21 +196,30 @@ namespace Kumano.Data.ViewModel
 		{
 			LOG.InfoFormat("LoadServiceImageList IsListLoaded={0}", IsListLoaded);
 			if (IsListLoaded) return;
-			IsListLoaded = true;
-
+			
 			if (!IsInitializedContainer) return;
 
-			long loadCategorId = 0L;
+			REQUEST_FINDARTIFACT param = null;
 
 			if (_LoadCategoryId != 0L)
 			{
-				loadCategorId = _LoadCategoryId;
+				param = new REQUEST_FINDARTIFACT();
+				param.TargetType = FINDTARGET_SELECTOR.CATEGORY;
+				param.TargetId = _LoadCategoryId;
 				_LoadCategoryId = 0L;
-			}else
+			}
+			else
+			if(_LoadTagId != 0L)
 			{
-				return;
+				param = new REQUEST_FINDARTIFACT();
+				param.TargetType = FINDTARGET_SELECTOR.TAG;
+				param.TargetId = _LoadTagId;
+				_LoadTagId = 0L;
 			}
 
+			if (param == null) return;
+
+			IsListLoaded = true;
 			this.IsBusy = true;
 
 			this._Images.Items.Clear();
@@ -191,10 +228,6 @@ namespace Kumano.Data.ViewModel
 			{
 				proxy.Login();
 				
-				var param = new REQUEST_FINDARTIFACT();
-				param.TargetType = FINDTARGET_SELECTOR.CATEGORY;
-				param.TargetId = loadCategorId;
-
 				RESPONSE_FINDARTIFACT result = await proxy.FindArtifactAsync(param);
 				foreach (var prop in result.Artifacts)
 				{
@@ -229,8 +262,8 @@ namespace Kumano.Data.ViewModel
 		}
 		public void Scrolling()
 		{
-			//this._ScrollingTimer.Stop();
-			//this._ScrollingTimer.Start();
+			this._ScrollingTimer.Stop();
+			this._ScrollingTimer.Start();
 		}
 
 		/// <summary>
@@ -307,7 +340,6 @@ namespace Kumano.Data.ViewModel
 					for (int index = 0; index < _ScrollingListView.Items.Count; index++)
 					{
 						GeneratorPosition position = generator.GeneratorPositionFromIndex(index);
-
 						if (position.Offset != 0)
 						{
 							dynamic d = _ScrollingListView.Items[index];

@@ -30,6 +30,9 @@
         <l:InteractionMessageTrigger MessageKey="DoImagePreview" Messenger="{Binding Messenger}">
             <localAct:DoImagePreviewPaneMessageAction />
         </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="ShowPropertyPane" Messenger="{Binding Messenger}">
+            <localAct:ShowPropertyPaneMessageAction />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     <Grid>
         <xctk:BusyIndicator IsBusy="{Binding IsBusy}">

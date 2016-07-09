@@ -61,6 +61,14 @@ namespace Mogami.Service
 		/// <param name="reqparam"></param>
 		/// <returns></returns>
 		[OperationContract]
+		RESPONSE_LOADTAG LoadTag(REQUEST_LOADTAG reqparam);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
 		RESPONSE_LOADTHUMBNAIL LoadThumbnail(REQUEST_LOADTHUMBNAIL reqparam);
 
 		[OperationContract(IsInitiating = true, IsTerminating = false)]

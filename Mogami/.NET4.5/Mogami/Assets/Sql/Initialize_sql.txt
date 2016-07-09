@@ -76,8 +76,7 @@ CREATE TABLE IF NOT EXISTS [T_Artifact2Category]
 CREATE TABLE IF NOT	EXISTS [TS_Artifact2Tag]
 (
 	[TagId] INTEGER,
-	[ArtifactId] INTEGER,
-	PRIMARY KEY([TagId], [ArtifactId])
+	[ArtifactId] INTEGER
 );
 
 --
@@ -87,3 +86,6 @@ INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (1, "RootC
 INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (2, "SystemCategory", 1);
 INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (3, "ApplicationCategory", 3);
 INSERT OR REPLACE INTO alCategory (Id, Name, CategoryTypeCode) VALUES (4, "RecycleCategory", 2);
+
+-- Tag
+INSERT OR REPLACE INTO alTag (Id, Name) VALUES (1, "RootTag");
