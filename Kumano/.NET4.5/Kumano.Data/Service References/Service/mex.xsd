@@ -11,8 +11,10 @@
   <xs:element name="REQUEST_ADDCATEGORY" nillable="true" type="tns:REQUEST_ADDCATEGORY" />
   <xs:complexType name="REQUEST_FINDARTIFACT">
     <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="SortTargetType" type="q2:SORTTARGET_SELECTOR" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="SortType" type="q3:SORTTYPE_SELECTOR" />
       <xs:element minOccurs="0" name="TargetId" type="xs:long" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="TargetType" type="q2:FINDTARGET_SELECTOR" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Mogami.Service.Construction" minOccurs="0" name="TargetType" type="q4:FINDTARGET_SELECTOR" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_FINDARTIFACT" nillable="true" type="tns:REQUEST_FINDARTIFACT" />
@@ -28,6 +30,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_LOADCATEGORY" nillable="true" type="tns:REQUEST_LOADCATEGORY" />
+  <xs:complexType name="REQUEST_LOADTAG">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TargetTagId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_LOADTAG" nillable="true" type="tns:REQUEST_LOADTAG" />
   <xs:complexType name="REQUEST_LOADTHUMBNAIL">
     <xs:sequence>
       <xs:element minOccurs="0" name="ThumbnailKey" nillable="true" type="xs:string" />

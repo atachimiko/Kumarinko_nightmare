@@ -24,6 +24,13 @@ namespace Kumano.Data.Infrastructure
 			typeof(DoArtifactNavigationListPaneMessage), // プロパティを所有する型を指定
 			new PropertyMetadata(0L));
 
+		public static readonly DependencyProperty FindByTagIdProperty = DependencyProperty.Register(
+			"FindByTagId", // プロパティ名を指定
+			typeof(long), // プロパティの型を指定
+			typeof(DoArtifactNavigationListPaneMessage), // プロパティを所有する型を指定
+			new PropertyMetadata(0L));
+
+
 		#endregion フィールド
 
 
@@ -44,6 +51,11 @@ namespace Kumano.Data.Infrastructure
 			set { SetValue(FindByCategoryIdProperty, value); }
 		}
 
+		public long FindByTagId
+		{
+			get { return (long)GetValue(FindByTagIdProperty); }
+			set { SetValue(FindByTagIdProperty, value); }
+		}
 		#endregion プロパティ
 
 		#region メソッド

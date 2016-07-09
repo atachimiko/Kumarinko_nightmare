@@ -50,7 +50,18 @@ namespace Kumano.Contrib.Infrastructures
 
 		#endregion プロパティ
 
+
 		#region メソッド
+
+		public static bool GetLoaded(DependencyObject obj)
+		{
+			return (bool)obj.GetValue(LoadedProperty);
+		}
+
+		public static void SetLoaded(DependencyObject obj, bool value)
+		{
+			obj.SetValue(LoadedProperty, value);
+		}
 
 		/// <summary>
 		/// 遅延ロード処理
@@ -79,5 +90,6 @@ namespace Kumano.Contrib.Infrastructures
 		}
 
 		#endregion メソッド
+
 	}
 }

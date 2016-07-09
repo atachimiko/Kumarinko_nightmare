@@ -35,6 +35,20 @@ namespace Mogami.Model.Repository
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public IQueryable<Artifact> FindByTag(Tag tag)
+		{
+			return from u in _dbset
+				   from c in u.Tags
+				   where c.Id == tag.Id
+				   select u;
+		}
+
+
+		/// <summary>
 		/// Artifactを読み込みます
 		/// </summary>
 		/// <param name="id"></param>

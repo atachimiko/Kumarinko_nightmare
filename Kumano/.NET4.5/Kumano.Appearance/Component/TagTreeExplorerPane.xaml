@@ -1,12 +1,66 @@
 ﻿<UserControl x:Class="Kumano.View.Component.TagTreeExplorerPane"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+             xmlns:lAction="clr-namespace:Kumano.View.Action"
              xmlns:local="clr-namespace:Kumano.View.Component"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:localAct="clr-namespace:Kumano.View.Action"
+             xmlns:localBehavior="clr-namespace:Kumano.View.Behavior"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tree="clr-namespace:Akalib.Wpf.Control.Tree;assembly=Akalib.Wpf"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Kumano.Appearance;component/Themes/TagTreeExplorer.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Kumano.Appearance;component/Resource/TreeStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <l:InteractionMessageTrigger MessageKey="Dialog" Messenger="{Binding Messenger}">
+            <localAct:DialogMessageAction />
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="ShowDocumentPane" Messenger="{Binding Messenger}">
+            <localAct:ShowDocumentPaneMessageAction />
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="FindDocumentPane" Messenger="{Binding Messenger}">
+            <localAct:FindDocumentPaneMessageAction />
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="DoArtifactNavigationListPane" Messenger="{Binding Messenger}">
+            <localAct:DoArtifactNavigationListPaneMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-            
+        <tree:TreeList x:Name="_tag_treeList"
+                       Grid.Column="0"
+                       Margin="3"
+                       DockPanel.Dock="Left"
+                       ItemContainerStyle="{StaticResource TreeListItemNodeStyle}"
+                       ItemTemplate="{StaticResource TagTreeItemTemplate}"
+                       Model="{Binding TagTreeData}">
+            <tree:TreeList.ContextMenu>
+                <ContextMenu IsOpen="{Binding IsContextMenuOpened}">
+                    <MenuItem Header="カタグ情報の変更" />
+                    <MenuItem Header="削除" />
+                    <Separator />
+                    <MenuItem Header="関連項目のリストアップ">
+                        <MenuItem Header="現在の一覧に追加" />
+                        <MenuItem Header="現在の一覧を置き換え" />
+                    </MenuItem>
+                </ContextMenu>
+            </tree:TreeList.ContextMenu>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <localBehavior:TreeListSetStateToSourceAction Source="{Binding SelectedTreeListNode}" Property="SelectedNode" />
+                    <localBehavior:TreeListSetStateToSourceAction Source="{Binding SelectedTreeListNodes}" Property="SelectedNodes" />
+                    <l:LivetCallMethodAction MethodName="ShowImageListDocument" MethodTarget="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </tree:TreeList>
     </Grid>
 </UserControl>

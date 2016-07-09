@@ -43,6 +43,8 @@ namespace Mogami.Service
 			MapperConfig = new MapperConfiguration(cfg =>
 			{
 				cfg.CreateMap<Artifact, DataArtifact>();
+				cfg.CreateMap<Category, DataCategory>();
+				cfg.CreateMap<Tag, DataTag>();
 			});
 
 			Mapper = MapperConfig.CreateMapper();
@@ -79,9 +81,13 @@ namespace Mogami.Service
 				switch (reqparam.TargetType)
 				{
 					case FINDTARGET_SELECTOR.CATEGORY:
-						artifact = new List<Artifact>(
-							repo.FindByCategory(new Category { Id = reqparam.TargetId }).ToArray()
-							);
+						var r = repo.FindByCategory(new Category { Id = reqparam.TargetId });
+						artifact = new List<Artifact>(r.ToArray().OrderBy(p => p.Title));
+						rsp.Success = true;
+						break;
+					case FINDTARGET_SELECTOR.TAG:
+						var rtags = repo.FindByTag(new Tag { Id = reqparam.TargetId });
+						artifact = new List<Artifact>(rtags.ToArray().OrderBy(p => p.Title));
 						rsp.Success = true;
 						break;
 					default:
@@ -177,6 +183,33 @@ namespace Mogami.Service
 			}
 
 			rsp.Success = true;
+			return rsp;
+		}
+
+		public RESPONSE_LOADTAG LoadTag(REQUEST_LOADTAG reqparam)
+		{
+			var rsp = new RESPONSE_LOADTAG();
+
+			using (var dbc = new AppDbContext())
+			{
+				var repo = new TagRepository(dbc);
+
+				long loadTagId = reqparam.TargetTagId;
+
+				var application = repo.Load(loadTagId);
+				foreach(var child in application.ChildTag)
+				{
+					rsp.Tags.Add(new DataTag
+					{
+						Id=child.Id,
+						Name=child.Name,
+						IsHasChild = child.ChildTag.Count > 0 ? true : false
+					});
+				}
+			}
+
+			rsp.Success = true;
+
 			return rsp;
 		}
 

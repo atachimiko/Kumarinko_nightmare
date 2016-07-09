@@ -185,13 +185,13 @@ namespace Kumano.Data.ViewModel
 				this._CategoryTreeExplorerPaneViewModel = new CategoryTreeExplorerPaneViewModel();
 				this.AnchorContents.Add(this._CategoryTreeExplorerPaneViewModel);
 			}
-			/*
+			
 			if (this._TagTreeExplorerPaneViewModel == null)
 			{
 				this._TagTreeExplorerPaneViewModel = new TagTreeExplorerPaneViewModel();
 				this.AnchorContents.Add(this._TagTreeExplorerPaneViewModel);
 			}
-			*/
+			
 		}
 
 		private void ShowDialog(IDialogViewModel viewmodel)

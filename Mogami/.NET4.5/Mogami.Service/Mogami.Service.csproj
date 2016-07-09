@@ -83,6 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Construction\FINDTARGET_SELECTOR.cs" />
+    <Compile Include="Construction\SORTTARGET_SELECTOR.cs" />
+    <Compile Include="Construction\SORTTYPE_SELECTOR.cs" />
     <Compile Include="Construction\VERSION_SELECTOR.cs" />
     <Compile Include="IMogamiApiService.cs" />
     <Compile Include="MogamiApiService.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Request\REQUEST_FINDARTIFACT.cs" />
     <Compile Include="Request\REQUEST_LOADARTIFACT.cs" />
     <Compile Include="Request\REQUEST_LOADCATEGORY.cs" />
+    <Compile Include="Request\REQUEST_LOADTAG.cs" />
     <Compile Include="Request\REQUEST_LOADTHUMBNAIL.cs" />
     <Compile Include="Request\REQUEST_UPDATECATEGORY.cs" />
     <Compile Include="Response\RESPONSEAPI_BASE.cs" />
@@ -99,10 +102,12 @@
     <Compile Include="Response\RESPONSE_GETSERVERVERSION.cs" />
     <Compile Include="Response\RESPONSE_LOADARTIFACT.cs" />
     <Compile Include="Response\RESPONSE_LOADCATGEORY.cs" />
+    <Compile Include="Response\RESPONSE_LOADTAG.cs" />
     <Compile Include="Response\RESPONSE_LOADTHUMBNAIL.cs" />
     <Compile Include="Response\RESPONSE_UPDATECATEGORY.cs" />
     <Compile Include="Serialized\DataArtifact.cs" />
     <Compile Include="Serialized\DataCategory.cs" />
+    <Compile Include="Serialized\DataTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

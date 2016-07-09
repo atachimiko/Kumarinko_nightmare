@@ -8,6 +8,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
              xmlns:local="clr-namespace:Kumano.View.Component"
+             xmlns:localAct="clr-namespace:Kumano.View.Action"
              xmlns:localContainer="clr-namespace:Kumano.View.Container"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
@@ -28,6 +29,9 @@
                                      MethodParameter="{StaticResource False}"
                                      MethodTarget="{Binding}" />
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="ShowPropertyPane" Messenger="{Binding Messenger}">
+            <localAct:ShowPropertyPaneMessageAction />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     <Grid x:Name="ImageGrid">
         <Grid.RowDefinitions>

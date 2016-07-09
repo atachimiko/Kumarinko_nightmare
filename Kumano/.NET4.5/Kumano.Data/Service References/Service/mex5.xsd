@@ -53,6 +53,16 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RESPONSE_LOADCATGEORY" nillable="true" type="tns:RESPONSE_LOADCATGEORY" />
+  <xs:complexType name="RESPONSE_LOADTAG">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RESPONSEAPI_BASE">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Mogami.Service.Serialized" minOccurs="0" name="Tags" nillable="true" type="q4:ArrayOfDataTag" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RESPONSE_LOADTAG" nillable="true" type="tns:RESPONSE_LOADTAG" />
   <xs:complexType name="RESPONSE_LOADTHUMBNAIL">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:RESPONSEAPI_BASE">

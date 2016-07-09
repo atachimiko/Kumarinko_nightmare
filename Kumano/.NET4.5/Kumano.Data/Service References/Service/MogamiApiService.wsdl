@@ -70,6 +70,12 @@
   <wsdl:message name="IMogamiApiService_LoadCategory_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoadCategoryResponse" />
   </wsdl:message>
+  <wsdl:message name="IMogamiApiService_LoadTag_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadTag" />
+  </wsdl:message>
+  <wsdl:message name="IMogamiApiService_LoadTag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadTagResponse" />
+  </wsdl:message>
   <wsdl:message name="IMogamiApiService_LoadThumbnail_InputMessage">
     <wsdl:part name="parameters" element="tns:LoadThumbnail" />
   </wsdl:message>
@@ -114,6 +120,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadCategory">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadCategory" message="tns:IMogamiApiService_LoadCategory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadCategoryResponse" message="tns:IMogamiApiService_LoadCategory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadTag">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadTag" message="tns:IMogamiApiService_LoadTag_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadTagResponse" message="tns:IMogamiApiService_LoadTag_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadThumbnail">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadThumbnail" message="tns:IMogamiApiService_LoadThumbnail_InputMessage" />
@@ -173,6 +183,15 @@
     </wsdl:operation>
     <wsdl:operation name="LoadCategory">
       <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/LoadCategory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadTag">
+      <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/LoadTag" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

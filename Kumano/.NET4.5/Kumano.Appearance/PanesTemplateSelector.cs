@@ -47,8 +47,11 @@ namespace Kumano.View
 		[DataTemplateSelectMark(typeof(CategoryTreeExplorerPaneViewModel))]
 		public DataTemplate CategoryTreeExplorerPaneTemplate { get; set; }
 
-		//[DataTemplateSelectMark(typeof(PropertyPaneViewModel))]
+		[DataTemplateSelectMark(typeof(PropertyPaneViewModel))]
 		public DataTemplate PropertyPaneTemplate { get; set; }
+
+		[DataTemplateSelectMark(typeof(TagTreeExplorerPaneViewModel))]
+		public DataTemplate TagTreeExplorerPaneTemplate { get; set; }
 
 		#endregion プロパティ
 

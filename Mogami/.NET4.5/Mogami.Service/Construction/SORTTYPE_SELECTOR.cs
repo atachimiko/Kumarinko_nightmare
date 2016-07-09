@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mogami.Service.Construction
 {
-	public enum FINDTARGET_SELECTOR
+	public enum SORTTYPE_SELECTOR
 	{
-		/// <summary>
-		/// Category
-		/// </summary>
-		CATEGORY,
-		/// <summary>
-		/// Tag
-		/// </summary>
-		TAG,
+		ASC,
+		DESC
 	}
 }

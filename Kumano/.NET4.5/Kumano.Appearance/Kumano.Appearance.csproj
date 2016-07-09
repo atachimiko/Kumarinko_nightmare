@@ -137,11 +137,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Component\ArtifactNavigationListProperty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Component\CategoryTreeExplorerPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Component\ImagePreviewDocument.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Component\ImagePreviewProperty.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,11 +195,17 @@
     <Compile Include="Component\ArtifactNavigationListDocument.xaml.cs">
       <DependentUpon>ArtifactNavigationListDocument.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Component\ArtifactNavigationListProperty.xaml.cs">
+      <DependentUpon>ArtifactNavigationListProperty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Component\CategoryTreeExplorerPane.xaml.cs">
       <DependentUpon>CategoryTreeExplorerPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Component\ImagePreviewDocument.xaml.cs">
       <DependentUpon>ImagePreviewDocument.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Component\ImagePreviewProperty.xaml.cs">
+      <DependentUpon>ImagePreviewProperty.xaml</DependentUpon>
     </Compile>
     <Compile Include="Component\PropertyPane.xaml.cs">
       <DependentUpon>PropertyPane.xaml</DependentUpon>
