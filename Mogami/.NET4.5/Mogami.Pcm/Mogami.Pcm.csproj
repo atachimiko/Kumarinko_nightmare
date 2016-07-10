@@ -52,6 +52,8 @@
     <Compile Include="PlugInApplicationAttribute.cs" />
     <Compile Include="PlugInAttribute.cs" />
     <Compile Include="PlugInBasedManager.cs" />
+    <Compile Include="PlugIn\IGenerateTagOperationPlugIn.cs" />
+    <Compile Include="PlugIn\IKumarinkoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

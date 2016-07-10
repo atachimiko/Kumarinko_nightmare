@@ -12,18 +12,32 @@ namespace Mogami.Pcm
 	[AttributeUsage(AttributeTargets.Class)]
 	public class PlugInAttribute : Attribute
 	{
+		#region コンストラクタ
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="name">Name of the PlugIn</param>
+		public PlugInAttribute(string name, string version)
+		{
+			Name = name;
+			Version = version;
+		}
+
+		#endregion コンストラクタ
+
+		#region プロパティ
+
 		/// <summary>
 		/// Name of the PlugIn.
 		/// </summary>
 		public string Name { get; set; }
 
 		/// <summary>
-		/// Constructor.
+		/// 
 		/// </summary>
-		/// <param name="name">Name of the PlugIn</param>
-		public PlugInAttribute(string name)
-		{
-			Name = name;
-		}
+		public string Version { get; set; }
+
+		#endregion プロパティ
 	}
 }

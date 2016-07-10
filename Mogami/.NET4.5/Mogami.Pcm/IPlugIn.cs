@@ -12,5 +12,10 @@ namespace Mogami.Pcm
 		/// プラグイン名
 		/// </summary>
 		string Name { get; }
+
+		/// <summary>
+		/// バージョン
+		/// </summary>
+		string Version { get; }
 	}
 }

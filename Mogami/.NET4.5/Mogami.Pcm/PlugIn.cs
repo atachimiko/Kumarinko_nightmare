@@ -14,6 +14,26 @@ namespace Mogami.Pcm
 	/// <typeparam name="TApp">Type of main application interface</typeparam>
 	public abstract class PlugIn<TApp> : IPlugIn
 	{
+		#region コンストラクタ
+
+		/// <summary>
+		/// 
+		/// </summary>
+		protected PlugIn()
+		{
+			Application = new PlugInApplication<TApp>();
+
+			//Get Name from PlugIn attribute.
+			var thisPlugInType = GetType();
+			var plugInAttribute = PcmHelper.GetAttribute<PlugInAttribute>(thisPlugInType);
+			Name = plugInAttribute == null ? thisPlugInType.Name : plugInAttribute.Name;
+			Version = plugInAttribute == null ? "" : plugInAttribute.Version;
+		}
+
+		#endregion コンストラクタ
+
+		#region プロパティ
+
 		/// <summary>
 		/// Gets a reference to main application.
 		/// </summary>
@@ -27,14 +47,8 @@ namespace Mogami.Pcm
 		/// <summary>
 		/// 
 		/// </summary>
-		protected PlugIn()
-		{
-			Application = new PlugInApplication<TApp>();
+		public string Version{get;private set; }
 
-			//Get Name from PlugIn attribute.
-			var thisPlugInType = GetType();
-			var plugInAttribute = PcmHelper.GetAttribute<PlugInAttribute>(thisPlugInType);
-			Name = plugInAttribute == null ? thisPlugInType.Name : plugInAttribute.Name;
-		}
+		#endregion プロパティ
 	}
 }
