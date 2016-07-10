@@ -1,4 +1,5 @@
 ﻿using Mogami.Core.Constructions;
+using Mogami.Pcm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,10 @@ namespace Mogami.Core.Infrastructure
 		/// </summary>
 		string DatabaseDirectoryPath { get; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		IPlugInBasedManager PlugInManager { get; }
 		/// <summary>
 		/// エンポラリファイルを格納するディレクトリパスを取得します
 		/// </summary>

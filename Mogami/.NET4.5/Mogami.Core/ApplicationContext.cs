@@ -1,5 +1,6 @@
 ﻿using Mogami.Core.Constructions;
 using Mogami.Core.Infrastructure;
+using Mogami.Pcm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,22 +24,25 @@ namespace Mogami.Core
 
 		#region プロパティ
 
-		#region ディレクトリパス
 		/// <summary>
 		/// アプリケーションコンテキストのApplicationDirectoryPathプロパティの値を取得します。
 		/// </summary>
 		public static string ApplicationDirectoryPath { get { return Instance.ApplicationDirectoryPath; } }
 
 		/// <summary>
-		/// サムネイルを格納するディレクトリパスを取得します
-		/// </summary>
-		public static string ThumbnailDirectoryPath { get { return Instance.ThumbnailDirectoryPath; } }
-		#endregion
-
-		/// <summary>
 		/// アプリケーションのアセンブリ情報
 		/// </summary>
 		public static System.Diagnostics.FileVersionInfo ApplicationFileVersionInfo { get { return Instance.ApplicationFileVersionInfo; } }
+
+		/// <summary>
+		/// プラグイン管理オブジェクト
+		/// </summary>
+		public static IPlugInBasedManager PlugInManager { get { return Instance.PlugInManager; } }
+
+		/// <summary>
+		/// サムネイルを格納するディレクトリパスを取得します
+		/// </summary>
+		public static string ThumbnailDirectoryPath { get { return Instance.ThumbnailDirectoryPath; } }
 
 		#endregion プロパティ
 

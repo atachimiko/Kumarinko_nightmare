@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.Applus", ".NET4.5\Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.Pcm", ".NET4.5\Mogami.Pcm\Mogami.Pcm.csproj", "{8E40F8C2-E1F7-4C99-8EED-0D2E50FF853F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogami.Pcm.Kumarinko", ".NET4.5\Mogami.Pcm.Kumarinko\Mogami.Pcm.Kumarinko.csproj", "{F9535AB3-278C-4490-AD26-A136F26052A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{8E40F8C2-E1F7-4C99-8EED-0D2E50FF853F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E40F8C2-E1F7-4C99-8EED-0D2E50FF853F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E40F8C2-E1F7-4C99-8EED-0D2E50FF853F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9535AB3-278C-4490-AD26-A136F26052A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9535AB3-278C-4490-AD26-A136F26052A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9535AB3-278C-4490-AD26-A136F26052A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9535AB3-278C-4490-AD26-A136F26052A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,5 +179,6 @@ Global
 		{756953CE-A786-4A28-ADD8-6E744633C904} = {128EBBCF-F1A4-435F-B597-9B742F65F6A3}
 		{AB280D7B-F16F-4B60-AE6E-130B563447FF} = {EB4362DB-1681-47A3-945F-D16A04D04B20}
 		{8E40F8C2-E1F7-4C99-8EED-0D2E50FF853F} = {EB4362DB-1681-47A3-945F-D16A04D04B20}
+		{F9535AB3-278C-4490-AD26-A136F26052A6} = {EB4362DB-1681-47A3-945F-D16A04D04B20}
 	EndGlobalSection
 EndGlobal

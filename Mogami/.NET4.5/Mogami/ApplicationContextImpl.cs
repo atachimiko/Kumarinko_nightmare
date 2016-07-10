@@ -1,6 +1,7 @@
 ﻿using Akalib;
 using Akalib.Entity;
 using log4net;
+using Mogami.Applus.Manager;
 using Mogami.Core.Constructions;
 using Mogami.Core.Infrastructure;
 using Mogami.Gateway;
@@ -16,11 +17,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using Mogami.Pcm;
 
 namespace Mogami
 {
 	public class ApplicationContextImpl : IApplicationContext
 	{
+
 
 		#region フィールド
 
@@ -42,6 +45,11 @@ namespace Mogami
 		/// .NETアプリケーションのコンテキスト
 		/// </summary>
 		private Application _Application;
+
+		/// <summary>
+		/// プラグイン管理
+		/// </summary>
+		private KumarinkoPlugInManager _KumarinkoPlugInManager;
 
 		/// <summary>
 		/// アプリケーションの処理計測を行うためのタイマー
@@ -125,6 +133,17 @@ namespace Mogami
 		}
 
 		/// <summary>
+		/// プラグイン管理オブジェクト
+		/// </summary>
+		public IPlugInBasedManager PlugInManager
+		{
+			get
+			{
+				return _KumarinkoPlugInManager;
+			}
+		}
+
+		/// <summary>
 		/// アプリケーションが一時ファイルを保存するディレクトリを取得します。
 		/// </summary>
 		public string TemporaryDirectoryPath
@@ -186,6 +205,9 @@ namespace Mogami
 					InitializeDatabase();
 					InitializeDatabaseThumbnail();
 					break;
+				case InitializeParamType.PLUGIN:
+					InitializePlugIn();
+					break;
 			}
 		}
 
@@ -200,6 +222,7 @@ namespace Mogami
 			RemoveTemporaryFiles();
 			Initialize(InitializeParamType.DIRECTORY);
 			Initialize(InitializeParamType.DATABASE);
+			Initialize(InitializeParamType.PLUGIN);
 		}
 
 		/// <summary>
@@ -265,7 +288,6 @@ namespace Mogami
 			builder_ThumbDb.DataSource = Path.Combine(DatabaseDirectoryPath, "thumbnail.db");
 			ThumbDbContext.SDbConnection = builder_ThumbDb;
 		}
-
 
 		/// <summary>
 		/// データベースに関する初期化処理
@@ -407,7 +429,6 @@ namespace Mogami
 			}
 		}
 
-
 		/// <summary>
 		/// 必要なディレクトリを作成する初期化処理
 		/// </summary>
@@ -421,6 +442,18 @@ namespace Mogami
 			System.IO.Directory.CreateDirectory(ConfigDirectoryPath);
 		}
 
+		private void InitializePlugIn()
+		{
+			var pluginFolderPath = Path.Combine(ApplicationSettingFilePath, "plugins");
+			if (!Directory.Exists(pluginFolderPath))
+				System.IO.Directory.CreateDirectory(pluginFolderPath);
+
+			_KumarinkoPlugInManager = new KumarinkoPlugInManager();
+			_KumarinkoPlugInManager.PlugInFolder = pluginFolderPath;
+
+			// フォルダ内の、プラグインDLLを読み込む
+			_KumarinkoPlugInManager.LoadPlugIns();
+		}
 		/// <summary>
 		/// テンポラリディレクトリ内のファイルを削除する
 		/// </summary>
