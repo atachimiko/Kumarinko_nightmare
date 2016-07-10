@@ -158,6 +158,10 @@
       <Project>{21e9e537-6737-4755-980b-8b2a6e737e48}</Project>
       <Name>Mogami.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\.NET4.5\Mogami.Pcm\Mogami.Pcm.csproj">
+      <Project>{8e40f8c2-e1f7-4c99-8eed-0d2e50ff853f}</Project>
+      <Name>Mogami.Pcm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\.NET4.5\Mogami.Service\Mogami.Service.csproj">
       <Project>{9f5decef-c35e-4c34-9c74-84334fdaeefd}</Project>
       <Name>Mogami.Service</Name>
