@@ -12,6 +12,6 @@ namespace Mogami.Core.Constructions
 	[Flags]
 	public enum InitializeParamType
 	{
-		DIRECTORY, DATABASE
+		DIRECTORY, DATABASE, PLUGIN
 	}
 }

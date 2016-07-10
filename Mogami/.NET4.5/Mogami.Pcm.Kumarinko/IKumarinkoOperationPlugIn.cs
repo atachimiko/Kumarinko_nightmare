@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mogami.Pcm.PlugIn
+namespace Mogami.Pcm.Kumarinko
 {
 	/// <summary>
 	/// 文字列からタグ生成を行うプラグインのインターフェース
 	/// </summary>
-	public interface IGenerateTagOperationPlugIn : IPlugIn
+	public interface IKumarinkoOperationPlugIn : IPlugIn
 	{
 		/// <summary>
 		/// 

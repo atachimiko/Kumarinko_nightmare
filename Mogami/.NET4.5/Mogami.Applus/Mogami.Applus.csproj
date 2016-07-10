@@ -78,6 +78,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\KumarinkoPlugInManager.cs" />
     <Compile Include="Manager\ThumbnailManager.cs" />
     <Compile Include="VirtualFileSystemWatcherManager.cs" />
     <Compile Include="WorkflowExtention.cs" />
@@ -111,6 +112,14 @@
     <ProjectReference Include="..\Mogami.Model\Mogami.Model.csproj">
       <Project>{21e9e537-6737-4755-980b-8b2a6e737e48}</Project>
       <Name>Mogami.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Pcm.Kumarinko\Mogami.Pcm.Kumarinko.csproj">
+      <Project>{f9535ab3-278c-4490-ad26-a136f26052a6}</Project>
+      <Name>Mogami.Pcm.Kumarinko</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogami.Pcm\Mogami.Pcm.csproj">
+      <Project>{8e40f8c2-e1f7-4c99-8eed-0d2e50ff853f}</Project>
+      <Name>Mogami.Pcm</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mogami.Workflow\Mogami.Workflow.csproj">
       <Project>{baa064db-6546-491e-a4f1-7a5678ec8e43}</Project>
