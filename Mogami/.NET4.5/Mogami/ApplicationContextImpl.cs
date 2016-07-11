@@ -444,7 +444,7 @@ namespace Mogami
 
 		private void InitializePlugIn()
 		{
-			var pluginFolderPath = Path.Combine(ApplicationSettingFilePath, "plugins");
+			var pluginFolderPath = Path.Combine(ApplicationDirectoryPath, "plugins");
 			if (!Directory.Exists(pluginFolderPath))
 				System.IO.Directory.CreateDirectory(pluginFolderPath);
 
