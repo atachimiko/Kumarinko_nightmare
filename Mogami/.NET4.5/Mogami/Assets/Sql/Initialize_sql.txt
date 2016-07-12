@@ -79,6 +79,12 @@ CREATE TABLE IF NOT	EXISTS [TS_Artifact2Tag]
 	[ArtifactId] INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS [TS_Category2Tag]
+(
+	[TagId] INTEGER,
+	[CategoryId] INTEGER
+);
+
 --
 -- Initialize Data
 --

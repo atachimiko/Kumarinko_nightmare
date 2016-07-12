@@ -68,6 +68,18 @@ namespace Mogami.Gateway
 					m.MapRightKey("ArtifactId");
 					m.ToTable("TS_Artifact2Tag");
 				});
+
+			// Tag <-> Category
+			modelBuilder.Entity<Tag>()
+				.HasMany(c => c.Categories)
+				.WithMany(p => p.Tags)
+				.Map(m =>
+				{
+					m.MapLeftKey("TagId");
+					m.MapRightKey("CategoryId");
+					m.ToTable("TS_Category2Tag");
+				});
+
 		}
 
 		protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)
