@@ -146,16 +146,6 @@ namespace Kumano.Data.ViewModel
 		}
 
 		/// <summary>
-		/// 画像リスト画面を表示します
-		/// </summary>
-		public void ShowImageListDocument()
-		{
-			LOG.Debug("Execute ShowImageListDocument");
-
-			this.ShowDocument(new ArtifactNavigationListDocumentViewModel());
-		}
-
-		/// <summary>
 		/// 画像プレビュー画面を表示します
 		/// </summary>
 		public void ShowImagePreviewDocument()

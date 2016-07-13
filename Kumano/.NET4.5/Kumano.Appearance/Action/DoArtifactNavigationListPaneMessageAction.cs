@@ -23,14 +23,18 @@ namespace Kumano.View.Action
 			if (confirmMessage == null) return;
 
 			var workspace = ApplicationContext.Workspace as WorkspaceViewModel;
-			workspace.ShowImageListDocument();
+			var vm = workspace.FindDocumentPane(typeof(NavigationDocumentViewModel)).FirstOrDefault() as NavigationDocumentViewModel;
+			var dataTemplate = vm.ActiveContent as ArtifactNavigationListDocumentViewModel;
+			if (dataTemplate == null)
+			{
+				dataTemplate = new ArtifactNavigationListDocumentViewModel();
+				vm.ActiveContent = dataTemplate;
+			}
 
-			var vm = workspace.FindDocumentPane(typeof(ArtifactNavigationListDocumentViewModel)).FirstOrDefault() as ArtifactNavigationListDocumentViewModel;
-			if(confirmMessage.FindByCategoryId!= 0L)
-				vm.LoadCategoryId = confirmMessage.FindByCategoryId;
+			if (confirmMessage.FindByCategoryId != 0L)
+				dataTemplate.LoadCategoryId = confirmMessage.FindByCategoryId;
 			else if (confirmMessage.FindByTagId != 0L)
-				vm.LoadTagId = confirmMessage.FindByTagId;
-
+				dataTemplate.LoadTagId = confirmMessage.FindByTagId;
 		}
 	}
 }

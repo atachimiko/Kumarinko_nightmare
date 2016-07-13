@@ -15,21 +15,44 @@ namespace Kumano.Data.ViewModel
 	/// </summary>
 	public class NavigationDocumentViewModel : DocumentViewModelBase, IDocumentPaneViewModel
 	{
-		public NavigationDocumentViewModel()
-		{
-			var name = "ArtifactNavigationListDocumentViewModel";
-			this.ViewTemplate = ApplicationContext.MainWindow.FindResource(name) as DataTemplate;
 
-		}
 
 		#region フィールド
+
+		private IDocumentPaneViewModel _ActiveContent;
 
 		private DataTemplate _ViewTemplate;
 
 		#endregion フィールド
 
 
+		#region コンストラクタ
+
+		public NavigationDocumentViewModel()
+		{
+			UpdateActiveViewTemplate();
+		}
+
+		#endregion コンストラクタ
+
+
 		#region プロパティ
+
+		/// <summary>
+		/// 表示するコンポーネントのViewModelを取得、または設定します
+		/// </summary>
+		public IDocumentPaneViewModel ActiveContent
+		{
+			get { return _ActiveContent; }
+			set
+			{
+				if (_ActiveContent == value) return;
+
+				_ActiveContent = value;
+				OnActiveContent();
+				RaisePropertyChanged();
+			}
+		}
 
 		public string ContentId
 		{
@@ -76,6 +99,27 @@ namespace Kumano.Data.ViewModel
 		public override void Close()
 		{
 
+		}
+
+		protected virtual void OnActiveContent()
+		{
+			UpdateActiveViewTemplate();
+		}
+
+		/// <summary>
+		/// 表示するDataTemplateを更新します
+		/// </summary>
+		private void UpdateActiveViewTemplate()
+		{
+			if (this.ActiveContent == null)
+			{
+				this.ViewTemplate = null;
+			}
+			else
+			{
+				var name = this.ActiveContent.GetType().Name;
+				this.ViewTemplate = ApplicationContext.MainWindow.FindResource(name) as DataTemplate;
+			}
 		}
 
 		#endregion メソッド
