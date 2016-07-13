@@ -141,6 +141,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Component\CategoryNavigationListDocument.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Component\CategoryTreeExplorerPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Component\ImagePreviewProperty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Component\NavigationListDocument.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +206,9 @@
     <Compile Include="Component\ArtifactNavigationListProperty.xaml.cs">
       <DependentUpon>ArtifactNavigationListProperty.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Component\CategoryNavigationListDocument.xaml.cs">
+      <DependentUpon>CategoryNavigationListDocument.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Component\CategoryTreeExplorerPane.xaml.cs">
       <DependentUpon>CategoryTreeExplorerPane.xaml</DependentUpon>
     </Compile>
@@ -206,6 +217,9 @@
     </Compile>
     <Compile Include="Component\ImagePreviewProperty.xaml.cs">
       <DependentUpon>ImagePreviewProperty.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Component\NavigationListDocument.xaml.cs">
+      <DependentUpon>NavigationListDocument.xaml</DependentUpon>
     </Compile>
     <Compile Include="Component\PropertyPane.xaml.cs">
       <DependentUpon>PropertyPane.xaml</DependentUpon>

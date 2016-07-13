@@ -32,6 +32,9 @@
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <localConverter:BooleanToVisibilityConverterForAvalonDock x:Key="BooleanToVisibilityConverterForAvalonDock" />
 
+            <DataTemplate DataType="{x:Type localVm:NavigationDocumentViewModel}">
+                <localComp:NavigationListDocument />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type localVm:CategoryTreeExplorerPaneViewModel}">
                 <localComp:CategoryTreeExplorerPane />
             </DataTemplate>
@@ -40,9 +43,6 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type localVm:TagTreeExplorerPaneViewModel}">
                 <localComp:TagTreeExplorerPane />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type localVm:ArtifactNavigationListDocumentViewModel}">
-                <localComp:ArtifactNavigationListDocument />
             </DataTemplate>
             <DataTemplate DataType="{x:Type localVm:ImagePreviewDocumentViewModel}">
                 <localComp:ImagePreviewDocument />
@@ -64,6 +64,12 @@
                     <TextBlock>ImageListのプロパティです</TextBlock>
                 </Grid>
             </DataTemplate>
+
+            <!--  ナビゲーションドキュメントに表示するデータテンプレートの定義  -->
+            <DataTemplate x:Key="ArtifactNavigationListDocumentViewModel" DataType="{x:Type localVm:ArtifactNavigationListDocumentViewModel}">
+                <localComp:ArtifactNavigationListDocument />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Fluent:RibbonWindow.Resources>
     <i:Interaction.Triggers>

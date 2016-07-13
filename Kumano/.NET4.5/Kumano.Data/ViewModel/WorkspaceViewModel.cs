@@ -29,6 +29,8 @@ namespace Kumano.Data.ViewModel
 
 		CategoryTreeExplorerPaneViewModel _CategoryTreeExplorerPaneViewModel;
 
+		NavigationDocumentViewModel _NavigationDocumentViewModel;
+
 		PropertyPaneViewModel _PropertyPaneViewModel;
 
 		TagTreeExplorerPaneViewModel _TagTreeExplorerPaneViewModel;
@@ -191,7 +193,12 @@ namespace Kumano.Data.ViewModel
 				this._TagTreeExplorerPaneViewModel = new TagTreeExplorerPaneViewModel();
 				this.AnchorContents.Add(this._TagTreeExplorerPaneViewModel);
 			}
-			
+
+			if (this._NavigationDocumentViewModel == null)
+			{
+				this._NavigationDocumentViewModel = new NavigationDocumentViewModel();
+				this.ShowDocument(this._NavigationDocumentViewModel);
+			}
 		}
 
 		private void ShowDialog(IDialogViewModel viewmodel)

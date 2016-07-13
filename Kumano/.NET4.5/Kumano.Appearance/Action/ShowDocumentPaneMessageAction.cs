@@ -34,8 +34,8 @@ namespace Kumano.View.Action
 			{
 				switch (confirmMessage.ShowDocumentPaneType)
 				{
-					case ShowDocumentPaneType.DocumentPaneArtifactList:
-						vm = new ArtifactNavigationListDocumentViewModel();
+					case ShowDocumentPaneType.DocumentPaneNavigation:
+						vm = workspace.FindDocumentPane(typeof(NavigationDocumentViewModel)).FirstOrDefault();
 						break;
 					case ShowDocumentPaneType.DocumentPanePreviewImage:
 						vm = new ImagePreviewDocumentViewModel();
