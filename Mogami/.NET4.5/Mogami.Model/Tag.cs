@@ -21,6 +21,10 @@ namespace Mogami.Model
 
 		private IList<Tag> _ChildTags;
 
+		private DateTime? _CreateDate;
+
+		private DateTime? _LastUpdate;
+
 		private string _Name;
 
 		private Tag _ParentTag;
@@ -65,6 +69,28 @@ namespace Mogami.Model
 			}
 		}
 
+		public DateTime? CreateDate
+		{
+			get { return _CreateDate; }
+			set
+			{
+				if (_CreateDate == value)
+					return;
+				_CreateDate = value;
+			}
+		}
+
+		public DateTime? LastUpdate
+		{
+			get { return _LastUpdate; }
+			set
+			{
+				if (_LastUpdate == value)
+					return;
+				_LastUpdate = value;
+			}
+		}
+
 		[Required]
 		public string Name
 		{
@@ -94,6 +120,5 @@ namespace Mogami.Model
 		}
 
 		#endregion プロパティ
-
 	}
 }
