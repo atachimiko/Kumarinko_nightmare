@@ -20,8 +20,8 @@ namespace Mogami.Model
 		private CategoryType _CategoryTypeCode;
 		private IList<Category> _ChildCategories;
 		private string _Name;
-
 		private Category _ParentCategory;
+		private IList<Tag> _Tags;
 
 		#endregion フィールド
 
@@ -32,6 +32,7 @@ namespace Mogami.Model
 		{
 			this.Artifacts = new ObservableSynchronizedCollection<T_Artifact2Category>();
 			this.ChildCategories = new ObservableSynchronizedCollection<Category>();
+			this.Tags = new ObservableSynchronizedCollection<Tag>();
 		}
 
 		#endregion コンストラクタ
@@ -81,6 +82,7 @@ namespace Mogami.Model
 				_ChildCategories = value;
 			}
 		}
+
 		public string Name
 		{
 			get
@@ -105,7 +107,18 @@ namespace Mogami.Model
 			}
 		}
 
-		#endregion プロパティ
+		public virtual IList<Tag> Tags
+		{
+			get
+			{ return _Tags; }
+			set
+			{
+				if (_Tags == value)
+					return;
+				_Tags = value;
+			}
+		}
 
+		#endregion プロパティ
 	}
 }

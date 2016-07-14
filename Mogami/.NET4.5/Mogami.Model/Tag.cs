@@ -14,10 +14,11 @@ namespace Mogami.Model
 	public class Tag : ServiceModel, ITag
 	{
 
-
 		#region フィールド
 
 		private IList<Artifact> _Artifacts;
+
+		private IList<Category> _Categories;
 
 		private IList<Tag> _ChildTags;
 
@@ -33,7 +34,7 @@ namespace Mogami.Model
 		public Tag()
 		{
 			this.Artifacts = new ObservableSynchronizedCollection<Artifact>();
-
+			this.Categories = new ObservableSynchronizedCollection<Category>();
 			this.ChildTag = new ObservableSynchronizedCollection<Tag>();
 		}
 
@@ -53,6 +54,22 @@ namespace Mogami.Model
 				_Artifacts = value;
 			}
 		}
+
+		/// <summary>
+		/// 関連するカテゴリ一覧を取得、または設定します。
+		/// </summary>
+		public virtual IList<Category> Categories
+		{
+			get
+			{ return _Categories; }
+			set
+			{
+				if (_Categories == value)
+					return;
+				_Categories = value;
+			}
+		}
+
 		public virtual IList<Tag> ChildTag
 		{
 			get
