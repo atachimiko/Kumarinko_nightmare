@@ -123,6 +123,7 @@
     <Compile Include="ViewModel\CategoryTreeExplorerPaneViewModel.cs" />
     <Compile Include="ViewModel\EditCategoryDialogViewModel.cs" />
     <Compile Include="ViewModel\ImagePreviewDocumentViewModel.cs" />
+    <Compile Include="ViewModel\NavigationDocumentViewModel.cs" />
     <Compile Include="ViewModel\PropertyPaneViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ArtifactNavigationListPropertyViewModel.cs" />
     <Compile Include="ViewModel\PropertyPane\ImagePreviewPropertyViewModel.cs" />

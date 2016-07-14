@@ -14,7 +14,7 @@ namespace Kumano.Data.Infrastructure
 		/// <summary>
 		/// 一覧
 		/// </summary>
-		DocumentPaneArtifactList,
+		DocumentPaneNavigation,
 
 		/// <summary>
 		/// 画像プレビュー
