@@ -8,6 +8,8 @@ using System.Windows;
 
 namespace Kumano.Core.Infrastructures
 {
+	
+
 	public interface IApplicationContext
 	{
 
@@ -32,6 +34,11 @@ namespace Kumano.Core.Infrastructures
 		/// コンフィグファイルを保存するディレクトリのパスを取得します
 		/// </summary>
 		string ConfigDirectoryPath { get; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DeviceSettingInfo DeviceSettingInfo { get; }
 
 		/// <summary>
 		/// 
@@ -63,10 +70,21 @@ namespace Kumano.Core.Infrastructures
 		void InitializeApplication();
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		Task<bool> LoadDeviceSettingInfoAsync();
+
+		/// <summary>
 		/// アプリケーション設定情報の保存
 		/// </summary>
 		void SaveApplicationSettingFile();
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		Task<bool> SaveDeviceSettingInfoAsync();
 		/// <summary>
 		/// 
 		/// </summary>

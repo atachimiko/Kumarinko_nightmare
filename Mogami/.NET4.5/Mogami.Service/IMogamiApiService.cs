@@ -14,6 +14,7 @@ namespace Mogami.Service
 	[ServiceContract(SessionMode = SessionMode.Required)]
 	public interface IMogamiApiService
 	{
+
 		#region メソッド
 
 		/// <summary>
@@ -47,6 +48,7 @@ namespace Mogami.Service
 		/// <returns></returns>
 		[OperationContract]
 		RESPONSE_LOADARTIFACT LoadArtifact(REQUEST_LOADARTIFACT reqparam);
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -54,6 +56,13 @@ namespace Mogami.Service
 		/// <returns></returns>
 		[OperationContract]
 		RESPONSE_LOADCATGEORY LoadCategory(REQUEST_LOADCATEGORY reqparam);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_LOADDEVICESETTING LoadDeviceSetting();
 
 		/// <summary>
 		/// 
@@ -76,6 +85,14 @@ namespace Mogami.Service
 
 		[OperationContract(IsInitiating = false, IsTerminating = true)]
 		void Logout();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reqparam"></param>
+		/// <returns></returns>
+		[OperationContract]
+		RESPONSE_SAVEDEVICESETTING SaveDeviceSetting(REQUEST_SAVEDEVICRSETTING reqparam);
 
 		/// <summary>
 		/// 

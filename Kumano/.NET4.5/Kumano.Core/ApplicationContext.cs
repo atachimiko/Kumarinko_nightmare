@@ -11,7 +11,6 @@ namespace Kumano.Core
 {
 	public static class ApplicationContext
 	{
-
 		#region フィールド
 
 		static IApplicationContext Instance;
@@ -19,6 +18,11 @@ namespace Kumano.Core
 		#endregion フィールド
 
 		#region プロパティ
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public static IApplicationContextEvent Event { get { return (IApplicationContextEvent)Instance; } }
 
 		/// <summary>
 		/// アプリケーションのアセンブリ情報

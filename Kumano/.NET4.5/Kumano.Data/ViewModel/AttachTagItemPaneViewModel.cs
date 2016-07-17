@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kumano.Core;
 
 namespace Kumano.Data.ViewModel
 {
@@ -32,10 +33,7 @@ namespace Kumano.Data.ViewModel
 			this.Title = "タグ設定";
 			this._Items = new ObservableSynchronizedCollection<AttachTagListItem>();
 
-			// DEBUG:
-			this._Items.Add(new AttachTagListItem { Label = "Test1" });
-			this._Items.Add(new AttachTagListItem { Label = "Test2" });
-			this._Items.Add(new AttachTagListItem { Label = "Test4" });
+			ApplicationContext.Event.LoadedDeviceSetting += OnEvent_LoadedDeviceSetting;
 		}
 
 		#endregion コンストラクタ
@@ -67,6 +65,21 @@ namespace Kumano.Data.ViewModel
 		}
 
 		#endregion プロパティ
+
+
+		#region メソッド
+
+		/// <summary>
+		/// デバイス設定情報イベント発生時
+		/// </summary>
+		private void OnEvent_LoadedDeviceSetting()
+		{
+			this._Items.Add(new AttachTagListItem { Label = "Test1" });
+			this._Items.Add(new AttachTagListItem { Label = "Test2" });
+			this._Items.Add(new AttachTagListItem { Label = "Test4" });
+		}
+
+		#endregion メソッド
 
 		#region 内部クラス
 

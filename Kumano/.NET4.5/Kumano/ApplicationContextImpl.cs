@@ -1,7 +1,9 @@
 ﻿using Kumano.Core.Constractures;
 using Kumano.Core.Infrastructures;
+using Kumano.Data.Service;
 using Kumano.Data.ViewModel;
 using log4net;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +16,7 @@ using System.Windows;
 
 namespace Kumano
 {
-	public class ApplicationContextImpl : IApplicationContext
+	public class ApplicationContextImpl : IApplicationContext, IApplicationContextEvent
 	{
 		#region フィールド
 
@@ -52,6 +54,13 @@ namespace Kumano
 		/// 
 		/// </summary>
 		WorkspaceViewModel _Workspace;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DeviceSettingInfo _DeviceSettingInfo;
+
+		public event LoadedDeviceSettingEventHandler LoadedDeviceSetting;
 
 		#endregion フィールド
 
@@ -155,6 +164,17 @@ namespace Kumano
 		{
 			get { return _Workspace; }
 			set { _Workspace = (WorkspaceViewModel)value; }
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DeviceSettingInfo DeviceSettingInfo
+		{
+			get
+			{
+				return _DeviceSettingInfo;
+			}
 		}
 
 		#endregion プロパティ
@@ -308,6 +328,34 @@ namespace Kumano
 				{
 
 				}
+			}
+		}
+
+		public async Task<bool> LoadDeviceSettingInfoAsync()
+		{
+			using (var proxy = new MogamiApiServiceClient())
+			{
+				await proxy.LoginAsync();
+				var rsp = await proxy.LoadDeviceAsync();
+				if (this.DeviceSettingInfo == null) this._DeviceSettingInfo = new DeviceSettingInfo();
+				JsonConvert.PopulateObject(rsp.Json, this.DeviceSettingInfo);
+
+				LoadedDeviceSetting();
+			}
+
+			return true;
+		}
+
+		public Task<bool> SaveDeviceSettingInfoAsync()
+		{
+			using (var proxy = new MogamiApiServiceClient())
+			{
+				await proxy.LoginAsync();
+				if (this.DeviceSettingInfo == null) this._DeviceSettingInfo = new DeviceSettingInfo();
+				var json = JsonConvert.SerializeObject(this.DeviceSettingInfo, Formatting.None);
+				var rsp = await proxy.SaveDeviceAsync(json);
+
+				return rsp.Success;
 			}
 		}
 

@@ -79,7 +79,10 @@
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="Constractures\ApplicationSettingInfo.cs" />
+    <Compile Include="Constractures\DeviceSettingInfo.cs" />
+    <Compile Include="Constractures\Device\AttachTagButtonModeType.cs" />
     <Compile Include="Infrastructures\IApplicationContext.cs" />
+    <Compile Include="Infrastructures\IApplicationContextEvent.cs" />
     <Compile Include="Infrastructures\IWorkspaceViewModel.cs" />
     <Compile Include="Presentation\ImageListLazyItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -186,6 +186,19 @@ namespace Mogami.Service
 			return rsp;
 		}
 
+		public RESPONSE_LOADDEVICESETTING LoadDeviceSetting()
+		{
+			var rsp = new RESPONSE_LOADDEVICESETTING();
+
+			using (var dbc = new AppDbContext())
+			{
+				
+
+			}
+
+			return rsp;
+		}
+
 		public RESPONSE_LOADTAG LoadTag(REQUEST_LOADTAG reqparam)
 		{
 			var rsp = new RESPONSE_LOADTAG();
@@ -240,6 +253,13 @@ namespace Mogami.Service
 		public void Logout()
 		{
 
+		}
+
+		public RESPONSE_SAVEDEVICESETTING SaveDeviceSetting(REQUEST_SAVEDEVICRSETTING reqparam)
+		{
+			var rsp = new RESPONSE_SAVEDEVICESETTING();
+
+			return rsp;
 		}
 
 		public RESPONSE_UPDATECATEGORY UpdateCategory(REQUEST_UPDATECATEGORY reqparam)
