@@ -27,6 +27,8 @@ namespace Kumano.Data.ViewModel
 		static ILog LOG = LogManager.GetLogger(typeof(WorkspaceViewModel));
 		private readonly MainWindowRibbonVisibilities _MainWindowRibbonVisibilities = new MainWindowRibbonVisibilities();
 
+		AttachTagItemPaneViewModel _AttachTagItemPaneViewModel;
+
 		CategoryTreeExplorerPaneViewModel _CategoryTreeExplorerPaneViewModel;
 
 		NavigationDocumentViewModel _NavigationDocumentViewModel;
@@ -188,6 +190,12 @@ namespace Kumano.Data.ViewModel
 			{
 				this._NavigationDocumentViewModel = new NavigationDocumentViewModel();
 				this.ShowDocument(this._NavigationDocumentViewModel);
+			}
+
+			if(_AttachTagItemPaneViewModel == null)
+			{
+				this._AttachTagItemPaneViewModel = new AttachTagItemPaneViewModel();
+				this.AnchorContents.Add(this._AttachTagItemPaneViewModel);
 			}
 		}
 

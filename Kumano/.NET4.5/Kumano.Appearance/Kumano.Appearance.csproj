@@ -141,6 +141,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Component\AttachTagItemPane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Component\CategoryNavigationListDocument.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +189,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resource\TagListViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resource\TreeStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +213,9 @@
     </Compile>
     <Compile Include="Component\ArtifactNavigationListProperty.xaml.cs">
       <DependentUpon>ArtifactNavigationListProperty.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Component\AttachTagItemPane.xaml.cs">
+      <DependentUpon>AttachTagItemPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Component\CategoryNavigationListDocument.xaml.cs">
       <DependentUpon>CategoryNavigationListDocument.xaml</DependentUpon>
@@ -228,6 +239,7 @@
       <DependentUpon>TagTreeExplorerPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Container\ImageListView.cs" />
+    <Compile Include="Container\TagListView.cs" />
     <Compile Include="Converter\BooleanToVisibilityConverterForAvalonDock.cs" />
     <Compile Include="Dialog\EditCategoryDialog.xaml.cs">
       <DependentUpon>EditCategoryDialog.xaml</DependentUpon>

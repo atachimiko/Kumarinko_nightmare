@@ -32,6 +32,9 @@
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <localConverter:BooleanToVisibilityConverterForAvalonDock x:Key="BooleanToVisibilityConverterForAvalonDock" />
 
+            <DataTemplate DataType="{x:Type localVm:AttachTagItemPaneViewModel}">
+                <localComp:AttachTagItemPane />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type localVm:NavigationDocumentViewModel}">
                 <localComp:NavigationListDocument />
             </DataTemplate>
@@ -250,7 +253,9 @@
                                 </xcad:LayoutAnchorablePane>
                             </xcad:LayoutAnchorablePaneGroup>
                         </xcad:LayoutPanel>
-                        <xcad:LayoutAnchorablePane Name="BottomPropertyPane" DockHeight="110" />
+                        <xcad:LayoutAnchorablePane Name="BottomPropertyPane" DockHeight="110">
+                            <xcad:LayoutAnchorable ContentId="AttachTagItemPane" />
+                        </xcad:LayoutAnchorablePane>
                     </xcad:LayoutPanel>
                 </xcad:LayoutRoot>
             </xcad:DockingManager>

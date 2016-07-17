@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:aka="http://schemas.akalib.net/wpf"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+                    xmlns:localContainer="clr-namespace:Kumano.View.Container"
+                    xmlns:localData="clr-namespace:Kumano.Core.Presentation;assembly=Kumano.Core">
+
+    <!--  ...  -->
+    <DataTemplate x:Key="TagButton_Template">
+        <Border Background="Transparent">
+            <StackPanel Orientation="Vertical">
+                <Label Content="{Binding Label}" />
+                <Button Height="26" Content="{Binding Label}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <l:LivetCallMethodAction MethodName="OutputLog" MethodTarget="{Binding}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!--  TagListView のスタイル定義  -->
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type localContainer:TagListView},
+                                        ResourceId=TagListView}"
+           BasedOn="{StaticResource {x:Type ListBox}}"
+           TargetType="{x:Type ListView}">
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="0.5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+
+                    <Border Name="bd"
+                            Margin="{TemplateBinding Margin}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer Margin="{TemplateBinding Padding}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="ScrollChanged">
+                                    <l:LivetCallMethodAction MethodName="Scrolling" MethodTarget="{Binding}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <WrapPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" IsItemsHost="True" />
+                        </ScrollViewer>
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--  TagListViewItemのスタイル定義  -->
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type localContainer:TagListView},
+                                        ResourceId=TagListViewItem}"
+           BasedOn="{StaticResource {x:Type ListBoxItem}}"
+           TargetType="{x:Type ListViewItem}">
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentControl Name="cc"
+                                    Content="{Binding}"
+                                    ContentTemplate="{StaticResource TagButton_Template}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

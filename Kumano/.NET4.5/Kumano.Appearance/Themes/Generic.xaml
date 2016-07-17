@@ -3,5 +3,6 @@
                     xmlns:local="clr-namespace:Kumano.View.Themes">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Kumano.Appearance;component/Resource/ImageListStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Kumano.Appearance;component/Resource/TagListViewStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

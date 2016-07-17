@@ -120,6 +120,7 @@
     <Compile Include="Struction\CategoryTreeItem.cs" />
     <Compile Include="Struction\TagTreeItem.cs" />
     <Compile Include="ViewModel\ArtifactNavigationListDocumentViewModel.cs" />
+    <Compile Include="ViewModel\AttachTagItemPaneViewModel.cs" />
     <Compile Include="ViewModel\CategoryTreeExplorerPaneViewModel.cs" />
     <Compile Include="ViewModel\EditCategoryDialogViewModel.cs" />
     <Compile Include="ViewModel\ImagePreviewDocumentViewModel.cs" />
