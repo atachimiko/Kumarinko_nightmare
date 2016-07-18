@@ -100,6 +100,11 @@ namespace Kumano.Data.ViewModel
 			}
 		}
 
+		public async void LoadDeviceSetting()
+		{
+			ApplicationContext.LoadDeviceSettingInfo();
+		}
+
 		public void Login()
 		{
 			LOG.Info("Login");
@@ -146,7 +151,6 @@ namespace Kumano.Data.ViewModel
 		{
 			this._PropertyPaneViewModel.ActiveContent = itemViewModel;
 		}
-
 		/// <summary>
 		/// 画像プレビュー画面を表示します
 		/// </summary>

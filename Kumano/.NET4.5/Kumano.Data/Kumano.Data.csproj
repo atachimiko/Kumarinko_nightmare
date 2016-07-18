@@ -178,10 +178,16 @@
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADCATGEORY.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADDEVICESETTING.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADTAG.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_SAVEDEVICESETTING.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Service\Kumano.Data.Service.RESPONSE_UPDATECATEGORY.datasource">

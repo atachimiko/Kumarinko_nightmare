@@ -42,6 +42,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="REQUEST_LOADTHUMBNAIL" nillable="true" type="tns:REQUEST_LOADTHUMBNAIL" />
+  <xs:complexType name="REQUEST_SAVEDEVICRSETTING">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="REQUEST_SAVEDEVICRSETTING" nillable="true" type="tns:REQUEST_SAVEDEVICRSETTING" />
   <xs:complexType name="REQUEST_UPDATECATEGORY">
     <xs:sequence />
   </xs:complexType>

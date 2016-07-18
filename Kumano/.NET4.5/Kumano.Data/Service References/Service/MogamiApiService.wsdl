@@ -70,6 +70,12 @@
   <wsdl:message name="IMogamiApiService_LoadCategory_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoadCategoryResponse" />
   </wsdl:message>
+  <wsdl:message name="IMogamiApiService_LoadDeviceSetting_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDeviceSetting" />
+  </wsdl:message>
+  <wsdl:message name="IMogamiApiService_LoadDeviceSetting_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDeviceSettingResponse" />
+  </wsdl:message>
   <wsdl:message name="IMogamiApiService_LoadTag_InputMessage">
     <wsdl:part name="parameters" element="tns:LoadTag" />
   </wsdl:message>
@@ -93,6 +99,12 @@
   </wsdl:message>
   <wsdl:message name="IMogamiApiService_Logout_OutputMessage">
     <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMogamiApiService_SaveDeviceSetting_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveDeviceSetting" />
+  </wsdl:message>
+  <wsdl:message name="IMogamiApiService_SaveDeviceSetting_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveDeviceSettingResponse" />
   </wsdl:message>
   <wsdl:message name="IMogamiApiService_UpdateCategory_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateCategory" />
@@ -121,6 +133,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadCategory" message="tns:IMogamiApiService_LoadCategory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadCategoryResponse" message="tns:IMogamiApiService_LoadCategory_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadDeviceSetting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadDeviceSetting" message="tns:IMogamiApiService_LoadDeviceSetting_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadDeviceSettingResponse" message="tns:IMogamiApiService_LoadDeviceSetting_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoadTag">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/LoadTag" message="tns:IMogamiApiService_LoadTag_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LoadTagResponse" message="tns:IMogamiApiService_LoadTag_OutputMessage" />
@@ -136,6 +152,10 @@
     <wsdl:operation msc:isInitiating="false" msc:isTerminating="true" name="Logout">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/Logout" message="tns:IMogamiApiService_Logout_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/LogoutResponse" message="tns:IMogamiApiService_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SaveDeviceSetting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/SaveDeviceSetting" message="tns:IMogamiApiService_SaveDeviceSetting_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMogamiApiService/SaveDeviceSettingResponse" message="tns:IMogamiApiService_SaveDeviceSetting_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateCategory">
       <wsdl:input wsaw:Action="http://tempuri.org/IMogamiApiService/UpdateCategory" message="tns:IMogamiApiService_UpdateCategory_InputMessage" />
@@ -190,6 +210,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="LoadDeviceSetting">
+      <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/LoadDeviceSetting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="LoadTag">
       <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/LoadTag" style="document" />
       <wsdl:input>
@@ -219,6 +248,15 @@
     </wsdl:operation>
     <wsdl:operation name="Logout">
       <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveDeviceSetting">
+      <soap12:operation soapAction="http://tempuri.org/IMogamiApiService/SaveDeviceSetting" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

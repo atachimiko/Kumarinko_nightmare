@@ -63,6 +63,11 @@ namespace Kumano.Core
 			ApplicationContext.Instance = applicationContextImpl;
 		}
 
+		public static void LoadDeviceSettingInfo()
+		{
+			Instance.LoadDeviceSettingInfoAsync();
+		}
+
 		/// <summary>
 		/// 経過時間を含めたログの出力
 		/// </summary>

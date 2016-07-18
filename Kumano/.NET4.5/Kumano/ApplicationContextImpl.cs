@@ -333,12 +333,14 @@ namespace Kumano
 
 		public async Task<bool> LoadDeviceSettingInfoAsync()
 		{
+			if (this.DeviceSettingInfo == null) this._DeviceSettingInfo = new DeviceSettingInfo();
+
 			using (var proxy = new MogamiApiServiceClient())
 			{
 				await proxy.LoginAsync();
-				var rsp = await proxy.LoadDeviceAsync();
-				if (this.DeviceSettingInfo == null) this._DeviceSettingInfo = new DeviceSettingInfo();
-				JsonConvert.PopulateObject(rsp.Json, this.DeviceSettingInfo);
+				var rsp = await proxy.LoadDeviceSettingAsync();
+				if (rsp.Data != null)
+					JsonConvert.PopulateObject(rsp.Data, this.DeviceSettingInfo);
 
 				LoadedDeviceSetting();
 			}
@@ -346,14 +348,17 @@ namespace Kumano
 			return true;
 		}
 
-		public Task<bool> SaveDeviceSettingInfoAsync()
+		public async Task<bool> SaveDeviceSettingInfoAsync()
 		{
 			using (var proxy = new MogamiApiServiceClient())
 			{
-				await proxy.LoginAsync();
+				await proxy.LoadDeviceSettingAsync();
 				if (this.DeviceSettingInfo == null) this._DeviceSettingInfo = new DeviceSettingInfo();
+
+				var req = new REQUEST_SAVEDEVICRSETTING();
 				var json = JsonConvert.SerializeObject(this.DeviceSettingInfo, Formatting.None);
-				var rsp = await proxy.SaveDeviceAsync(json);
+				req.Data = json;
+				var rsp = await proxy.SaveDeviceSettingAsync(req);
 
 				return rsp.Success;
 			}

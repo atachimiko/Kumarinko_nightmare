@@ -83,6 +83,7 @@
             <l:LivetCallMethodAction MethodName="LoadLayout"
                                      MethodParameter="{Binding ElementName=dockManager}"
                                      MethodTarget="{Binding}" />
+            <l:LivetCallMethodAction MethodName="LoadDeviceSetting" MethodTarget="{Binding}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="Unloaded">
             <l:LivetCallMethodAction MethodName="SaveLayout"

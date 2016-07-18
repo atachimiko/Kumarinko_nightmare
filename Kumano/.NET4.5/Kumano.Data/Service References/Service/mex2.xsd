@@ -73,31 +73,43 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="LoadDeviceSetting">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadDeviceSettingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadDeviceSettingResult" nillable="true" type="q11:RESPONSE_LOADDEVICESETTING" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="LoadTag">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q11:REQUEST_LOADTAG" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q12:REQUEST_LOADTAG" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LoadTagResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadTagResult" nillable="true" type="q12:RESPONSE_LOADTAG" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadTagResult" nillable="true" type="q13:RESPONSE_LOADTAG" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LoadThumbnail">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q13:REQUEST_LOADTHUMBNAIL" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q14:REQUEST_LOADTHUMBNAIL" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LoadThumbnailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadThumbnailResult" nillable="true" type="q14:RESPONSE_LOADTHUMBNAIL" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="LoadThumbnailResult" nillable="true" type="q15:RESPONSE_LOADTHUMBNAIL" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -121,17 +133,31 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="SaveDeviceSetting">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q16:REQUEST_SAVEDEVICRSETTING" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveDeviceSettingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="SaveDeviceSettingResult" nillable="true" type="q17:RESPONSE_SAVEDEVICESETTING" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="UpdateCategory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q15:REQUEST_UPDATECATEGORY" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Mogami.Service.Request" minOccurs="0" name="reqparam" nillable="true" type="q18:REQUEST_UPDATECATEGORY" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateCategoryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="UpdateCategoryResult" nillable="true" type="q16:RESPONSE_UPDATECATEGORY" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Mogami.Service.Response" minOccurs="0" name="UpdateCategoryResult" nillable="true" type="q19:RESPONSE_UPDATECATEGORY" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

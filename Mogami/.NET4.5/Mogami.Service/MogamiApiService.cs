@@ -245,6 +245,7 @@ namespace Mogami.Service
 			return rsp;
 		}
 
+
 		public void Login()
 		{
 			

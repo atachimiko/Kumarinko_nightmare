@@ -189,8 +189,10 @@ namespace Kumano.Data.Service {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_FINDARTIFACT))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_GETSERVERVERSION))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_LOADCATGEORY))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_LOADDEVICESETTING))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_LOADTAG))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_LOADTHUMBNAIL))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_SAVEDEVICESETTING))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_UPDATECATEGORY))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Kumano.Data.Service.RESPONSE_ADDCATEGORY))]
     public partial class RESPONSEAPI_BASE : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -321,6 +323,29 @@ namespace Kumano.Data.Service {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSE_LOADDEVICESETTING", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
+    [System.SerializableAttribute()]
+    public partial class RESPONSE_LOADDEVICESETTING : Kumano.Data.Service.RESPONSEAPI_BASE {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DataField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Data {
+            get {
+                return this.DataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataField, value) != true)) {
+                    this.DataField = value;
+                    this.RaisePropertyChanged("Data");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSE_LOADTAG", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
     [System.SerializableAttribute()]
     public partial class RESPONSE_LOADTAG : Kumano.Data.Service.RESPONSEAPI_BASE {
@@ -363,6 +388,13 @@ namespace Kumano.Data.Service {
                 }
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RESPONSE_SAVEDEVICESETTING", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Response")]
+    [System.SerializableAttribute()]
+    public partial class RESPONSE_SAVEDEVICESETTING : Kumano.Data.Service.RESPONSEAPI_BASE {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -929,6 +961,51 @@ namespace Kumano.Data.Service {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="REQUEST_SAVEDEVICRSETTING", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request")]
+    [System.SerializableAttribute()]
+    public partial class REQUEST_SAVEDEVICRSETTING : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DataField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Data {
+            get {
+                return this.DataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataField, value) != true)) {
+                    this.DataField = value;
+                    this.RaisePropertyChanged("Data");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="REQUEST_UPDATECATEGORY", Namespace="http://schemas.datacontract.org/2004/07/Mogami.Service.Request")]
     [System.SerializableAttribute()]
     public partial class REQUEST_UPDATECATEGORY : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -990,6 +1067,12 @@ namespace Kumano.Data.Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadCategory", ReplyAction="http://tempuri.org/IMogamiApiService/LoadCategoryResponse")]
         System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADCATGEORY> LoadCategoryAsync(Kumano.Data.Service.REQUEST_LOADCATEGORY reqparam);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadDeviceSetting", ReplyAction="http://tempuri.org/IMogamiApiService/LoadDeviceSettingResponse")]
+        Kumano.Data.Service.RESPONSE_LOADDEVICESETTING LoadDeviceSetting();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadDeviceSetting", ReplyAction="http://tempuri.org/IMogamiApiService/LoadDeviceSettingResponse")]
+        System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADDEVICESETTING> LoadDeviceSettingAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/LoadTag", ReplyAction="http://tempuri.org/IMogamiApiService/LoadTagResponse")]
         Kumano.Data.Service.RESPONSE_LOADTAG LoadTag(Kumano.Data.Service.REQUEST_LOADTAG reqparam);
         
@@ -1013,6 +1096,12 @@ namespace Kumano.Data.Service {
         
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, IsInitiating=false, Action="http://tempuri.org/IMogamiApiService/Logout", ReplyAction="http://tempuri.org/IMogamiApiService/LogoutResponse")]
         System.Threading.Tasks.Task LogoutAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/SaveDeviceSetting", ReplyAction="http://tempuri.org/IMogamiApiService/SaveDeviceSettingResponse")]
+        Kumano.Data.Service.RESPONSE_SAVEDEVICESETTING SaveDeviceSetting(Kumano.Data.Service.REQUEST_SAVEDEVICRSETTING reqparam);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/SaveDeviceSetting", ReplyAction="http://tempuri.org/IMogamiApiService/SaveDeviceSettingResponse")]
+        System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_SAVEDEVICESETTING> SaveDeviceSettingAsync(Kumano.Data.Service.REQUEST_SAVEDEVICRSETTING reqparam);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMogamiApiService/UpdateCategory", ReplyAction="http://tempuri.org/IMogamiApiService/UpdateCategoryResponse")]
         Kumano.Data.Service.RESPONSE_UPDATECATEGORY UpdateCategory(Kumano.Data.Service.REQUEST_UPDATECATEGORY reqparam);
@@ -1088,6 +1177,14 @@ namespace Kumano.Data.Service {
             return base.Channel.LoadCategoryAsync(reqparam);
         }
         
+        public Kumano.Data.Service.RESPONSE_LOADDEVICESETTING LoadDeviceSetting() {
+            return base.Channel.LoadDeviceSetting();
+        }
+        
+        public System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_LOADDEVICESETTING> LoadDeviceSettingAsync() {
+            return base.Channel.LoadDeviceSettingAsync();
+        }
+        
         public Kumano.Data.Service.RESPONSE_LOADTAG LoadTag(Kumano.Data.Service.REQUEST_LOADTAG reqparam) {
             return base.Channel.LoadTag(reqparam);
         }
@@ -1118,6 +1215,14 @@ namespace Kumano.Data.Service {
         
         public System.Threading.Tasks.Task LogoutAsync() {
             return base.Channel.LogoutAsync();
+        }
+        
+        public Kumano.Data.Service.RESPONSE_SAVEDEVICESETTING SaveDeviceSetting(Kumano.Data.Service.REQUEST_SAVEDEVICRSETTING reqparam) {
+            return base.Channel.SaveDeviceSetting(reqparam);
+        }
+        
+        public System.Threading.Tasks.Task<Kumano.Data.Service.RESPONSE_SAVEDEVICESETTING> SaveDeviceSettingAsync(Kumano.Data.Service.REQUEST_SAVEDEVICRSETTING reqparam) {
+            return base.Channel.SaveDeviceSettingAsync(reqparam);
         }
         
         public Kumano.Data.Service.RESPONSE_UPDATECATEGORY UpdateCategory(Kumano.Data.Service.REQUEST_UPDATECATEGORY reqparam) {
