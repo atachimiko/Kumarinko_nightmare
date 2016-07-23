@@ -13,13 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Wpf.Mvvm", ".NET4.5\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Entity", ".NET4.5\Akalib.Entity\Akalib.Entity.csproj", "{756953CE-A786-4A28-ADD8-6E744633C904}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3480136-F99F-460B-B999-9BDC0692337B}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Sample.TreeList", "Akalib.Sample.TreeList\Akalib.Sample.TreeList.csproj", "{0AB17E8F-8A6A-483A-A1F2-2757F2F8EA7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akalib.Sample.VirtualWrapImageList", "Akalib.Sample.VirtualWrapImageList\Akalib.Sample.VirtualWrapImageList.csproj", "{7E58F0A3-5D8F-465D-B8BE-3292E69F5222}"
